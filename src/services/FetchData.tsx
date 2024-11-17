@@ -1,7 +1,7 @@
-// src/services/memberService.ts
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
+//Todo change member from type any
 // interface Member {
 //   id: number;
 //   name: string;
@@ -9,7 +9,9 @@ import Cookies from 'js-cookie';
 //   email: string;
 // }
 
-async function FetchData({ type, id = "" }: { type: 'meetings' | 'members' | 'attendees' | 'attendance' | 'users', id?: string }) {
+//Fetch all data based on type, mostly from Table
+
+async function FetchData({ type, id = "" }: { type: 'meetings' | 'members' | 'attendees' | 'attendance' | 'users' | 'clubs', id?: string }) {
     const token = Cookies.get('session');
 
     let endpoint = ""
@@ -21,11 +23,10 @@ async function FetchData({ type, id = "" }: { type: 'meetings' | 'members' | 'at
         endpoint = "meetings/attendees";
     else if (type == "attendance")
         endpoint = "attendance/fetch";
-    else if (type == "users")
-        endpoint = "users/fetch";
-
-    // else if (type == "club")
-    //     endpoint = "clubs/fetch";
+    else if (type == "users") //(admin only)
+        endpoint = "admin/users/fetch";
+    else if (type == "clubs") //(admin only)
+        endpoint = "admin/clubs/fetch";
 
     try {
         const response = await axios.get<any>('http://localhost:3001/' + endpoint, {

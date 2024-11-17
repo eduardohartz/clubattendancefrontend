@@ -1,16 +1,16 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import FetchData from '../services/FetchData';
-import { deleteMeeting, deleteMember, removeAttendee, deleteAttendance, deleteUser } from '../services/DeleteData';
-import { updateMeetingStatus, updateMemberStatus, updateUserStatus } from '../services/UpdateData';
-import { getUser } from '../services/Auth';
+import { deleteMeeting, deleteMember, removeAttendee, deleteAttendance, deleteUser, adminDeleteClub } from '../services/DeleteData';
+import { updateClubStatus, updateMeetingStatus, updateMemberStatus, updateUserStatus } from '../services/UpdateData';
 
-const headersMap: { [key in 'meetings' | 'members' | 'attendees' | 'attendance' | 'users']: string[] } = {
+const headersMap: { [key in 'meetings' | 'members' | 'attendees' | 'attendance' | 'users' | 'clubs']: string[] } = {
     meetings: ["Date", "Start Time", "End Time", "Status", "Volunteering", "Actions"],
     members: ["First Name", "Last Name", "Status", "Join Date", "Actions"],
     attendees: ["First Name", "Last Name", "Time Attended", "Actions"],
     attendance: ["Date", "Time Added", "Volunteering", "Actions"],
     users: ["ID", "Username", "Status", "Admin", "Seen at", "IP", "Actions"],
+    clubs: ["ID", "Owner", "Status", "Display Name", "External ID", "Volunteering", "Actions"],
 };
 
 const dataKeyMap = {
@@ -19,6 +19,7 @@ const dataKeyMap = {
     attendees: ["firstName", "lastName", "timeAttended", "actions"],
     attendance: ["date", "timeAdded", "volunteering", "actions"],
     users: ["id", "username", "status", "admin", "seenAt", "lastIp", "actions"],
+    clubs: ["id", "owner", "status", "displayName", "externalId", "volunteering", "actions"],
 };
 
 const formatDate = (timestamp: string) => {
@@ -69,6 +70,15 @@ const getStatus = (type: string, row: any, current: any) => {
                     </select>
                 </>
             );
+        case 'clubs':
+            return (
+                <>
+                    <select defaultValue={current} onChange={async (event) => await updateClubStatus({ id: row.id }, event.target.value === "true")} className="py-[2px] px-1 rounded-md text-[13px] bg-none appearance-auto hover:cursor-pointer disabled:bg-greyscale-300">
+                        <option value="true">Active</option>
+                        <option value="false">Inactive</option>
+                    </select>
+                </>
+            );
         default:
             return null;
     }
@@ -104,28 +114,19 @@ const getActions = (type: string, row: any, reloadData: () => void) => {
                     <span className="text-red-500 hover:underline cursor-pointer ml-2" onClick={() => deleteUser({ id: row.id }, reloadData)}>Delete</span>
                 </>
             );
+        case 'clubs':
+            return (
+                <>
+                    <span className="text-red-500 hover:underline cursor-pointer ml-2" onClick={() => adminDeleteClub({ id: row.owner }, reloadData)}>Delete</span>
+                </>
+            );
         default:
             return null;
     }
 };
 
-function Table({ type, id = "" }: { type: 'meetings' | 'members' | 'attendees' | 'attendance' | 'users', id?: string }) {
-
+function Table({ type, id = "", user }: { type: 'meetings' | 'members' | 'attendees' | 'attendance' | 'users' | 'clubs', id?: string, user: any }) {
     const [data, setData] = useState([]);
-    const [isAdmin, setIsAdmin] = useState([]);
-
-    useEffect(() => {
-        const fetchUser = async () => {
-            const user = await getUser();
-            setIsAdmin(user.admin);
-        };
-
-        fetchUser();
-    }, []);
-
-    if (type == "users" && !isAdmin) {
-        return null;
-    }
 
     const reloadData = async () => {
         const result = await FetchData({ type, id });
@@ -133,8 +134,14 @@ function Table({ type, id = "" }: { type: 'meetings' | 'members' | 'attendees' |
     };
 
     useEffect(() => {
-        reloadData();
-    }, [type]);
+        if (user && (type !== "users" || user.admin)) {
+            reloadData();
+        }
+    }, [user, type, id]);
+
+    if (!user || (type === "users" && !user.admin)) {
+        return null;
+    }
 
     const headers = headersMap[type] || [];
     const dataKeys = dataKeyMap[type] || [];
@@ -162,7 +169,6 @@ function Table({ type, id = "" }: { type: 'meetings' | 'members' | 'attendees' |
                                                 key === 'actions' ? getActions(type, row, reloadData) :
                                                     key == 'volunteering' || key == 'admin' ? (row[key] ? "Yes" : "No") :
                                                         key == 'status' ? getStatus(type, row, row[key]) :
-
                                                             row[key]}
                                 </td>
                             ))}

@@ -3,6 +3,7 @@ import Cookies from "js-cookie";
 import { toast, Slide } from "react-toastify";
 const token = Cookies.get('session');
 
+//Update statuses, origin from Table.tsx
 
 export async function updateMemberStatus({ id }: { id: number }, newValue: string) {
     try {
@@ -108,10 +109,11 @@ export async function updateMeetingStatus({ id }: { id: number }, newValue: stri
     }
 };
 
+//Update a user's status (admin only)
 export async function updateUserStatus({ id }: { id: number }, newValue: boolean) {
 
     try {
-        const response = await axios.post('http://localhost:3001/users/update', {
+        const response = await axios.post('http://localhost:3001/admin/users/update', {
             id,
             status: newValue
         }, {
@@ -160,9 +162,10 @@ export async function updateUserStatus({ id }: { id: number }, newValue: boolean
     }
 };
 
-export async function updateClubStatus({ id }: { id: number }, newValue: string) {
+//Update a club's status (admin only)
+export async function updateClubStatus({ id }: { id: number }, newValue: boolean) {
     try {
-        const response = await axios.post('http://localhost:3001/clubs/update', {
+        const response = await axios.post('http://localhost:3001/admin/clubs/update', {
             id,
             status: newValue
         }, {
@@ -209,4 +212,110 @@ export async function updateClubStatus({ id }: { id: number }, newValue: string)
             transition: Slide,
         });
     }
+};
+
+//Club Settings todo
+
+export async function updateClubName(clubName: string) {
+
+    try {
+        const response = await axios.post('http://localhost:3001/club/update', {
+            clubName,
+        }, {
+            headers: {
+                'Authorization': `${token}`,
+            }
+        });
+
+        if (response.data.success) {
+            toast.success("Club updated", {
+                position: "bottom-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                transition: Slide,
+            });
+        } else {
+            toast.error("Error updating club", {
+                position: "bottom-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                transition: Slide,
+            });
+        }
+    } catch (error) {
+        toast.error("Error updating club", {
+            position: "bottom-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            transition: Slide,
+        });
+    }
+
+};
+
+export async function updateOfficerName(officerName: string) {
+
+    try {
+        const response = await axios.post('http://localhost:3001/club/update', {
+            officerName,
+        }, {
+            headers: {
+                'Authorization': `${token}`,
+            }
+        });
+
+        if (response.data.success) {
+            toast.success("Club updated", {
+                position: "bottom-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                transition: Slide,
+            });
+        } else {
+            toast.error("Error updating club", {
+                position: "bottom-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                transition: Slide,
+            });
+        }
+    } catch (error) {
+        toast.error("Error updating club", {
+            position: "bottom-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            transition: Slide,
+        });
+    }
+
 };

@@ -1,13 +1,7 @@
-// src/services/memberService.ts
 import axios from 'axios';
 import Cookies from "js-cookie";
 
-// interface Member {
-//   id: number;
-//   name: string;
-//   role: string;
-//   email: string;
-// }
+//Used to log out
 
 async function DeleteSession() {
     const token = Cookies.get('session');

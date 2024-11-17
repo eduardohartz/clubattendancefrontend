@@ -1,61 +1,40 @@
-import { useState, useEffect } from 'react';
-import { Navigate, useNavigate } from 'react-router-dom';
-import { getClub, getUser } from '../services/Auth';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-const ProtectedRoute = ({ path, element }: { path: string, element: JSX.Element }) => {
-    const [isLoading, setIsLoading] = useState(true);
-    const [user, setUser] = useState<any>(null);
-    const [club, setClub] = useState<any>(null);
+function ProtectedRoute({ path, element, user, club }: { path: string, element: JSX.Element, user: any, club: any }) {
     const navigate = useNavigate();
+    const [shouldRender, setShouldRender] = useState(true);
 
     useEffect(() => {
-        const fetchData = async () => {
-            const user = await getUser();
-            const club = await getClub();
-            setUser(user);
-            setClub(club);
-            setIsLoading(false);
-        };
+        if (!user) {
+            navigate("/login?redirect=" + path);
+            setShouldRender(false);
+        } else if (user.status === false) {
+            alert("Your account has been disabled. Please contact an administrator.");
+            navigate("/");
+            setShouldRender(false);
+        } else if (path.includes("admin") && !user.admin) {
+            alert("You do not have permission to access this page.");
+            navigate("/dashboard");
+            setShouldRender(false);
+        } else if (!club) {
+            alert("There is a problem with your request. Please try again.");
+            navigate("/");
+            setShouldRender(false);
+        } else if (club.status === false && path !== "/settings" && path !== "/dashboard/admin") {
+            alert("Your club has been disabled. Please contact an administrator.");
+            navigate("/settings");
+            setShouldRender(false);
+        } else {
+            setShouldRender(true);
+        }
+    }, [user, club, path, navigate]);
 
-        fetchData();
-    }, []);
-
-    if (isLoading) {
-        return;
-    }
-
-    //User checks
-
-    if (!user) {
-        return <Navigate to={"/login?redirect=" + path} />;
-    }
-
-    if (user.status == false) {
-        alert("Your account has been disabled. Please contact an administrator.");
-        navigate("/");
-        return (<></>);
-    }
-
-    if (path.includes("admin") && !user.admin) {
-        alert("You do not have permission to access this page.");
-        navigate("/dashboard");
-        return <Navigate to={"/dashboard"} />;
-    }
-
-    //Club checks
-
-    if (!club) {
-        alert("There is a problem with your account! Please contact support.");
-        return <Navigate to={"/"} />;
-    }
-
-    if (club.status == false) {
-        alert("Your club has been disabled. Please contact an administrator.")
-        navigate("/");
-        return (<></>);
+    if (!shouldRender) {
+        return null;
     }
 
     return element;
-};
+}
 
 export default ProtectedRoute;

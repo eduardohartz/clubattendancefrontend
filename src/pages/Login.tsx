@@ -17,7 +17,7 @@ function Login() {
     useEffect(() => {
         const checkSession = () => {
             if (Cookies.get('session')) {
-                navigate('/dashboard', { replace: true });
+                navigate('/dashboard');
             } else {
                 setLoading(false);
             }

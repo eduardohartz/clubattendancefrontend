@@ -1,9 +1,15 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Helmet } from "react-helmet";
-import { Link } from "react-router-dom";
-import { getClub, getUser } from "../services/Auth";
+import { Link, useNavigate } from "react-router-dom";
 
-function Sidebar({ page }: { page: string }) {
+function Sidebar({ page, user, club }: { page: string, user: any, club: any }) {
+
+    const navigate = useNavigate()
+
+    if (!user || !club) {
+        navigate("/")
+        return;
+    }
 
     const buttonClass = "rounded-md text-left w-[150px] text-[13.5px] px-[20px] py-[14px] hover:bg-greyscale-200 transition-colors"
     const textClass = "text-left text-xl transition-colors ml-4"
@@ -11,28 +17,6 @@ function Sidebar({ page }: { page: string }) {
     const selected = "bg-greyscale-200"
 
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-    const [isAdmin, setIsAdmin] = useState(false);
-
-    const [club, setClub] = useState<any>(null);
-
-    useEffect(() => {
-        const fetchUser = async () => {
-            const user = await getUser();
-            setIsAdmin(user.admin);
-        };
-
-        fetchUser();
-    }, []);
-
-    useEffect(() => {
-        const fetchClub = async () => {
-            const club = await getClub();
-            setClub(club);
-        };
-
-        fetchClub();
-    }, []);
 
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
@@ -49,10 +33,10 @@ function Sidebar({ page }: { page: string }) {
 
                 <div className="flex flex-1 items-center flex-col gap-2 mt-[25px]">
                     <Link to={"/dashboard"}><button className={`${buttonClass} ${page == "/dashboard" ? selected : ""}`}><i className="fa-solid fa-house fa-lg mr-1"></i> Home</button></Link>
-                    <Link to={"/dashboard/members"}><button className={`${buttonClass} ${page.includes("member") ? selected : ""}`}><i className="fa-solid fa-users fa-lg mr-1"></i> Members</button></Link>
                     <Link to={"/dashboard/meetings"}><button className={`${buttonClass} ${page.includes("meeting") ? selected : ""}`}><i className="fa-solid fa-comments fa-lg mr-1"></i> Meetings</button></Link>
+                    <Link to={"/dashboard/members"}><button className={`${buttonClass} ${page.includes("member") ? selected : ""}`}><i className="fa-solid fa-users fa-lg mr-1"></i> Members</button></Link>
                     <Link to={"/dashboard/settings"}><button className={`${buttonClass} ${page == "/dashboard/settings" ? selected : ""}`}><i className="fa-solid fa-cog fa-lg mr-1"></i> Club Settings</button></Link>
-                    {isAdmin ? <Link to={"/dashboard/admin"}><button className={`${buttonClass} ${page == "/dashboard/admin" ? selected : ""}`}><i className="fa-solid fa-user-shield fa-lg mr-1"></i> Admin</button></Link> : ""}
+                    {user.admin ? <Link to={"/dashboard/admin"}><button className={`${buttonClass} ${page == "/dashboard/admin" ? selected : ""}`}><i className="fa-solid fa-user-shield fa-lg mr-1"></i> Admin</button></Link> : ""}
                     <span className="w-[160px] border-b-2 border-b-greyscale-200 mb-[40px]"></span>
                     <Link to={"/settings"}><button className={`${buttonClass} ${page == "/settings" ? selected : ""}`}><i className="fa-solid fa-user fa-lg mr-1"></i> User Settings</button></Link>
                     <Link to={"/logout"}><button className={`${buttonClass} text-warningred`}><i className="fa-solid fa-right-from-bracket fa-lg mr-1"></i> Logout</button></Link>
@@ -69,12 +53,12 @@ function Sidebar({ page }: { page: string }) {
                 <div className="flex flex-col gap-4 ml-8">
                     <span className="text-4xl font-bold mt-20">Club Attendance</span>
                     <span className="text-2xl ml-2">FCCLA 2024-25</span>
-                    <Link to={"/dashboard"}><span className={`${textClass} ${page == "/dashboard" ? tselected : ""}`}>Home</span></Link>
-                    <Link to={"/dashboard/members"}><span className={`${textClass} ${page.includes("member") ? tselected : ""}`}>Members</span></Link>
-                    <Link to={"/dashboard/meetings"}><span className={`${textClass} ${page.includes("meeting") ? tselected : ""}`}>Meetings</span></Link>
-                    <Link to={"/dashboard/settings"}><span className={`${textClass} ${page == "/dashboard/settings" ? tselected : ""}`}>Club Settings</span></Link>
-                    <Link to={"/settings"}><span className={`${textClass} ${page == "/settings" ? tselected : ""}`}>User Settings</span></Link>
-                    <Link to={"/logout"}><span className={`${textClass} text-warningred`}>Logout</span></Link>
+                    <Link to={"/dashboard"} onClick={toggleMenu}><span className={`${textClass} ${page == "/dashboard" ? tselected : ""}`}>Home</span></Link>
+                    <Link to={"/dashboard/meetings"} onClick={toggleMenu}><span className={`${textClass} ${page.includes("meeting") ? tselected : ""}`}>Meetings</span></Link>
+                    <Link to={"/dashboard/members"} onClick={toggleMenu}><span className={`${textClass} ${page.includes("member") ? tselected : ""}`}>Members</span></Link>
+                    <Link to={"/dashboard/settings"} onClick={toggleMenu}><span className={`${textClass} ${page == "/dashboard/settings" ? tselected : ""}`}>Club Settings</span></Link>
+                    <Link to={"/settings"} onClick={toggleMenu}><span className={`${textClass} ${page == "/settings" ? tselected : ""}`}>User Settings</span></Link>
+                    <Link to={"/logout"} onClick={toggleMenu}><span className={`${textClass} text-warningred`}>Logout</span></Link>
                 </div>
             </div>
         </>

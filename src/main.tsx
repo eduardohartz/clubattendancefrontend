@@ -4,10 +4,13 @@ import Handler from "./handler";
 import "./assets/styles/globals.css";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { StrictMode } from 'react';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  <BrowserRouter>
-    <ToastContainer />
-    <Handler />
-  </BrowserRouter>
+  <StrictMode>
+    <BrowserRouter>
+      <ToastContainer />
+      <Handler />
+    </BrowserRouter>
+  </StrictMode>
 )

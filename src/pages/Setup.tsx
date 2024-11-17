@@ -53,7 +53,7 @@ function Setup() {
                 setError(response.data.errors[0]);
             }
         } catch (err) {
-            if (axios.isAxiosError(err) && err.response?.status === 403) {
+            if (axios.isAxiosError(err) && (err.response?.status === 403 || err.response?.status === 500)) {
                 setError(err.response.data.errors[0]);
             } else {
                 setError("An error occurred. Please try again.");
