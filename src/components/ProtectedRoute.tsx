@@ -17,7 +17,7 @@ function ProtectedRoute({ path, element, user, club }: { path: string, element: 
             alert("You do not have permission to access this page.");
             navigate("/dashboard");
             setShouldRender(false);
-        } else if (!club) {
+        } else if (!club && path !== "/settings" && path !== "/dashboard/admin") {
             alert("There is a problem with your request. Please try again.");
             navigate("/");
             setShouldRender(false);

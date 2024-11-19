@@ -214,7 +214,7 @@ export async function updateClubStatus({ id }: { id: number }, newValue: boolean
     }
 };
 
-//Club Settings todo
+//Club Settings
 
 export async function updateClubName(clubName: string) {
 
@@ -319,3 +319,138 @@ export async function updateOfficerName(officerName: string) {
     }
 
 };
+
+export async function updateUseStaticCode(useStaticCode: boolean) {
+
+    try {
+        const response = await axios.post('http://localhost:3001/club/update', {
+            useStaticCode,
+        }, {
+            headers: {
+                'Authorization': `${token}`,
+            }
+        });
+
+        if (response.data.success) {
+            toast.success("Club updated", {
+                position: "bottom-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                transition: Slide,
+            });
+        } else {
+            toast.error("Error updating club", {
+                position: "bottom-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                transition: Slide,
+            });
+        }
+    } catch (error) {
+        toast.error("Error updating club", {
+            position: "bottom-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            transition: Slide,
+        });
+    }
+
+}
+
+//User Settings
+
+export async function updatePassword(currentPassword: string, newPassword: string, repeatNewPassword: string) {
+
+    if (newPassword !== repeatNewPassword) {
+        toast.error("Passwords do not match!", {
+            position: "bottom-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            transition: Slide,
+        });
+        return;
+    }
+
+    try {
+        const response = await axios.post('http://localhost:3001/user/update', {
+            currentPassword,
+            newPassword
+        }, {
+            headers: {
+                'Authorization': `${token}`,
+            }
+        });
+
+        if (response.data.success) {
+            toast.success("Password updated", {
+                position: "bottom-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                transition: Slide,
+            });
+        } else {
+            toast.error("Error updating password", {
+                position: "bottom-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                transition: Slide,
+            });
+        }
+    } catch (error) {
+        if (axios.isAxiosError(error) && error.response?.status === 400) {
+            toast.error(error.response.data.error, {
+                position: "bottom-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                transition: Slide,
+            });
+        } else {
+            toast.error("Error updating password", {
+                position: "bottom-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                transition: Slide,
+            });
+        }
+    }
+}

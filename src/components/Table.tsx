@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import FetchData from '../services/FetchData';
-import { deleteMeeting, deleteMember, removeAttendee, deleteAttendance, deleteUser, adminDeleteClub } from '../services/DeleteData';
+import { deleteMeeting, deleteMember, removeAttendee, deleteAttendance, adminDeleteUser, adminDeleteClub } from '../services/DeleteData';
 import { updateClubStatus, updateMeetingStatus, updateMemberStatus, updateUserStatus } from '../services/UpdateData';
 
 const headersMap: { [key in 'meetings' | 'members' | 'attendees' | 'attendance' | 'users' | 'clubs']: string[] } = {
@@ -89,14 +89,14 @@ const getActions = (type: string, row: any, reloadData: () => void) => {
         case 'meetings':
             return (
                 <>
-                    <Link to={`/dashboard/meetings/${row.id}`} className="text-blue-500 hover:underline">View</Link>
+                    <Link to={`/dashboard/meeting/${row.id}`} className="text-blue-500 hover:underline">View</Link>
                     <span className="text-red-500 hover:underline cursor-pointer ml-2" onClick={() => deleteMeeting({ id: row.id }, reloadData)}>Delete</span>
                 </>
             );
         case 'members':
             return (
                 <>
-                    <Link to={`/dashboard/members/${row.id}`} className="text-blue-500 hover:underline">View</Link>
+                    <Link to={`/dashboard/member/${row.id}`} className="text-blue-500 hover:underline">View</Link>
                     <span className="text-red-500 hover:underline cursor-pointer ml-2" onClick={() => deleteMember({ id: row.id }, reloadData)}>Delete</span>
                 </>
             );
@@ -111,7 +111,7 @@ const getActions = (type: string, row: any, reloadData: () => void) => {
         case 'users':
             return (
                 <>
-                    <span className="text-red-500 hover:underline cursor-pointer ml-2" onClick={() => deleteUser({ id: row.id }, reloadData)}>Delete</span>
+                    <span className="text-red-500 hover:underline cursor-pointer ml-2" onClick={() => adminDeleteUser({ id: row.id }, reloadData)}>Delete</span>
                 </>
             );
         case 'clubs':

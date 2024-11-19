@@ -4,6 +4,9 @@ import { Helmet } from "react-helmet";
 
 function Home({ user }: { user: any }) {
 
+    if (!user)
+        return
+
     return (
         <>
             <Helmet>

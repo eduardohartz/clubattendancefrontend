@@ -290,9 +290,68 @@ export async function deleteClub() {
 
 };
 
+//Delete user
+
+export async function deleteUser() {
+
+    const token = Cookies.get('session');
+
+    const confirmation = confirm("Are you sure you want to delete your user? THIS WILL DELETE ALL ASSOCIATED ATTENDANCE DATA!");
+
+    if (!confirmation) {
+        return false;
+    }
+
+    const confirmation2 = confirm("This action is irrevarsable, you will not be able to login anymore. Are you sure you want to continue?");
+
+    if (!confirmation2) {
+        return false;
+    }
+
+    try {
+        const response = await axios.delete('http://localhost:3001/user/delete', {
+            headers: {
+                'Authorization': `${token}`,
+            }
+        });
+
+        if (response.data.success == "true") {
+            Cookies.remove('session')
+            return true;
+        } else {
+            toast.error("Error deleting user", {
+                position: "bottom-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                transition: Slide,
+            });
+            return false;
+        }
+    } catch (error) {
+        toast.error("Error deleting user", {
+            position: "bottom-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            transition: Slide,
+        });
+        return false;
+    }
+
+};
+
 //Delete user (admin only)
 
-export async function deleteUser({ id }: { id: number }, callback: () => void) {
+export async function adminDeleteUser({ id }: { id: number }, callback: () => void) {
 
     const token = Cookies.get('session');
 
@@ -351,6 +410,8 @@ export async function deleteUser({ id }: { id: number }, callback: () => void) {
     }
 
 };
+
+//Delete club (admin only)
 
 export async function adminDeleteClub({ id }: { id: number }, callback: () => void) {
 

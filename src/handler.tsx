@@ -201,7 +201,7 @@ const Handler = () => {
               }
             />
             <Route
-              path="/dashboard/members/:id"
+              path="/dashboard/member/:id"
               element={
                 <ProtectedRoute
                   element={
@@ -231,7 +231,7 @@ const Handler = () => {
               }
             />
             <Route
-              path="/dashboard/meetings/:id"
+              path="/dashboard/meeting/:id"
               element={
                 <ProtectedRoute
                   element={

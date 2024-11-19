@@ -11,7 +11,7 @@ function Sidebar({ page, user, club }: { page: string, user: any, club: any }) {
         return;
     }
 
-    const buttonClass = "rounded-md text-left w-[150px] text-[13.5px] px-[20px] py-[14px] hover:bg-greyscale-200 transition-colors"
+    const buttonClass = "rounded-md text-left w-[170px] text-[13.5px] px-[20px] py-[14px] hover:bg-greyscale-200 transition-colors"
     const textClass = "text-left text-xl transition-colors ml-4"
     const tselected = "font-bold"
     const selected = "bg-greyscale-200"
@@ -27,17 +27,17 @@ function Sidebar({ page, user, club }: { page: string, user: any, club: any }) {
             <Helmet>
                 <link rel="stylesheet preconnect" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
             </Helmet>
-            <div className="hidden h-[100vh] w-[200px] bg-greyscale-100 border-r-2 border-r-greyscale-200 lg:flex flex-1 items-center flex-col">
-                <span className="text-xl font-bold mt-7">Club Attendance</span>
-                <span className="text-base border-b-2 border-b-greyscale-200 w-[160px] text-center">{club ? club.displayName : ''}</span>
+            <div className="hidden h-[100vh] w-[225px] bg-greyscale-100 border-r-2 border-r-greyscale-200 lg:flex flex-1 items-center flex-col">
+                <span className="text-2xl font-bold mt-7">Club Attendance</span>
+                <span className="text-base border-b-2 border-b-greyscale-200 w-[180px] text-center py-1">{club ? club.displayName : ''}</span>
 
-                <div className="flex flex-1 items-center flex-col gap-2 mt-[25px]">
+                <div className="flex flex-1 items-center flex-col gap-2 mt-[25px] mr-3">
                     <Link to={"/dashboard"}><button className={`${buttonClass} ${page == "/dashboard" ? selected : ""}`}><i className="fa-solid fa-house fa-lg mr-1"></i> Home</button></Link>
                     <Link to={"/dashboard/meetings"}><button className={`${buttonClass} ${page.includes("meeting") ? selected : ""}`}><i className="fa-solid fa-comments fa-lg mr-1"></i> Meetings</button></Link>
                     <Link to={"/dashboard/members"}><button className={`${buttonClass} ${page.includes("member") ? selected : ""}`}><i className="fa-solid fa-users fa-lg mr-1"></i> Members</button></Link>
                     <Link to={"/dashboard/settings"}><button className={`${buttonClass} ${page == "/dashboard/settings" ? selected : ""}`}><i className="fa-solid fa-cog fa-lg mr-1"></i> Club Settings</button></Link>
                     {user.admin ? <Link to={"/dashboard/admin"}><button className={`${buttonClass} ${page == "/dashboard/admin" ? selected : ""}`}><i className="fa-solid fa-user-shield fa-lg mr-1"></i> Admin</button></Link> : ""}
-                    <span className="w-[160px] border-b-2 border-b-greyscale-200 mb-[40px]"></span>
+                    <span className="w-[180px] border-b-2 border-b-greyscale-200 mb-[40px]"></span>
                     <Link to={"/settings"}><button className={`${buttonClass} ${page == "/settings" ? selected : ""}`}><i className="fa-solid fa-user fa-lg mr-1"></i> User Settings</button></Link>
                     <Link to={"/logout"}><button className={`${buttonClass} text-warningred`}><i className="fa-solid fa-right-from-bracket fa-lg mr-1"></i> Logout</button></Link>
                 </div>

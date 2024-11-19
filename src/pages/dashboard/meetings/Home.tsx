@@ -3,6 +3,9 @@ import Table from "../../../components/Table";
 
 function Home({ user }: { user: any }) {
 
+    if (!user)
+        return
+
     return (
         <>
             <Helmet>

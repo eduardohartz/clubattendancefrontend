@@ -5,6 +5,10 @@ import Cookies from 'js-cookie';
 import { Helmet } from 'react-helmet';
 
 function Admin({ user }: { user: any }) {
+
+    if (!user)
+        return
+
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     const handleAddUser = async () => {

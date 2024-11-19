@@ -5,6 +5,10 @@ import { useState, useEffect } from "react";
 import { Helmet } from "react-helmet";
 
 function View({ user }: { user: any }) {
+
+    if (!user)
+        return
+
     const { id } = useParams<{ id: string }>();
     const [member, setMember] = useState<any>(null);
     const [loading, setLoading] = useState(true);
