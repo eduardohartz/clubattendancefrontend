@@ -1,7 +1,8 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import getBaseUrl from './Api';
 
-//Todo change member from type any
+// TODO change member from type any
 // interface Member {
 //   id: number;
 //   name: string;
@@ -9,29 +10,33 @@ import Cookies from 'js-cookie';
 //   email: string;
 // }
 
-//Fetch all data based on type, mostly from Table
+// Fetch all data based on type, mostly for Table
 
 async function FetchData({ type, id = "" }: { type: 'meetings' | 'members' | 'attendees' | 'attendance' | 'users' | 'clubs', id?: string }) {
     const token = Cookies.get('session');
 
+    if (!token) {
+        return null;
+    }
+
     let endpoint = ""
     if (type == "meetings")
-        endpoint = "meetings/fetch";
+        endpoint = "/meetings/fetch";
     else if (type == "members")
-        endpoint = "members/fetch";
+        endpoint = "/members/fetch";
     else if (type == "attendees")
-        endpoint = "meetings/attendees";
+        endpoint = "/meetings/attendees";
     else if (type == "attendance")
-        endpoint = "attendance/fetch";
-    else if (type == "users") //(admin only)
-        endpoint = "admin/users/fetch";
-    else if (type == "clubs") //(admin only)
-        endpoint = "admin/clubs/fetch";
+        endpoint = "/attendance/fetch";
+    else if (type == "users") // (admin only)
+        endpoint = "/admin/users/fetch";
+    else if (type == "clubs") // (admin only)
+        endpoint = "/admin/clubs/fetch";
 
     try {
-        const response = await axios.get<any>('http://localhost:3001/' + endpoint, {
+        const response = await axios.get<any>(getBaseUrl() + endpoint, {
             params: {
-                id: (type == 'attendance' || type == 'attendees' || type == 'members') ? id : undefined
+                id: (type == 'attendance' || type == 'attendees' || type == 'members' || type == 'meetings') ? id : undefined
             },
             headers: {
                 'Authorization': `${token}`,

@@ -1,7 +1,7 @@
 import { Routes, Route, useLocation } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import PageTransition from "./components/PageTransition";
-import Sidebar from "./components/Sidebar";  // Import the navbar directly here
+import Sidebar from "./components/Sidebar";
 
 // No login needed
 import Landing from "./pages/Landing";
@@ -22,7 +22,7 @@ import Meetings from "./pages/dashboard/meetings/Home";
 import Meeting from "./pages/dashboard/meetings/View";
 import Logout from "./pages/Logout";
 
-//Admin
+// Admin
 import Admin from "./pages/dashboard/Admin";
 
 // 404
@@ -32,6 +32,7 @@ import Unknown from "./pages/404";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { useState, useEffect } from "react";
 import { getUser, getClub } from "./services/Auth";
+import Loading from "./components/Loading";
 
 const Handler = () => {
   const location = useLocation();
@@ -66,7 +67,7 @@ const Handler = () => {
       {showNavbar && club && <PageTransition><Sidebar page={currentRoute} user={user} club={club} /></PageTransition>}
 
       {isLoading ? (
-        <div></div>
+        <Loading />
       ) : (
         <AnimatePresence mode="wait">
           <Routes location={location} key={location.pathname}>
@@ -236,7 +237,7 @@ const Handler = () => {
                 <ProtectedRoute
                   element={
                     <PageTransition>
-                      <Meeting />
+                      <Meeting user={user} club={club} />
                     </PageTransition>
                   }
                   path={currentRoute}

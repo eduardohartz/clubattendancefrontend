@@ -3,6 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
+import Loading from "../components/Loading";
+import getBaseUrl from "../services/Api";
 
 function Setup() {
     const [username, setUsername] = useState("");
@@ -39,7 +41,7 @@ function Setup() {
         setIsSubmitting(true);
 
         try {
-            const response = await axios.post('http://localhost:3001/auth/setup', {
+            const response = await axios.post(getBaseUrl() + '/auth/setup', {
                 username,
                 password,
                 clubName,
@@ -64,7 +66,7 @@ function Setup() {
     };
 
     if (loading) {
-        return <div></div>;
+        return <Loading />;
     }
 
     return (

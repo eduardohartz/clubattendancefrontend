@@ -29,10 +29,10 @@ function Home() {
                 setCurrentText(texts[index]);
                 setIndex((prevIndex) => (prevIndex + 1) % texts.length);
                 setIsUp(false);
-            }, 500); // Match the timeout duration with the animation duration
+            }, 500);
         };
 
-        const interval = setInterval(changeText, 2000); // Change text every 2 seconds
+        const interval = setInterval(changeText, 2000);
 
         return () => clearInterval(interval);
     }, [index, texts]);

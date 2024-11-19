@@ -1,10 +1,11 @@
-import { Navigate, useParams } from "react-router-dom";
+import { Link, Navigate, useParams } from "react-router-dom";
 import Table from "../../../components/Table";
 import FetchData from "../../../services/FetchData";
 import { useState, useEffect } from "react";
 import { Helmet } from "react-helmet";
+import Loading from "../../../components/Loading";
 
-function View({ user }: { user: any }) {
+function Member({ user }: { user: any }) {
 
     if (!user)
         return
@@ -29,7 +30,7 @@ function View({ user }: { user: any }) {
     }, [id]);
 
     if (loading) {
-        return <div></div>;
+        return <Loading />;
     }
 
     if (!member) {
@@ -46,6 +47,7 @@ function View({ user }: { user: any }) {
                 <div className="absolute top-[100px] min-w-[80%]">
                     <div className="mx-auto flex w-[100%] items-center justify-between mb-5">
                         <span className="justify-start text-2xl font-bold ml-2">Member: {member.firstName + " " + member.lastName}</span>
+                        <Link to={"/dashboard/members"}><button className="bg-greyscale-200 hover:bg-greyscale-300 transition-colors px-[25px] py-[12px] rounded-lg text-[13.5px] mr-2 justify-end"><i className="fa-solid fa-arrow-left fa-lg" /> Back</button></Link>
                     </div>
                     <Table type={"attendance"} id={id} user={user} />
                 </div>
@@ -54,4 +56,4 @@ function View({ user }: { user: any }) {
     );
 }
 
-export default View;
+export default Member;

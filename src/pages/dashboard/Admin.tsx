@@ -3,6 +3,7 @@ import Table from "../../components/Table";
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { Helmet } from 'react-helmet';
+import getBaseUrl from '../../services/Api';
 
 function Admin({ user }: { user: any }) {
 
@@ -22,7 +23,7 @@ function Admin({ user }: { user: any }) {
 
         try {
             const token = Cookies.get('session');
-            const response = await axios.post('http://localhost:3001/admin/users/create', {
+            const response = await axios.post(getBaseUrl() + '/admin/users/create', {
                 username
             }, {
                 headers: {

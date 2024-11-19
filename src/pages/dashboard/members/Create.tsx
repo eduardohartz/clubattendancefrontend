@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Cookies from 'js-cookie';
 import { toast, Slide } from "react-toastify";
 import { Helmet } from "react-helmet";
+import getBaseUrl from "../../../services/Api";
 
 function Create() {
     const [firstname, setFirstname] = useState("");
@@ -20,7 +21,7 @@ function Create() {
 
         try {
 
-            const response = await axios.post('http://localhost:3001/members/create', {
+            const response = await axios.post(getBaseUrl() + '/members/create', {
                 firstname,
                 lastname
             }, {

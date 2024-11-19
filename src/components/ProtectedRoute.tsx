@@ -18,8 +18,7 @@ function ProtectedRoute({ path, element, user, club }: { path: string, element: 
             navigate("/dashboard");
             setShouldRender(false);
         } else if (!club && path !== "/settings" && path !== "/dashboard/admin") {
-            alert("There is a problem with your request. Please try again.");
-            navigate("/");
+            navigate("/login?redirect=" + path);
             setShouldRender(false);
         } else if (club.status === false && path !== "/settings" && path !== "/dashboard/admin") {
             alert("Your club has been disabled. Please contact an administrator.");

@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Helmet } from "react-helmet";
 import { deleteClub } from "../../services/DeleteData";
-import { updateClubName, updateOfficerName, updateUseStaticCode } from "../../services/UpdateData";
+import { updateAllowSelfRegistration, updateClubName, updateOfficerName, updateUseStaticCode } from "../../services/UpdateData";
 import { useNavigate } from "react-router-dom";
 
 function Settings({ club }: { club: any }) {
@@ -9,12 +9,14 @@ function Settings({ club }: { club: any }) {
     if (!club)
         return
 
-    const [isChecked, setIsChecked] = useState(club.useStaticCode);
+    const [isQrChecked, setIsQrChecked] = useState(club.useStaticCode);
+    const [isSelfChecked, setIsSelfChecked] = useState(club.allowSelfRegistration);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [hasRendered, setHasRendered] = useState(false);
     const [fieldToEdit, setFieldToEdit] = useState("");
     const [newFieldValue, setNewFieldValue] = useState("");
+    const qrCodeRef = useRef<HTMLImageElement>(null);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -50,10 +52,16 @@ function Settings({ club }: { club: any }) {
         setIsModalOpen(false);
     };
 
-    const handleCheckboxChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleQrCheckboxChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const checked = e.target.checked;
-        setIsChecked(checked);
+        setIsQrChecked(checked);
         await updateUseStaticCode(checked);
+    };
+
+    const handleSelfCheckboxChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const checked = e.target.checked;
+        setIsSelfChecked(checked);
+        await updateAllowSelfRegistration(checked);
     };
 
     const handleDeleteClub = async () => {
@@ -74,13 +82,25 @@ function Settings({ club }: { club: any }) {
         setTimeout(() => setIsQrModalVisible(false), 300)
     };
 
+    const handleDownloadQrCode = () => {
+        if (qrCodeRef.current) {
+            const link = document.createElement('a');
+            link.href = qrCodeRef.current.src;
+            link.target = '_blank';
+            link.download = 'qr_code.png';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    }
+
     return (
         <>
             <Helmet>
                 <title>Club Settings | Club Attendance</title>
             </Helmet>
             <div className="usablesize h-[100vh] absolute top-0 right-0 flex flex-col items-center gap-10">
-                <div className="absolute top-[100px] min-w-[40%] bg-greyscale-100 rounded-lg h-[325px] p-8">
+                <div className="absolute top-[100px] min-w-[40%] bg-greyscale-100 rounded-lg h-[365px] p-8">
                     <div className="mx-auto flex w-[100%] flex-col gap-8 mb-5 items-left">
                         <span className="text-3xl font-bold ml-2 self-center">Club Settings</span>
                         <div className="flex flex-col w-full gap-2">
@@ -99,16 +119,25 @@ function Settings({ club }: { club: any }) {
                                 />
                             </span>
                             <span className="text-xl">
+                                Allow Member self-registration:
+                                <input
+                                    type="checkbox"
+                                    className="w-6 h-6 ml-2 rounded-md border-0 text-accent-100 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-accent-200 transition-all hover:cursor-pointer"
+                                    onChange={handleSelfCheckboxChange}
+                                    checked={isSelfChecked}
+                                />
+                            </span>
+                            <span className="text-xl">
                                 Enable static QR-Code:
                                 <input
                                     type="checkbox"
                                     className="w-6 h-6 ml-2 rounded-md border-0 text-accent-100 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-accent-200 transition-all hover:cursor-pointer"
-                                    onChange={handleCheckboxChange}
-                                    checked={isChecked}
+                                    onChange={handleQrCheckboxChange}
+                                    checked={isQrChecked}
                                 />
                             </span>
                             <button
-                                disabled={!isChecked}
+                                disabled={!isQrChecked}
                                 className="bg-accent-100 hover:bg-accent-200 transition-colors px-[20px] py-[10px] rounded-lg text-[15.5px] mr-2 w-full  disabled:bg-slate-300 disabled:hover:cursor-not-allowed disabled:hover:bg-slate-300"
                                 onClick={handleOpenQrModal}
                             >
@@ -164,8 +193,14 @@ function Settings({ club }: { club: any }) {
                         <h2 className="text-2xl font-bold mb-4">Attendance QR Code</h2>
                         <span className="mb-4">This is used for attendance check-in. Your club members can scan this at every meeting to attend.</span>
                         <div className="flex justify-center mt-4">
-                            <img className="w-64" src={`https://api.qrserver.com/v1/create-qr-code/?size=1000x1000&data=https://clubattendance.com/attend?code=${club.externalId}`} alt="QR Code" />
+                            <img ref={qrCodeRef} className="w-64" src={`https://api.qrserver.com/v1/create-qr-code/?size=1000x1000&data=https://clubattendance.com/attend?code=${club.externalId}`} alt="QR Code" />
                         </div>
+                        <button
+                            className="bg-accent-100 mr-3 hover:bg-accent-100 text-white px-4 py-2 rounded-lg transition-colors mt-6"
+                            onClick={handleDownloadQrCode}
+                        >
+                            Download
+                        </button>
                         <button
                             className="bg-gray-400 hover:bg-gray-500 text-white px-4 py-2 rounded-lg transition-colors mt-6"
                             onClick={handleCloseQrModal}

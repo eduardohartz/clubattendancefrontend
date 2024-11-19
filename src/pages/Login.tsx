@@ -3,6 +3,8 @@ import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
+import Loading from "../components/Loading";
+import getBaseUrl from "../services/Api";
 
 function Login() {
     const [username, setUsername] = useState("");
@@ -32,7 +34,7 @@ function Login() {
         setIsSubmitting(true);
 
         try {
-            const response = await axios.post('http://localhost:3001/auth/login', {
+            const response = await axios.post(getBaseUrl() + '/auth/login', {
                 username,
                 password
             });
@@ -58,7 +60,7 @@ function Login() {
     };
 
     if (loading) {
-        return <div></div>;
+        return <Loading />;
     }
 
     return (

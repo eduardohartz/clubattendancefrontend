@@ -1,7 +1,8 @@
 import axios from "axios";
 import Cookies from "js-cookie";
+import getBaseUrl from "./Api";
 
-//todo user type instead of any
+// TODO user type instead of any
 export async function getUser() {
     const token = Cookies.get('session');
 
@@ -10,7 +11,7 @@ export async function getUser() {
     }
 
     try {
-        const response = await axios.get<any>('http://localhost:3001/auth/@me', {
+        const response = await axios.get<any>(getBaseUrl() + '/auth/@me', {
             headers: {
                 'Authorization': `${token}`
             }
@@ -26,7 +27,7 @@ export async function getUser() {
     }
 };
 
-//todo club type instead of any
+// TODO club type instead of any
 export async function getClub() {
     const token = Cookies.get('session');
     const user = getUser();
@@ -36,7 +37,7 @@ export async function getClub() {
     }
 
     try {
-        const response = await axios.get<any>('http://localhost:3001/club/get', {
+        const response = await axios.get<any>(getBaseUrl() + '/club/get', {
             headers: {
                 'Authorization': `${token}`
             }

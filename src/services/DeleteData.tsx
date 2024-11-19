@@ -1,12 +1,17 @@
 import axios from "axios";
 import Cookies from "js-cookie";
 import { toast, Slide } from "react-toastify";
+import getBaseUrl from "./Api";
 
-//Delete member from members table
+// Delete member from members table
 
 export async function deleteMember({ id }: { id: number }, callback: () => void) {
 
     const token = Cookies.get('session');
+
+    if (!token) {
+        return null;
+    }
 
     const confirmation = confirm("Are you sure you want to delete this member? THIS WILL DELETE ALL ASSOCIATED ATTENDANCE RECORDS!");
 
@@ -15,7 +20,7 @@ export async function deleteMember({ id }: { id: number }, callback: () => void)
     }
 
     try {
-        const response = await axios.delete('http://localhost:3001/members/delete', {
+        const response = await axios.delete(getBaseUrl() + '/members/delete', {
             headers: {
                 'Authorization': `${token}`,
                 'Id': `${id}`
@@ -64,11 +69,15 @@ export async function deleteMember({ id }: { id: number }, callback: () => void)
 
 };
 
-//Delete meeting from meetings table
+// Delete meeting from meetings table
 
 export async function deleteMeeting({ id }: { id: number }, callback: () => void) {
 
     const token = Cookies.get('session');
+
+    if (!token) {
+        return null;
+    }
 
     const confirmation = confirm("Are you sure you want to delete this meeting? THIS WILL DELETE ALL ASSOCIATED ATTENDANCE RECORDS!");
 
@@ -77,7 +86,7 @@ export async function deleteMeeting({ id }: { id: number }, callback: () => void
     }
 
     try {
-        const response = await axios.delete('http://localhost:3001/meetings/delete', {
+        const response = await axios.delete(getBaseUrl() + '/meetings/delete', {
             headers: {
                 'Authorization': `${token}`,
                 'Id': `${id}`
@@ -126,11 +135,15 @@ export async function deleteMeeting({ id }: { id: number }, callback: () => void
 
 };
 
-//Delete attendance from a member's attendance table
+// Delete attendance from a member's attendance table
 
 export async function deleteAttendance({ id }: { id: number }, callback: () => void) {
 
     const token = Cookies.get('session');
+
+    if (!token) {
+        return null;
+    }
 
     const confirmation = confirm("Are you sure you want to delete this attendance record? THIS IS IRREVERSABLE!");
 
@@ -139,7 +152,7 @@ export async function deleteAttendance({ id }: { id: number }, callback: () => v
     }
 
     try {
-        const response = await axios.delete('http://localhost:3001/attendance/delete', {
+        const response = await axios.delete(getBaseUrl() + '/attendance/delete', {
             headers: {
                 'Authorization': `${token}`,
                 'Id': `${id}`
@@ -188,14 +201,18 @@ export async function deleteAttendance({ id }: { id: number }, callback: () => v
 
 };
 
-//Remove an attendee from a meeting attendee table
+// Remove an attendee from a meeting attendee table
 
 export async function removeAttendee({ id }: { id: number }) {
 
     const token = Cookies.get('session');
 
+    if (!token) {
+        return null;
+    }
+
     try {
-        const response = await axios.delete('http://localhost:3001/meetings/attendee', {
+        const response = await axios.delete(getBaseUrl() + '/meetings/attendee', {
             headers: {
                 'Authorization': `${token}`,
                 'Id': `${id}`
@@ -231,11 +248,15 @@ export async function removeAttendee({ id }: { id: number }) {
 
 };
 
-//Delete club
+// Delete club
 
 export async function deleteClub() {
 
     const token = Cookies.get('session');
+
+    if (!token) {
+        return null;
+    }
 
     const confirmation = confirm("Are you sure you want to delete your club? THIS WILL DELETE ALL ASSOCIATED ATTENDANCE DATA!");
 
@@ -250,7 +271,7 @@ export async function deleteClub() {
     }
 
     try {
-        const response = await axios.delete('http://localhost:3001/club/delete', {
+        const response = await axios.delete(getBaseUrl() + '/club/delete', {
             headers: {
                 'Authorization': `${token}`,
             }
@@ -290,11 +311,15 @@ export async function deleteClub() {
 
 };
 
-//Delete user
+// Delete user
 
 export async function deleteUser() {
 
     const token = Cookies.get('session');
+
+    if (!token) {
+        return null;
+    }
 
     const confirmation = confirm("Are you sure you want to delete your user? THIS WILL DELETE ALL ASSOCIATED ATTENDANCE DATA!");
 
@@ -309,7 +334,7 @@ export async function deleteUser() {
     }
 
     try {
-        const response = await axios.delete('http://localhost:3001/user/delete', {
+        const response = await axios.delete(getBaseUrl() + '/user/delete', {
             headers: {
                 'Authorization': `${token}`,
             }
@@ -349,11 +374,15 @@ export async function deleteUser() {
 
 };
 
-//Delete user (admin only)
+// Delete user (admin only)
 
 export async function adminDeleteUser({ id }: { id: number }, callback: () => void) {
 
     const token = Cookies.get('session');
+
+    if (!token) {
+        return null;
+    }
 
     const confirmation = confirm("Are you sure you want to delete this user? THE CLUB WILL AND ITS DATA WILL BE DELETED!");
 
@@ -362,7 +391,7 @@ export async function adminDeleteUser({ id }: { id: number }, callback: () => vo
     }
 
     try {
-        const response = await axios.delete('http://localhost:3001/admin/users/delete', {
+        const response = await axios.delete(getBaseUrl() + '/admin/users/delete', {
             headers: {
                 'Authorization': `${token}`,
                 'Id': `${id}`
@@ -411,11 +440,15 @@ export async function adminDeleteUser({ id }: { id: number }, callback: () => vo
 
 };
 
-//Delete club (admin only)
+// Delete club (admin only)
 
 export async function adminDeleteClub({ id }: { id: number }, callback: () => void) {
 
     const token = Cookies.get('session');
+
+    if (!token) {
+        return null;
+    }
 
     const confirmation = confirm("Are you sure you want to delete this club? ITS DATA WILL BE DELETED!");
 
@@ -424,7 +457,7 @@ export async function adminDeleteClub({ id }: { id: number }, callback: () => vo
     }
 
     try {
-        const response = await axios.delete('http://localhost:3001/admin/clubs/delete', {
+        const response = await axios.delete(getBaseUrl() + '/admin/clubs/delete', {
             headers: {
                 'Authorization': `${token}`,
                 'Id': `${id}`
