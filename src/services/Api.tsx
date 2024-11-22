@@ -1,6 +1,6 @@
 const getBaseUrl = () => {
     let url;
-    switch (process.env.NODE_ENV) {
+    switch (process.env.ENV) {
         case 'development':
             url = 'http://localhost:3001';
             break;
