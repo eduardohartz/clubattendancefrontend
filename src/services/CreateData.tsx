@@ -5,12 +5,8 @@ import getBaseUrl from "./Api";
 export async function createMeeting() {
     const token = Cookies.get('session');
 
-    if (!token) {
-        return null;
-    }
-
     try {
-        const response = await axios.post<any>(getBaseUrl() + 'meetings/create', {}, {
+        const response = await axios.post<any>(getBaseUrl() + '/meetings/create', {}, {
             headers: {
                 'Authorization': `${token}`,
             }
@@ -21,7 +17,6 @@ export async function createMeeting() {
             return null
         }
     } catch (error) {
-        Cookies.remove('session')
         return null
     }
 };

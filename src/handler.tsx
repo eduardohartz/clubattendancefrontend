@@ -51,7 +51,8 @@ const Handler = () => {
         setUser(user);
         setClub(club);
       } catch (error) {
-        console.error(error);
+        setUser(null);
+        setClub(null);
       } finally {
         setIsLoading(false);
       }

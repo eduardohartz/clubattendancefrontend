@@ -41,8 +41,8 @@ function Login() {
 
             if (response.data.session) {
                 Cookies.set('session', response.data.session, {
-                    secure: false,
-                    sameSite: 'None',
+                    secure: true,
+                    sameSite: 'Strict',
                     expires: 7
                 });
                 if (redirect)
@@ -56,7 +56,6 @@ function Login() {
             if (axios.isAxiosError(err) && err.response?.status === 403) {
                 setError(err.response.data.errors[0]);
             } else {
-                console.error(err);
                 setError("An error occurred. Please try again.");
             }
         } finally {

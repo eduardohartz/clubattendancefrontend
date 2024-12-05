@@ -50,8 +50,8 @@ function Setup() {
 
             if (response.data.session) {
                 Cookies.set('session', response.data.session, {
-                    secure: false,
-                    sameSite: 'None',
+                    secure: true,
+                    sameSite: 'Strict',
                     expires: 7
                 });
                 navigate('/dashboard', { replace: true });

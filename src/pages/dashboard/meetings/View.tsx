@@ -21,7 +21,7 @@ function Meeting({ user, club }: { user: any, club: any }) {
                 const data = await FetchData({ type: 'meetings', id });
                 setMeeting(data);
             } catch (error) {
-                console.error('Error fetching meeting:', error);
+                setMeeting(null);
             } finally {
                 setLoading(false);
             }

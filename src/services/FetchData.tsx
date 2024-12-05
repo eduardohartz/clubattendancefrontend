@@ -45,8 +45,7 @@ async function FetchData({ type, id = "" }: { type: 'meetings' | 'members' | 'at
         });
         return response.data;
     } catch (error) {
-        console.error('Error fetching data:', error);
-        throw error;
+        return null;
     }
 };
 

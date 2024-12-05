@@ -20,7 +20,7 @@ function Member({ user }: { user: any }) {
                 const data = await FetchData({ type: 'members', id });
                 setMember(data);
             } catch (error) {
-                console.error('Error fetching member:', error);
+                setMember(null)
             } finally {
                 setLoading(false);
             }
