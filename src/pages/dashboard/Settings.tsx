@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Helmet } from "react-helmet";
+import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { deleteClub } from "../../services/DeleteData";
 import { updateAllowSelfRegistration, updateClubName, updateOfficerName, updateUseStaticCode } from "../../services/UpdateData";
 import { useNavigate } from "react-router-dom";
@@ -96,9 +96,11 @@ function Settings({ club }: { club: any }) {
 
     return (
         <>
-            <Helmet>
-                <title>Club Settings | Club Attendance</title>
-            </Helmet>
+            <HelmetProvider>
+                <Helmet>
+                    <title>Club Settings | Club Attendance</title>
+                </Helmet>
+            </HelmetProvider>
             <div className="usablesize h-[100vh] absolute top-0 right-0 flex flex-col items-center gap-10">
                 <div className="absolute top-[100px] min-w-[40%] bg-greyscale-100 rounded-lg h-[365px] p-8">
                     <div className="mx-auto flex w-[100%] flex-col gap-8 mb-5 items-left">

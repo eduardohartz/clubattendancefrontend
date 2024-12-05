@@ -1,4 +1,4 @@
-import { Helmet } from "react-helmet";
+import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -40,7 +40,11 @@ function Login() {
             });
 
             if (response.data.session) {
-                Cookies.set('session', response.data.session, { expires: 7 });
+                Cookies.set('session', response.data.session, {
+                    secure: false,
+                    sameSite: 'None',
+                    expires: 7
+                });
                 if (redirect)
                     navigate(redirect);
                 else
@@ -52,6 +56,7 @@ function Login() {
             if (axios.isAxiosError(err) && err.response?.status === 403) {
                 setError(err.response.data.errors[0]);
             } else {
+                console.error(err);
                 setError("An error occurred. Please try again.");
             }
         } finally {
@@ -65,9 +70,11 @@ function Login() {
 
     return (
         <>
-            <Helmet>
-                <title>Log in | Club Attendance</title>
-            </Helmet>
+            <HelmetProvider>
+                <Helmet>
+                    <title>Log in | Club Attendance</title>
+                </Helmet>
+            </HelmetProvider>
             <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
                 <div className="sm:mx-auto sm:w-full sm:max-w-sm">
                     <Link to={"/"}><img className="mx-auto h-12 rounded-md w-auto" src="/logo.png" alt="Club Attendance"></img></Link>

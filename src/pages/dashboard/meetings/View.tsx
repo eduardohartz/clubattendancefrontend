@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Helmet } from "react-helmet";
+import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { useParams, Navigate, Link } from "react-router-dom";
 import FetchData from "../../../services/FetchData";
 import { formatDate, formatTime } from "../../../utils/Formatters";
@@ -66,9 +66,11 @@ function Meeting({ user, club }: { user: any, club: any }) {
     }
     return (
         <>
-            <Helmet>
-                <title>Meeting | Club Attendance</title>
-            </Helmet>
+            <HelmetProvider>
+                <Helmet>
+                    <title>Meeting | Club Attendance</title>
+                </Helmet>
+            </HelmetProvider>
             <div className="usablesize h-[100vh] absolute top-0 right-0 flex flex-col items-center gap-10">
                 <div className="absolute top-[100px] w-[80%] max-w-[1000px]">
                     <div className="mx-auto flex w-full items-center justify-between mb-5">

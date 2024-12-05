@@ -1,6 +1,6 @@
 const getBaseUrl = () => {
     let url;
-    switch (process.env.ENV) {
+    switch (import.meta.env.VITE_ENV) {
         case 'development':
             url = 'http://localhost:3001';
             break;

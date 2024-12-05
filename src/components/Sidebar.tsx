@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Helmet } from "react-helmet";
+import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { Link, useNavigate } from "react-router-dom";
 
 function Sidebar({ page, user, club }: { page: string, user: any, club: any }) {
@@ -24,9 +24,11 @@ function Sidebar({ page, user, club }: { page: string, user: any, club: any }) {
 
     return (
         <>
-            <Helmet>
-                <link rel="stylesheet preconnect" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
-            </Helmet>
+            <HelmetProvider>
+                <Helmet>
+                    <link rel="stylesheet preconnect" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
+                </Helmet>
+            </HelmetProvider>
             <div className="hidden h-[100vh] w-[225px] bg-greyscale-100 border-r-2 border-r-greyscale-200 lg:flex flex-1 items-center flex-col">
                 <img className="h-12 w-auto rounded-md mt-3" src="/logo.png" alt=""></img>
                 <span className="text-2xl font-bold">Club Attendance</span>

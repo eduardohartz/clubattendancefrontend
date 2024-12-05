@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Cookies from 'js-cookie';
 import { toast, Slide } from "react-toastify";
-import { Helmet } from "react-helmet";
+import { Helmet, HelmetProvider } from 'react-helmet-async';
 import getBaseUrl from "../../../services/Api";
 
 function Create() {
@@ -60,9 +60,11 @@ function Create() {
 
     return (
         <>
-            <Helmet>
-                <title>Create Member | Club Attendance</title>
-            </Helmet>
+            <HelmetProvider>
+                <Helmet>
+                    <title>Create Member | Club Attendance</title>
+                </Helmet>
+            </HelmetProvider>
             <div className="usablesize h-[100vh] absolute top-0 right-0 flex flex-col items-center gap-10">
                 <h2 className="mt-28 text-center text-3xl/9 font-bold tracking-tight text-gray-900">Create member</h2>
                 <div className="mt-0 sm:mx-auto sm:w-full sm:max-w-sm">

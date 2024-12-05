@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import Table from "../../../components/Table";
-import { Helmet } from "react-helmet";
+import { Helmet, HelmetProvider } from 'react-helmet-async';
 
 function Home({ user }: { user: any }) {
 
@@ -9,9 +9,11 @@ function Home({ user }: { user: any }) {
 
     return (
         <>
-            <Helmet>
-                <title>Members | Club Attendance</title>
-            </Helmet>
+            <HelmetProvider>
+                <Helmet>
+                    <title>Members | Club Attendance</title>
+                </Helmet>
+            </HelmetProvider>
             <div className="usablesize h-[100vh] absolute top-0 right-0 flex flex-col items-center gap-10">
                 <div className="absolute top-[100px] min-w-[80%]">
                     <div className="mx-auto flex w-[100%] items-center justify-between mb-5">

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Table from "../../components/Table";
 import axios from 'axios';
 import Cookies from 'js-cookie';
-import { Helmet } from 'react-helmet';
+import { Helmet, HelmetProvider } from 'react-helmet-async';
 import getBaseUrl from '../../services/Api';
 
 function Admin({ user }: { user: any }) {
@@ -46,9 +46,11 @@ function Admin({ user }: { user: any }) {
 
     return (
         <>
-            <Helmet>
-                <title>Admin | Club Attendance</title>
-            </Helmet>
+            <HelmetProvider>
+                <Helmet>
+                    <title>Admin | Club Attendance</title>
+                </Helmet>
+            </HelmetProvider>
             <div className="usablesize h-[100vh] absolute top-0 right-0 flex flex-col items-center gap-10">
                 <div className="relative top-[100px] min-w-[80%]">
                     <div className="mx-auto flex w-[100%] items-center justify-between mb-5">

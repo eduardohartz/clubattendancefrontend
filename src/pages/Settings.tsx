@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Helmet } from "react-helmet";
+import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { updatePassword } from "../services/UpdateData";
 import { deleteUser } from "../services/DeleteData";
 import { useNavigate } from "react-router-dom";
@@ -49,9 +49,11 @@ function Settings({ user }: { user: any }) {
 
     return (
         <>
-            <Helmet>
-                <title>User Settings | Club Attendance</title>
-            </Helmet>
+            <HelmetProvider>
+                <Helmet>
+                    <title>User Settings | Club Attendance</title>
+                </Helmet>
+            </HelmetProvider>
             <div className="usablesize h-[100vh] absolute top-0 right-0 flex flex-col items-center gap-10">
                 <div className="absolute top-[100px] min-w-[40%] bg-greyscale-100 rounded-lg h-[300px] p-8">
                     <div className="mx-auto flex w-[100%] flex-col gap-8 mb-5 items-left">
