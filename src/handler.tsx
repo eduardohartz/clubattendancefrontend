@@ -67,7 +67,7 @@ const Handler = () => {
     <>
       {showNavbar && club && <PageTransition><Sidebar page={currentRoute} user={user} club={club} /></PageTransition>}
 
-      {isLoading ? (
+      {isLoading && currentRoute != "/" ? (
         <Loading />
       ) : (
         <AnimatePresence mode="wait">

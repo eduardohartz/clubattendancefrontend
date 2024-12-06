@@ -43,7 +43,6 @@ function Login() {
                 Cookies.set('session', response.data.session, {
                     secure: true,
                     sameSite: 'Strict',
-                    expires: 7
                 });
                 if (redirect)
                     navigate(redirect);

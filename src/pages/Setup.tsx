@@ -52,7 +52,6 @@ function Setup() {
                 Cookies.set('session', response.data.session, {
                     secure: true,
                     sameSite: 'Strict',
-                    expires: 7
                 });
                 navigate('/dashboard', { replace: true });
             } else if (response.data.errors) {
