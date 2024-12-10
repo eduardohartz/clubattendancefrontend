@@ -25,6 +25,7 @@ interface ClubData {
 
 function Attend() {
     const [data, setData] = useState<ClubData | null>(null);
+    const [memberId, setMemberId] = useState("");
     const [firstName, setFirstName] = useState("");
     const [register, setRegister] = useState(false);
     const [lastName, setLastName] = useState("");
@@ -75,12 +76,22 @@ function Attend() {
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
         setIsSubmitting(true);
-        if (!firstName || !lastName) {
-            setError("Please enter your first and last name");
-            setIsSubmitting(false);
-            return;
+
+        if (!register) {
+            if (!memberId || !lastName) {
+                setError("Please select your first name and enter your last name");
+                setIsSubmitting(false);
+                return;
+            }
+        } else {
+            if (!firstName || !lastName) {
+                setError("Please enter your first and last name");
+                setIsSubmitting(false);
+                return;
+            }
         }
-        const result = await attendMeeting(code!, firstName, lastName, register);
+
+        const result = await attendMeeting(code!, memberId, lastName, register, firstName);
         setIsSubmitting(false);
         if (result === true) {
             Cookies.set(code!, "true", {
@@ -180,8 +191,8 @@ function Attend() {
                                         id="firstName"
                                         name="firstName"
                                         required
-                                        value={firstName}
-                                        onChange={(e) => setFirstName(e.target.value)}
+                                        value={memberId}
+                                        onChange={(e) => setMemberId(e.target.value)}
                                         className="block w-full border-none rounded-md py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-accent-200 sm:text-sm transition-all"
                                     >
                                         <option value="" disabled>

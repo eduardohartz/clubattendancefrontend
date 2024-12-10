@@ -80,13 +80,14 @@ export async function createAttendee(memberId: string, meetingId: string) {
     }
 };
 
-export async function attendMeeting(code: string, firstName: string, lastName: string, register: boolean) {
+export async function attendMeeting(code: string, memberId: string, lastName: string, register: boolean, firstName: string = "") {
     try {
         const response = await axios.post(getBaseUrl() + '/attend', {
             code,
-            firstName,
+            memberId,
             lastName,
-            register
+            register,
+            firstName
         });
         if (response.data.success) {
             return true
