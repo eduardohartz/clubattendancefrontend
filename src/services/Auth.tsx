@@ -30,11 +30,6 @@ export async function getUser() {
 // TODO club type instead of any
 export async function getClub() {
     const token = Cookies.get('session');
-    const user = getUser();
-    if (!user) {
-        Cookies.remove('session')
-        return null
-    }
 
     try {
         const response = await axios.get<any>(getBaseUrl() + '/club/get', {
