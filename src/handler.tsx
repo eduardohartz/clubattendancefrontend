@@ -133,7 +133,7 @@ const Handler = () => {
                 <ProtectedRoute
                   element={
                     <PageTransition>
-                      <Dashboard />
+                      <Dashboard club={club} />
                     </PageTransition>
                   }
                   path={currentRoute}

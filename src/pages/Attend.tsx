@@ -129,7 +129,7 @@ function Attend() {
         return (
             <div className="w-full h-screen flex items-center justify-center flex-col">
                 <span className="text-2xl mt-46 font-['Galano'] select-none">
-                    You have successfully attended the meeting
+                    You have successfully attended this meeting
                 </span>
             </div>
         );

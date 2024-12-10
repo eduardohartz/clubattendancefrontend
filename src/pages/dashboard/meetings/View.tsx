@@ -9,6 +9,8 @@ import { updateMeeting } from "../../../services/UpdateData";
 import PageTransition from "../../../components/PageTransition";
 import { createAttendee, createMember } from "../../../services/CreateData";
 import { errorToast } from "../../../components/Toast";
+import { faArrowLeft, faDownload, faPlus, faPowerOff, faQrcode } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function Meeting({ user, club }: { user: any, club: any }) {
     if (!user || !club) return null;
@@ -169,7 +171,7 @@ function Meeting({ user, club }: { user: any, club: any }) {
                         <span className="justify-start text-2xl font-bold ml-2">Meeting {formatDate(meeting.startTime)}</span>
                         <Link to={"/dashboard/meetings"}>
                             <button className="bg-greyscale-200 hover:bg-greyscale-300 transition-colors px-[25px] py-[12px] rounded-lg text-[13.5px] mr-2 justify-end">
-                                <i className="fa-solid fa-arrow-left fa-lg" /> Back
+                                <FontAwesomeIcon icon={faArrowLeft} size="lg" /> Back
                             </button>
                         </Link>
                     </div>
@@ -192,13 +194,13 @@ function Meeting({ user, club }: { user: any, club: any }) {
                             <div className="w-1/2">
                                 <div className="w-full h-full flex items-end gap-2">
                                     <button className="right-1 relative bg-accent-100 hover:bg-accent-200 transition-colors px-[25px] py-[12px] rounded-lg text-[13.5px] justify-end ml-1 disabled:cursor-not-allowed disabled:bg-accent-90 disabled:hover:bg-accent-90" onClick={handleOpenQrModal} disabled={meeting.endTime != null}>
-                                        <i className="fa-solid fa-qrcode fa-lg" /> QR-Code
+                                        <FontAwesomeIcon icon={faQrcode} size="lg" /> QR-Code
                                     </button>
                                     <button className="right-1 relative bg-accent-100 hover:bg-accent-200 transition-colors px-[25px] py-[12px] rounded-lg text-[13.5px] justify-end ml-1" onClick={handleOpenModal}>
-                                        <i className="fa-solid fa-plus fa-lg" /> Add manually
+                                        <FontAwesomeIcon icon={faPlus} size="lg" /> Add manually
                                     </button>
                                     <button className="right-1 relative text-warningred bg-greyscale-200 hover:bg-greyscale-300 transition-colors px-[25px] py-[12px] rounded-lg text-[13.5px] justify-end ml-1 disabled:cursor-not-allowed disabled:hover:bg-greyscale-200" onClick={handleEndMeeting} disabled={meeting.endTime != null}>
-                                        <i className="fa-solid fa-power-off fa-lg" /> End Meeting
+                                        <FontAwesomeIcon icon={faPowerOff} size="lg" /> End Meeting
                                     </button>
                                 </div>
                             </div>
@@ -220,7 +222,7 @@ function Meeting({ user, club }: { user: any, club: any }) {
                                         />
                                     </span>
                                     <button className="right-0 relative bg-accent-100 hover:bg-accent-200 transition-colors px-[25px] py-[12px] rounded-lg text-[13.5px] justify-end" onClick={handleSaveChanges}>
-                                        <i className="fa-solid fa-download fa-lg" /> Save
+                                        <FontAwesomeIcon icon={faDownload} size="lg" /> Save
                                     </button>
                                 </div>
                             </div>

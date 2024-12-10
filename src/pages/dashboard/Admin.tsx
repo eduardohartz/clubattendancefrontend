@@ -4,6 +4,8 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import getBaseUrl from '../../services/Api';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 function Admin({ user }: { user: any }) {
 
@@ -60,7 +62,7 @@ function Admin({ user }: { user: any }) {
                             onClick={handleAddUser}
                             disabled={isSubmitting}
                         >
-                            <i className="fa-solid fa-plus fa-lg" /> Add User
+                            <FontAwesomeIcon icon={faPlus} size="lg" /> Add User
                         </button>
                     </div>
                     <Table type={"users"} user={user} />

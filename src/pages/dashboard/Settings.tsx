@@ -3,6 +3,8 @@ import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { deleteClub } from "../../services/DeleteData";
 import { updateAllowSelfRegistration, updateClubName, updateOfficerName, updateUseStaticCode } from "../../services/UpdateData";
 import { useNavigate } from "react-router-dom";
+import { faDownload, faQrcode, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function Settings({ club }: { club: any }) {
 
@@ -143,13 +145,13 @@ function Settings({ club }: { club: any }) {
                                 className="bg-accent-100 hover:bg-accent-200 transition-colors px-[20px] py-[10px] rounded-lg text-[15.5px] mr-2 w-full  disabled:bg-slate-300 disabled:hover:cursor-not-allowed disabled:hover:bg-slate-300"
                                 onClick={handleOpenQrModal}
                             >
-                                <i className="fa-solid fa-code fa-lg" /> QR Code
+                                <FontAwesomeIcon icon={faQrcode} size="lg" /> QR Code
                             </button>
                             <button
                                 className="bg-red-400 hover:bg-red-500 transition-colors px-[20px] py-[10px] rounded-lg text-[15.5px] mr-2 w-full"
                                 onClick={handleDeleteClub}
                             >
-                                <i className="fa-solid fa-trash fa-lg" /> Delete club
+                                <FontAwesomeIcon icon={faTrash} size="lg" /> Delete club
                             </button>
                         </div>
                     </div>
@@ -201,7 +203,8 @@ function Settings({ club }: { club: any }) {
                             className="bg-accent-100 mr-3 hover:bg-accent-100 text-white px-4 py-2 rounded-lg transition-colors mt-6"
                             onClick={handleDownloadQrCode}
                         >
-                            Download
+                            <FontAwesomeIcon icon={faDownload} size="lg" /> Save
+
                         </button>
                         <button
                             className="bg-gray-400 hover:bg-gray-500 text-white px-4 py-2 rounded-lg transition-colors mt-6"

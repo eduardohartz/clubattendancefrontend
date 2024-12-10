@@ -3,6 +3,8 @@ import Table from "../../../components/Table";
 import { useNavigate } from "react-router-dom";
 import { createMeeting } from "../../../services/CreateData";
 import { useState } from 'react';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 function Home({ user }: { user: any }) {
     const [isCreatingMeeting, setIsCreatingMeeting] = useState(false);
@@ -43,7 +45,7 @@ function Home({ user }: { user: any }) {
                                 </svg>
                             ) : (
                                 <>
-                                    <i className="fa-solid fa-plus fa-lg" /> New Meeting
+                                    <FontAwesomeIcon icon={faPlus} size="lg" /> New Meeting
                                 </>
                             )}
                         </button>

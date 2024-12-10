@@ -3,6 +3,8 @@ import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { updatePassword } from "../services/UpdateData";
 import { deleteUser } from "../services/DeleteData";
 import { useNavigate } from "react-router-dom";
+import { faKey, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function Settings({ user }: { user: any }) {
     if (!user) return null;
@@ -65,13 +67,13 @@ function Settings({ user }: { user: any }) {
                                 className="bg-accent-100 hover:bg-accent-200 transition-colors px-[20px] py-[10px] rounded-lg text-[15.5px] mr-2 justify-end w-full"
                                 onClick={() => handleOpenModal("Change Password")}
                             >
-                                <i className="fa-solid fa-key fa-lg" /> Change Password
+                                <FontAwesomeIcon icon={faKey} size="lg" /> Change Password
                             </button>
                             <button
                                 className="bg-red-400 hover:bg-red-500 transition-colors px-[20px] py-[10px] rounded-lg text-[15.5px] mr-2 justify-end w-full"
                                 onClick={() => handleDeleteUser}
                             >
-                                <i className="fa-solid fa-trash fa-lg" /> Delete Account
+                                <FontAwesomeIcon icon={faTrash} size="lg" />  Delete Account
                             </button>
                         </div>
                     </div>
