@@ -48,7 +48,7 @@ function Member({ user }: { user: any }) {
             <div className="usablesize h-[100vh] absolute top-0 right-0 flex flex-col items-center gap-10">
                 <div className="absolute top-[100px] min-w-[80%]">
                     <div className="mx-auto flex w-[100%] items-center justify-between mb-5">
-                        <span className="justify-start text-2xl font-bold ml-2">Member: {member.firstName + " " + member.lastName}</span>
+                        <span className="justify-start text-2xl font-bold ml-2">Attendance for: {member.firstName + " " + member.lastName}</span>
                         <Link to={"/dashboard/members"}><button className="bg-greyscale-200 hover:bg-greyscale-300 transition-colors px-[25px] py-[12px] rounded-lg text-[13.5px] mr-2 justify-end"><i className="fa-solid fa-arrow-left fa-lg" /> Back</button></Link>
                     </div>
                     <Table type={"attendance"} id={id} user={user} />

@@ -49,7 +49,7 @@ function Settings({ club }: { club: any }) {
             updateOfficerName(newFieldValue);
             club.officer = newFieldValue;
         }
-        setIsModalOpen(false);
+        handleCloseModal();
     };
 
     const handleQrCheckboxChange = async (e: React.ChangeEvent<HTMLInputElement>) => {

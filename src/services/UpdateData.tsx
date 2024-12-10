@@ -1,7 +1,42 @@
 import axios from "axios";
 import Cookies from "js-cookie";
-import { toast, Slide } from "react-toastify";
 import getBaseUrl from "./Api";
+import { errorToast, successToast } from "../components/Toast";
+
+export async function updateMeeting(id: string, newNotes: string = "", volunteering: boolean = false, endMeeting: boolean = false) {
+
+    const token = Cookies.get('session');
+
+    if (!token) {
+        return null;
+    }
+
+    const data: any = {};
+
+    data.id = id;
+    data.notes = newNotes;
+    data.volunteering = volunteering;
+
+    if (endMeeting == true) {
+        data.status = "ended";
+    }
+
+    try {
+        const response = await axios.post(getBaseUrl() + '/meetings/update', data, {
+            headers: {
+                'Authorization': `${token}`,
+            }
+        });
+
+        if (response.data.success) {
+            successToast("Meeting updated")
+        } else {
+            errorToast("Error updating meeting")
+        }
+    } catch (error) {
+        errorToast("Error updating meeting")
+    }
+};
 
 //Update statuses, origin from Table.tsx
 
@@ -24,42 +59,12 @@ export async function updateMemberStatus({ id }: { id: number }, newValue: strin
         });
 
         if (response.data.success) {
-            toast.success("Member updated", {
-                position: "bottom-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-                transition: Slide,
-            });
+            successToast("Member updated")
         } else {
-            toast.error("Error updating member", {
-                position: "bottom-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-                transition: Slide,
-            });
+            errorToast("Error updating member")
         }
     } catch (error) {
-        toast.error("Error updating member", {
-            position: "bottom-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-            transition: Slide,
-        });
+        errorToast("Error updating member")
     }
 };
 
@@ -84,163 +89,15 @@ export async function updateMeetingStatus({ id }: { id: number }, newValue: stri
         });
 
         if (response.data.success) {
-            toast.success("Meeting updated", {
-                position: "bottom-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-                transition: Slide,
-            });
+            successToast("Meeting updated")
             return true;
         } else {
-            toast.error("Error updating meeting", {
-                position: "bottom-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-                transition: Slide,
-            });
+            errorToast("Error updating meeting")
             return false;
         }
     } catch (error) {
-        toast.error("Error updating meeting", {
-            position: "bottom-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-            transition: Slide,
-        });
+        errorToast("Error updating meeting")
         return false;
-    }
-};
-
-//Update a user's status (admin only)
-export async function updateUserStatus({ id }: { id: number }, newValue: boolean) {
-
-    const token = Cookies.get('session');
-
-    if (!token) {
-        return null;
-    }
-
-    try {
-        const response = await axios.post(getBaseUrl() + '/admin/users/update', {
-            id,
-            status: newValue
-        }, {
-            headers: {
-                'Authorization': `${token}`,
-            }
-        });
-
-        if (response.data.success) {
-            toast.success("User updated", {
-                position: "bottom-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-                transition: Slide,
-            });
-        } else {
-            toast.error("Error updating user", {
-                position: "bottom-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-                transition: Slide,
-            });
-        }
-    } catch (error) {
-        toast.error("Error updating user", {
-            position: "bottom-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-            transition: Slide,
-        });
-    }
-};
-
-//Update a club's status (admin only)
-export async function updateClubStatus({ id }: { id: number }, newValue: boolean) {
-
-    const token = Cookies.get('session');
-
-    if (!token) {
-        return null;
-    }
-
-    try {
-        const response = await axios.post(getBaseUrl() + '/admin/clubs/update', {
-            id,
-            status: newValue
-        }, {
-            headers: {
-                'Authorization': `${token}`,
-            }
-        });
-
-        if (response.data.success) {
-            toast.success("Club updated", {
-                position: "bottom-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-                transition: Slide,
-            });
-        } else {
-            toast.error("Error updating club", {
-                position: "bottom-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-                transition: Slide,
-            });
-        }
-    } catch (error) {
-        toast.error("Error updating club", {
-            position: "bottom-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-            transition: Slide,
-        });
     }
 };
 
@@ -264,42 +121,12 @@ export async function updateClubName(clubName: string) {
         });
 
         if (response.data.success) {
-            toast.success("Club updated", {
-                position: "bottom-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-                transition: Slide,
-            });
+            successToast("Club updated")
         } else {
-            toast.error("Error updating club", {
-                position: "bottom-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-                transition: Slide,
-            });
+            errorToast("Error updating club")
         }
     } catch (error) {
-        toast.error("Error updating club", {
-            position: "bottom-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-            transition: Slide,
-        });
+        errorToast("Error updating club")
     }
 
 };
@@ -322,42 +149,12 @@ export async function updateOfficerName(officerName: string) {
         });
 
         if (response.data.success) {
-            toast.success("Club updated", {
-                position: "bottom-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-                transition: Slide,
-            });
+            successToast("Club updated")
         } else {
-            toast.error("Error updating club", {
-                position: "bottom-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-                transition: Slide,
-            });
+            errorToast("Error updating club")
         }
     } catch (error) {
-        toast.error("Error updating club", {
-            position: "bottom-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-            transition: Slide,
-        });
+        errorToast("Error updating club")
     }
 
 };
@@ -380,42 +177,12 @@ export async function updateUseStaticCode(useStaticCode: boolean) {
         });
 
         if (response.data.success) {
-            toast.success("Club updated", {
-                position: "bottom-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-                transition: Slide,
-            });
+            successToast("Club updated")
         } else {
-            toast.error("Error updating club", {
-                position: "bottom-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-                transition: Slide,
-            });
+            errorToast("Error updating club")
         }
     } catch (error) {
-        toast.error("Error updating club", {
-            position: "bottom-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-            transition: Slide,
-        });
+        errorToast("Error updating club")
     }
 
 }
@@ -438,42 +205,12 @@ export async function updateAllowSelfRegistration(allowSelfRegistration: boolean
         });
 
         if (response.data.success) {
-            toast.success("Club updated", {
-                position: "bottom-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-                transition: Slide,
-            });
+            successToast("Club updated")
         } else {
-            toast.error("Error updating club", {
-                position: "bottom-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-                transition: Slide,
-            });
+            errorToast("Error updating club")
         }
     } catch (error) {
-        toast.error("Error updating club", {
-            position: "bottom-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-            transition: Slide,
-        });
+        errorToast("Error updating club")
     }
 
 }
@@ -489,17 +226,7 @@ export async function updatePassword(currentPassword: string, newPassword: strin
     }
 
     if (newPassword !== repeatNewPassword) {
-        toast.error("Passwords do not match!", {
-            position: "bottom-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-            transition: Slide,
-        });
+        errorToast("Passwords do not match!")
         return;
     }
 
@@ -514,55 +241,73 @@ export async function updatePassword(currentPassword: string, newPassword: strin
         });
 
         if (response.data.success) {
-            toast.success("Password updated", {
-                position: "bottom-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-                transition: Slide,
-            });
+            successToast("Password updated")
         } else {
-            toast.error("Error updating password", {
-                position: "bottom-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-                transition: Slide,
-            });
+            errorToast("Error updating password")
         }
     } catch (error) {
         if (axios.isAxiosError(error) && error.response?.status === 400) {
-            toast.error(error.response.data.error, {
-                position: "bottom-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-                transition: Slide,
-            });
+            errorToast(error.response.data.errors[0])
         } else {
-            toast.error("Error updating password", {
-                position: "bottom-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-                transition: Slide,
-            });
+            errorToast("Error updating password")
         }
     }
 }
+
+//Update a user's status (admin only)
+export async function updateUserStatus({ id }: { id: number }, newValue: boolean) {
+
+    const token = Cookies.get('session');
+
+    if (!token) {
+        return null;
+    }
+
+    try {
+        const response = await axios.post(getBaseUrl() + '/admin/users/update', {
+            id,
+            status: newValue
+        }, {
+            headers: {
+                'Authorization': `${token}`,
+            }
+        });
+
+        if (response.data.success) {
+            successToast("User updated")
+        } else {
+            errorToast("Error updating user")
+        }
+    } catch (error) {
+        errorToast("Error updating user")
+    }
+};
+
+//Update a club's status (admin only)
+export async function updateClubStatus({ id }: { id: number }, newValue: boolean) {
+
+    const token = Cookies.get('session');
+
+    if (!token) {
+        return null;
+    }
+
+    try {
+        const response = await axios.post(getBaseUrl() + '/admin/clubs/update', {
+            id,
+            status: newValue
+        }, {
+            headers: {
+                'Authorization': `${token}`,
+            }
+        });
+
+        if (response.data.success) {
+            successToast("Club updated")
+        } else {
+            errorToast("Error updating club")
+        }
+    } catch (error) {
+        errorToast("Error updating club")
+    }
+};

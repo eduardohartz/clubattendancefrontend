@@ -8,10 +8,12 @@ const pageVariants = {
 };
 
 const pageTransition = {
-  type: "easeInOut",
-  stiffness: 1,
-  damping: 3,
-  duration: 0.15,
+  type: "tween",
+  duration: 0.2,
+  ease: "easeInOut",
+  stiffness: 20,
+  damping: 10,
+  mass: 1,
 };
 
 interface PageTransitionProps {

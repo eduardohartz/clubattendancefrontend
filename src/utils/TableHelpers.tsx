@@ -14,10 +14,10 @@ export const headersMap: { [key in 'meetings' | 'members' | 'attendees' | 'atten
 export const dataKeyMap = {
     meetings: ["date", "startTime", "endTime", "status", "volunteering", "actions"],
     members: ["firstName", "lastName", "status", "joinedAt", "actions"],
-    attendees: ["firstName", "lastName", "timeAttended", "actions"],
-    attendance: ["date", "timeAdded", "volunteering", "actions"],
+    attendees: ["memberFirstName", "memberLastName", "time", "actions"],
+    attendance: ["date", "time", "volunteering", "actions"],
     users: ["id", "username", "status", "admin", "seenAt", "lastIp", "actions"],
-    clubs: ["id", "owner", "status", "displayName", "externalId", "volunteering", "actions"],
+    clubs: ["id", "ownerId", "status", "displayName", "externalId", "volunteering", "actions"],
 };
 
 export const getActions = (type: string, row: any, reloadData: () => void) => {
@@ -38,11 +38,14 @@ export const getActions = (type: string, row: any, reloadData: () => void) => {
             );
         case 'attendees':
             return (
-                <span className="text-red-500 hover:underline cursor-pointer" onClick={() => removeAttendee({ id: row.id })}>Remove</span>
+                <span className="text-red-500 hover:underline cursor-pointer" onClick={() => removeAttendee({ id: row.externalId })}>Remove</span>
             );
         case 'attendance':
             return (
-                <span className="text-red-500 hover:underline cursor-pointer" onClick={() => deleteAttendance({ id: row.id }, reloadData)}>Delete</span>
+                <>
+                    <Link to={`/dashboard/meeting/${row.meetingId}`} className="text-blue-500 hover:underline">View</Link>
+                    <span className="text-red-500 hover:underline cursor-pointer ml-2" onClick={() => deleteAttendance({ id: row.id }, reloadData)}>Delete</span>
+                </>
             );
         case 'users':
             return (
@@ -53,7 +56,7 @@ export const getActions = (type: string, row: any, reloadData: () => void) => {
         case 'clubs':
             return (
                 <>
-                    <span className="text-red-500 hover:underline cursor-pointer ml-2" onClick={() => adminDeleteClub({ id: row.owner }, reloadData)}>Delete</span>
+                    <span className="text-red-500 hover:underline cursor-pointer ml-2" onClick={() => adminDeleteClub({ id: row.ownerId }, reloadData)}>Delete</span>
                 </>
             );
         default:

@@ -49,4 +49,22 @@ async function FetchData({ type, id = "" }: { type: 'meetings' | 'members' | 'at
     }
 };
 
+export async function fetchAttendData(code: string) {
+    try {
+        const response = await axios.get<any>(getBaseUrl() + "/attend/stats", {
+            params: {
+                code: code
+            },
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        return response.data;
+    } catch (error) {
+        if (axios.isAxiosError(error))
+            return error.response?.data;
+        return null;
+    }
+}
+
 export default FetchData;

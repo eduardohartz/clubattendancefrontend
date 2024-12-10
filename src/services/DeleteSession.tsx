@@ -12,7 +12,7 @@ async function DeleteSession() {
     }
 
     try {
-        const response = await axios.get<any>(getBaseUrl() + '/auth/logout', {
+        const response = await axios.post<any>(getBaseUrl() + '/auth/logout', {}, {
             headers: {
                 'Authorization': `${token}`
             }

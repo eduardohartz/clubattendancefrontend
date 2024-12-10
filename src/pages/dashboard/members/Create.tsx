@@ -1,60 +1,22 @@
-import axios from "axios";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import Cookies from 'js-cookie';
-import { toast, Slide } from "react-toastify";
 import { Helmet, HelmetProvider } from 'react-helmet-async';
-import getBaseUrl from "../../../services/Api";
+import { createMember } from "../../../services/CreateData";
 
 function Create() {
-    const [firstname, setFirstname] = useState("");
-    const [lastname, setLastname] = useState("");
-    const [error, setError] = useState("");
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
     const [isSubmitting, setIsSubmitting] = useState(false);
     const navigate = useNavigate();
 
     const handleSubmit = async (event: React.FormEvent) => {
-        const token = Cookies.get('session')
         event.preventDefault();
-        setError("");
         setIsSubmitting(true);
-
-        try {
-
-            const response = await axios.post(getBaseUrl() + '/members/create', {
-                firstname,
-                lastname
-            }, {
-                headers: {
-                    'Authorization': `${token}`
-                }
-            });
-
-            if (response.data.success) {
-                navigate("/dashboard/members");
-                toast.success("Member added", {
-                    position: "bottom-right",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "light",
-                    transition: Slide,
-                });
-            } else if (response.data.errors) {
-                setError(response.data.errors[0]);
-            }
-        } catch (err) {
-            if (axios.isAxiosError(err) && err.response?.status === 403) {
-                setError(err.response.data.errors[0]);
-            } else {
-                setError("An error occurred. Please try again.");
-            }
-        } finally {
-            setIsSubmitting(false);
+        const id = await createMember(firstName, lastName);
+        if (id) {
+            navigate("/dashboard/members");
         }
+        setIsSubmitting(false);
     };
 
 
@@ -78,8 +40,8 @@ function Create() {
                                     type="text"
                                     autoComplete="current-firstname"
                                     required
-                                    value={firstname}
-                                    onChange={(e) => setFirstname(e.target.value)}
+                                    value={firstName}
+                                    onChange={(e) => setFirstName(e.target.value)}
                                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-accent-200 sm:text-sm/6 transition-all"
                                 />
                             </div>
@@ -96,15 +58,11 @@ function Create() {
                                     type="text"
                                     autoComplete="current-lastname"
                                     required
-                                    value={lastname}
-                                    onChange={(e) => setLastname(e.target.value)}
+                                    value={lastName}
+                                    onChange={(e) => setLastName(e.target.value)}
                                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-accent-200 sm:text-sm/6 transition-all"
                                 />
                             </div>
-                        </div>
-
-                        <div>
-                            <span id="error" className="text-warningred">{error}</span>
                         </div>
 
                         <div className="flex gap-2">

@@ -1,7 +1,7 @@
 import axios from "axios";
 import Cookies from "js-cookie";
-import { toast, Slide } from "react-toastify";
 import getBaseUrl from "./Api";
+import { errorToast, successToast } from "../components/Toast";
 
 // Delete member from members table
 
@@ -28,43 +28,13 @@ export async function deleteMember({ id }: { id: number }, callback: () => void)
         });
 
         if (response.data.success == "true") {
-            toast.success("Member deleted", {
-                position: "bottom-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-                transition: Slide,
-            });
+            successToast("Member deleted")
             callback();
         } else {
-            toast.error("Error deleting member", {
-                position: "bottom-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-                transition: Slide,
-            });
+            errorToast("Error deleting member")
         }
     } catch (error) {
-        toast.error("Error deleting member", {
-            position: "bottom-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-            transition: Slide,
-        });
+        errorToast("Error deleting member")
     }
 
 };
@@ -94,43 +64,13 @@ export async function deleteMeeting({ id }: { id: number }, callback: () => void
         });
 
         if (response.data.success == "true") {
-            toast.success("Meeting deleted", {
-                position: "bottom-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-                transition: Slide,
-            });
+            successToast("Meeting deleted")
             callback();
         } else {
-            toast.error("Error deleting meeting", {
-                position: "bottom-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-                transition: Slide,
-            });
+            errorToast("Error deleting meeting")
         }
     } catch (error) {
-        toast.error("Error deleting meeting", {
-            position: "bottom-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-            transition: Slide,
-        });
+        errorToast("Error deleting meeting")
     }
 
 };
@@ -160,43 +100,13 @@ export async function deleteAttendance({ id }: { id: number }, callback: () => v
         });
 
         if (response.data.success == "true") {
-            toast.success("Record deleted", {
-                position: "bottom-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-                transition: Slide,
-            });
+            successToast("Record deleted")
             callback();
         } else {
-            toast.error("Error deleting record", {
-                position: "bottom-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-                transition: Slide,
-            });
+            errorToast("Error deleting record")
         }
     } catch (error) {
-        toast.error("Error deleting record", {
-            position: "bottom-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-            transition: Slide,
-        });
+        errorToast("Error deleting record")
     }
 
 };
@@ -220,30 +130,10 @@ export async function removeAttendee({ id }: { id: number }) {
         });
 
         if (response.data.success != "true") {
-            toast.error("Error deleting attendee", {
-                position: "bottom-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-                transition: Slide,
-            });
+            errorToast("Error deleting attendee")
         }
     } catch (error) {
-        toast.error("Error deleting attendee", {
-            position: "bottom-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-            transition: Slide,
-        });
+        errorToast("Error deleting attendee")
     }
 
 };
@@ -281,31 +171,11 @@ export async function deleteClub() {
             Cookies.remove('session')
             return true;
         } else {
-            toast.error("Error deleting club", {
-                position: "bottom-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-                transition: Slide,
-            });
+            errorToast("Error deleting club")
             return false;
         }
     } catch (error) {
-        toast.error("Error deleting club", {
-            position: "bottom-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-            transition: Slide,
-        });
+        errorToast("Error deleting club")
         return false;
     }
 
@@ -344,31 +214,11 @@ export async function deleteUser() {
             Cookies.remove('session')
             return true;
         } else {
-            toast.error("Error deleting user", {
-                position: "bottom-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-                transition: Slide,
-            });
+            errorToast("Error deleting account")
             return false;
         }
     } catch (error) {
-        toast.error("Error deleting user", {
-            position: "bottom-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-            transition: Slide,
-        });
+        errorToast("Error deleting account")
         return false;
     }
 
@@ -399,43 +249,13 @@ export async function adminDeleteUser({ id }: { id: number }, callback: () => vo
         });
 
         if (response.data.success == "true") {
-            toast.success("User deleted", {
-                position: "bottom-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-                transition: Slide,
-            });
+            successToast("User deleted")
             callback();
         } else {
-            toast.error("Error deleting user", {
-                position: "bottom-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-                transition: Slide,
-            });
+            errorToast("Error deleting user")
         }
     } catch (error) {
-        toast.error("Error deleting user", {
-            position: "bottom-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-            transition: Slide,
-        });
+        errorToast("Error deleting user")
     }
 
 };
@@ -465,43 +285,13 @@ export async function adminDeleteClub({ id }: { id: number }, callback: () => vo
         });
 
         if (response.data.success == "true") {
-            toast.success("Club deleted", {
-                position: "bottom-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-                transition: Slide,
-            });
+            successToast("Club deleted")
             callback();
         } else {
-            toast.error("Error deleting club", {
-                position: "bottom-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-                transition: Slide,
-            });
+            errorToast("Error deleting club")
         }
     } catch (error) {
-        toast.error("Error deleting club", {
-            position: "bottom-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-            transition: Slide,
-        });
+        errorToast("Error deleting club")
     }
 
 };
