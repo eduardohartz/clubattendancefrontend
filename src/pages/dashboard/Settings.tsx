@@ -5,8 +5,9 @@ import { updateAllowSelfRegistration, updateClubName, updateOfficerName, updateU
 import { useNavigate } from "react-router-dom";
 import { faDownload, faQrcode, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Club } from "../../types/models";
 
-function Settings({ club }: { club: any }) {
+function Settings({ club }: { club: Club | null }) {
 
     if (!club)
         return
@@ -33,7 +34,7 @@ function Settings({ club }: { club: any }) {
         setFieldToEdit(field);
         setNewFieldValue(currentValue);
         setIsModalVisible(true);
-        setTimeout(() => setIsModalOpen(true), 0);
+        setTimeout(() => setIsModalOpen(true), 200);
     };
 
     const handleCloseModal = () => {
@@ -112,14 +113,14 @@ function Settings({ club }: { club: any }) {
                                 Club name: {club.displayName}
                                 <i
                                     className="fa-solid fa-pen-to-square hover:cursor-pointer ml-1"
-                                    onClick={() => handleOpenModal("Club Name", club.displayName)}
+                                    onClick={() => handleOpenModal("Club Name", club.displayName || "")}
                                 />
                             </span>
                             <span className="text-xl">
                                 Club officer name: {club.officer}
                                 <i
                                     className="fa-solid fa-pen-to-square hover:cursor-pointer ml-1"
-                                    onClick={() => handleOpenModal("Officer Name", club.officer)}
+                                    onClick={() => handleOpenModal("Officer Name", club.officer || "")}
                                 />
                             </span>
                             <span className="text-xl">

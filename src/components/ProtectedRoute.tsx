@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { User, Club } from '../types/models';
 
-function ProtectedRoute({ path, element, user, club }: { path: string, element: JSX.Element, user: any, club: any }) {
+function ProtectedRoute({ path, element, user, club }: { path: string, element: JSX.Element, user: User | null, club: Club | null }) {
     const navigate = useNavigate();
     const [shouldRender, setShouldRender] = useState(true);
 
     useEffect(() => {
-        if (!user) {
+        if (!user || !club) {
             navigate("/login?redirect=" + path);
             setShouldRender(false);
         } else if (user.status === false) {

@@ -5,8 +5,9 @@ import { deleteUser } from "../services/DeleteData";
 import { useNavigate } from "react-router-dom";
 import { faKey, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { User } from "../types/models";
 
-function Settings({ user }: { user: any }) {
+function Settings({ user }: { user: User | null }) {
     if (!user) return null;
 
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -20,7 +21,7 @@ function Settings({ user }: { user: any }) {
     const handleOpenModal = (field: string) => {
         setFieldToEdit(field);
         setIsModalVisible(true);
-        setTimeout(() => setIsModalOpen(true), 0)
+        setTimeout(() => setIsModalOpen(true), 200)
     };
 
     const handleCloseModal = () => {

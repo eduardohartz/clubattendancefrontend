@@ -11,12 +11,13 @@ import { createAttendee, createMember } from "../../../services/CreateData";
 import { errorToast } from "../../../components/Toast";
 import { faArrowLeft, faDownload, faPlus, faPowerOff, faQrcode } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import type { User, Club, Member, Meeting } from "../../../types/models";
 
-function Meeting({ user, club }: { user: any, club: any }) {
+function Meeting({ user, club }: { user: User | null, club: Club | null }) {
     if (!user || !club) return null;
 
     const { id } = useParams<{ id: string }>();
-    const [meeting, setMeeting] = useState<any>(null);
+    const [meeting, setMeeting] = useState<Meeting | null>(null);
     const [loading, setLoading] = useState(true);
     const [showAttendees, setShowAttendees] = useState(true);
     const [duration, setDuration] = useState<string>("");
@@ -27,7 +28,7 @@ function Meeting({ user, club }: { user: any, club: any }) {
     const [isQrModalOpen, setIsQrModalOpen] = useState(false);
     const [isQrModalVisible, setIsQrModalVisible] = useState(false);
     const qrCodeRef = useRef<HTMLImageElement>(null);
-    const [members, setMembers] = useState<any[]>([]);
+    const [members, setMembers] = useState<Member[]>([]);
     const [selectedMember, setSelectedMember] = useState<string>("");
     const [firstName, setFirstName] = useState<string>("");
     const [lastName, setLastName] = useState<string>("");
@@ -58,14 +59,14 @@ function Meeting({ user, club }: { user: any, club: any }) {
     }, [id]);
 
     useEffect(() => {
-        if (!meeting) return;
+        if (meeting == null) return;
 
-        setVolunteering(meeting.volunteering);
-        setNotes(meeting.notes);
+        setVolunteering(meeting.volunteering || false);
+        setNotes(meeting.notes || "");
 
         const updateDuration = () => {
             const now = new Date().getTime();
-            const durationMs = ((meeting.endTime * 1000) || now) - (meeting.startTime * 1000);
+            const durationMs = ((meeting.endTime ?? now / 1000) * 1000) - (meeting.startTime * 1000);
             const durationSec = Math.floor(durationMs / 1000);
             const hours = Math.floor(durationSec / 3600);
             const minutes = Math.floor((durationSec % 3600) / 60);
@@ -97,7 +98,7 @@ function Meeting({ user, club }: { user: any, club: any }) {
 
     const handleOpenModal = () => {
         setIsModalVisible(true);
-        setTimeout(() => setIsModalOpen(true), 0);
+        setTimeout(() => setIsModalOpen(true), 200);
     };
 
     const handleCloseModal = () => {
@@ -168,7 +169,7 @@ function Meeting({ user, club }: { user: any, club: any }) {
             <div className="usablesize h-[100vh] absolute top-0 right-0 flex flex-col items-center gap-10">
                 <div className="absolute top-[100px] w-[80%] max-w-[1000px]">
                     <div className="mx-auto flex w-full items-center justify-between mb-5">
-                        <span className="justify-start text-2xl font-bold ml-2">Meeting {formatDate(meeting.startTime)}</span>
+                        <span className="justify-start text-2xl font-bold ml-2">Meeting {formatDate(meeting.startTime.toString())}</span>
                         <Link to={"/dashboard/meetings"}>
                             <button className="bg-greyscale-200 hover:bg-greyscale-300 transition-colors px-[25px] py-[12px] rounded-lg text-[13.5px] mr-2 justify-end">
                                 <FontAwesomeIcon icon={faArrowLeft} size="lg" /> Back
@@ -179,11 +180,11 @@ function Meeting({ user, club }: { user: any, club: any }) {
                         <div className="w-full px-5 grid grid-cols-1 md:grid-cols-3 gap-4 justify-center py-4">
                             <div className="bg-greyscale-200 rounded-md p-2 flex justify-center">
                                 <span className="text-lg font-mono">Start Time:</span>
-                                <span className="ml-2 text-lg font-mono">{formatTime(meeting.startTime)}</span>
+                                <span className="ml-2 text-lg font-mono">{formatTime(meeting.startTime.toString())}</span>
                             </div>
                             <div className="bg-greyscale-200 rounded-md p-2 flex justify-center">
                                 <span className="text-lg font-mono">End Time:</span>
-                                <span className="ml-2 text-lg font-mono">{formatTime(meeting.endTime)}</span>
+                                <span className="ml-2 text-lg font-mono">{formatTime(meeting.endTime?.toString() || "")}</span>
                             </div>
                             <div className="bg-greyscale-200 rounded-md p-2 flex justify-center">
                                 <span className="text-lg font-mono">Duration:</span>
@@ -254,7 +255,7 @@ function Meeting({ user, club }: { user: any, club: any }) {
                         <h2 className="text-2xl font-bold mb-4">Add member manually</h2>
                         <select className="rounded-lg my-4 block w-64" onChange={(e) => setSelectedMember(e.target.value)} defaultValue={selectedMember}>
                             <option value="" disabled>Select member</option>
-                            {members.map((member: any) => (
+                            {members.map((member: Member) => (
                                 <option key={member.id} value={member.id}>{member.firstName} {member.lastName}</option>
                             ))}
                             <option value="new"> -Add new member</option>

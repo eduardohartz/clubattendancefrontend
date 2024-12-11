@@ -5,8 +5,9 @@ import { createMeeting } from "../../../services/CreateData";
 import { useState } from 'react';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { User } from '../../../types/models';
 
-function Home({ user }: { user: any }) {
+function Home({ user }: { user: User | null }) {
     const [isCreatingMeeting, setIsCreatingMeeting] = useState(false);
 
     if (!user)

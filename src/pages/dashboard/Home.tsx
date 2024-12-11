@@ -1,8 +1,13 @@
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faNewspaper } from '@fortawesome/free-solid-svg-icons'
+import { Club } from '../../types/models';
 
-function Home({ club }: { club: any }) {
+function Home({ club }: { club: Club | null }) {
+
+    if (!club) {
+        return;
+    }
 
     return (
         <>

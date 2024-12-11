@@ -5,8 +5,9 @@ import { formatDate, formatTime } from '../utils/Formatters';
 import { getWsUrl } from '../services/Api';
 import Cookies from 'js-cookie';
 import Loading from './Loading';
+import { User } from '../types/models';
 
-function Table({ type, id = "", user }: { type: 'meetings' | 'members' | 'attendees' | 'attendance' | 'users' | 'clubs', id?: string, user: any }) {
+function Table({ type, id = "", user }: { type: 'meetings' | 'members' | 'attendees' | 'attendance' | 'users' | 'clubs', id?: string, user: User | null }) {
     const [data, setData] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const wsRef = useRef<WebSocket | null>(null);

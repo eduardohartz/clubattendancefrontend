@@ -33,14 +33,15 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import { useState, useEffect } from "react";
 import { getUser, getClub } from "./services/Auth";
 import Loading from "./components/Loading";
+import { User, Club } from "./types/models";
 
 const Handler = () => {
   const location = useLocation();
   const currentRoute = location.pathname;
 
   const [isLoading, setIsLoading] = useState(true);
-  const [user, setUser] = useState<any>(null);
-  const [club, setClub] = useState<any>(null);
+  const [user, setUser] = useState<User | null>(null);
+  const [club, setClub] = useState<Club | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {

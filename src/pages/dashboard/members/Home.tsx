@@ -3,8 +3,9 @@ import Table from "../../../components/Table";
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { User } from "../../../types/models";
 
-function Home({ user }: { user: any }) {
+function Home({ user }: { user: User | null }) {
 
     if (!user)
         return

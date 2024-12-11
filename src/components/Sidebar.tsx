@@ -1,15 +1,13 @@
 import { faBars, faCog, faComments, faHouse, faRightFromBracket, faUser, faUsers, faUserShield, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { User, Club } from "../types/models";
 
-function Sidebar({ page, user, club }: { page: string, user: any, club: any }) {
-
-    const navigate = useNavigate()
+function Sidebar({ page, user, club }: { page: string, user: User | null, club: Club | null }) {
 
     if (!user || !club) {
-        navigate("/")
-        return;
+        return
     }
 
     const buttonClass = "rounded-md text-left w-[170px] text-[13.5px] px-[20px] py-[14px] hover:bg-greyscale-200 transition-colors"

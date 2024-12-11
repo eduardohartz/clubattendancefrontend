@@ -6,8 +6,9 @@ import { Helmet, HelmetProvider } from 'react-helmet-async';
 import getBaseUrl from '../../services/Api';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { User } from '../../types/models';
 
-function Admin({ user }: { user: any }) {
+function Admin({ user }: { user: User | null }) {
 
     if (!user)
         return

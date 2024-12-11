@@ -6,8 +6,9 @@ import { Helmet, HelmetProvider } from 'react-helmet-async';
 import Loading from "../../../components/Loading";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { User } from "../../../types/models";
 
-function Member({ user }: { user: any }) {
+function Member({ user }: { user: User | null }) {
 
     if (!user)
         return

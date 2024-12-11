@@ -1,9 +1,9 @@
 import axios from "axios";
 import Cookies from "js-cookie";
 import getBaseUrl from "./Api";
+import { User, Club } from "../types/models";
 
-// TODO user type instead of any
-export async function getUser() {
+export async function getUser(): Promise<User | null> {
     const token = Cookies.get('session');
 
     if (!token) {
@@ -11,39 +11,37 @@ export async function getUser() {
     }
 
     try {
-        const response = await axios.get<any>(getBaseUrl() + '/auth/@me', {
+        const response = await axios.get<User>(`${getBaseUrl()}/auth/@me`, {
             headers: {
-                'Authorization': `${token}`
-            }
+                Authorization: `${token}`,
+            },
         });
         if (!response.data.id) {
-            Cookies.remove('session')
-            return null
+            Cookies.remove('session');
+            return null;
         }
         return response.data;
     } catch (error) {
-        Cookies.remove('session')
-        return null
+        Cookies.remove('session');
+        return null;
     }
-};
-
-// TODO club type instead of any
-export async function getClub() {
+}
+export async function getClub(): Promise<Club | null> {
     const token = Cookies.get('session');
 
     try {
-        const response = await axios.get<any>(getBaseUrl() + '/club/get', {
+        const response = await axios.get<Club>(`${getBaseUrl()}/club/get`, {
             headers: {
-                'Authorization': `${token}`
-            }
+                Authorization: `${token}`,
+            },
         });
         if (!response.data.id) {
-            Cookies.remove('session')
-            return null
+            Cookies.remove('session');
+            return null;
         }
         return response.data;
     } catch (error) {
-        Cookies.remove('session')
-        return null
+        Cookies.remove('session');
+        return null;
     }
-};
+}
