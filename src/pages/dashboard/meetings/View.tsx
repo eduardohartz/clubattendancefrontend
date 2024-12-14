@@ -175,7 +175,7 @@ function Meeting({ user, club }: { user: User | null, club: Club | null }) {
                     <div className="mx-auto flex w-full items-center justify-between mb-5">
                         <span className="justify-start text-2xl font-bold ml-2">
                             Meeting
-                            {formatDate(meeting.startTime.toString())}
+                            {` ${formatDate(meeting.startTime.toString())}`}
                         </span>
                         <Link to="/dashboard/meetings">
                             <button className="bg-greyscale-200 hover:bg-greyscale-300 transition-colors px-[25px] py-[12px] rounded-lg text-[13.5px] mr-2 justify-end">
