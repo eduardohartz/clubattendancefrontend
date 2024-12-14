@@ -1,7 +1,7 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { useParams, Navigate, Link } from "react-router-dom";
-import FetchData from "../../../services/FetchData";
+import { FetchData } from "../../../services/FetchData";
 import { formatDate, formatTime } from "../../../utils/Formatters";
 import Table from "../../../components/Table";
 import Loading from "../../../components/Loading";
@@ -14,7 +14,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import type { User, Club, Member, Meeting } from "../../../types/models";
 
 function Meeting({ user, club }: { user: User | null, club: Club | null }) {
-    if (!user || !club) return null;
 
     const { id } = useParams<{ id: string }>();
     const [meeting, setMeeting] = useState<Meeting | null>(null);
@@ -33,30 +32,29 @@ function Meeting({ user, club }: { user: User | null, club: Club | null }) {
     const [firstName, setFirstName] = useState<string>("");
     const [lastName, setLastName] = useState<string>("");
 
-    const fetchMembers = async () => {
-        const data = await FetchData({ type: 'members' });
-        setMembers(data);
-    };
-
     useEffect(() => {
+        const fetchMembers = async () => {
+            const data = await FetchData({ type: 'members' });
+            setMembers(data);
+        };
         fetchMembers();
     }, []);
 
-    const fetchMeeting = async () => {
+    const fetchMeeting = useCallback(async () => {
         setLoading(true);
         try {
             const data = await FetchData({ type: 'meetings', id });
             setMeeting(data);
-        } catch (error) {
+        } catch {
             setMeeting(null);
         } finally {
             setLoading(false);
         }
-    };
+    }, [id]);
 
     useEffect(() => {
         fetchMeeting();
-    }, [id]);
+    }, [id, fetchMeeting]);
 
     useEffect(() => {
         if (meeting == null) return;
@@ -88,6 +86,8 @@ function Meeting({ user, club }: { user: User | null, club: Club | null }) {
         return () => clearInterval(intervalId);
     }, [meeting]);
 
+    if (!user || !club) return null;
+
     if (loading) {
         return <Loading />;
     }
@@ -116,7 +116,7 @@ function Meeting({ user, club }: { user: User | null, club: Club | null }) {
                 errorToast("Please fill in all fields!")
                 return
             }
-            let id = await createMember(firstName, lastName);
+            const id = await createMember(firstName, lastName);
             if (!id) {
                 return;
             }

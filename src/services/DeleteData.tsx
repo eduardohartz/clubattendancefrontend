@@ -33,7 +33,7 @@ export async function deleteMember({ id }: { id: number }, callback: () => void)
         } else {
             errorToast("Error deleting member")
         }
-    } catch (error) {
+    } catch {
         errorToast("Error deleting member")
     }
 
@@ -69,7 +69,7 @@ export async function deleteMeeting({ id }: { id: number }, callback: () => void
         } else {
             errorToast("Error deleting meeting")
         }
-    } catch (error) {
+    } catch {
         errorToast("Error deleting meeting")
     }
 
@@ -105,7 +105,7 @@ export async function deleteAttendance({ id }: { id: number }, callback: () => v
         } else {
             errorToast("Error deleting record")
         }
-    } catch (error) {
+    } catch {
         errorToast("Error deleting record")
     }
 
@@ -132,7 +132,7 @@ export async function removeAttendee({ id }: { id: number }) {
         if (response.data.success != "true") {
             errorToast("Error deleting attendee")
         }
-    } catch (error) {
+    } catch {
         errorToast("Error deleting attendee")
     }
 
@@ -174,7 +174,7 @@ export async function deleteClub() {
             errorToast("Error deleting club")
             return false;
         }
-    } catch (error) {
+    } catch {
         errorToast("Error deleting club")
         return false;
     }
@@ -217,7 +217,7 @@ export async function deleteUser() {
             errorToast("Error deleting account")
             return false;
         }
-    } catch (error) {
+    } catch {
         errorToast("Error deleting account")
         return false;
     }
@@ -254,7 +254,7 @@ export async function deleteCustomField({ id }: { id: number }, callback: () => 
         } else {
             errorToast("Error deleting field")
         }
-    } catch (error) {
+    } catch {
         errorToast("Error deleting field")
     }
 
@@ -290,7 +290,7 @@ export async function adminDeleteUser({ id }: { id: number }, callback: () => vo
         } else {
             errorToast("Error deleting user")
         }
-    } catch (error) {
+    } catch {
         errorToast("Error deleting user")
     }
 
@@ -326,7 +326,7 @@ export async function adminDeleteClub({ id }: { id: number }, callback: () => vo
         } else {
             errorToast("Error deleting club")
         }
-    } catch (error) {
+    } catch {
         errorToast("Error deleting club")
     }
 

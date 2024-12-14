@@ -9,11 +9,9 @@ import { User } from '../../../types/models';
 
 function Home({ user }: { user: User | null }) {
     const [isCreatingMeeting, setIsCreatingMeeting] = useState(false);
-
-    if (!user)
-        return
-
     const navigate = useNavigate();
+
+    if (!user) return
 
     const handleCreateMeeting = async () => {
         setIsCreatingMeeting(true);

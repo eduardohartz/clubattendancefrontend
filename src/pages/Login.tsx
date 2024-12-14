@@ -14,7 +14,7 @@ function Login() {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
-    let redirect = searchParams.get("redirect");
+    const redirect = searchParams.get("redirect");
 
     useEffect(() => {
         const checkSession = () => {

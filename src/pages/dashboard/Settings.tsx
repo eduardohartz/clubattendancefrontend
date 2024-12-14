@@ -9,11 +9,8 @@ import { Club } from "../../types/models";
 
 function Settings({ club }: { club: Club | null }) {
 
-    if (!club)
-        return
-
-    const [isQrChecked, setIsQrChecked] = useState(club.useStaticCode);
-    const [isSelfChecked, setIsSelfChecked] = useState(club.allowSelfRegistration);
+    const [isQrChecked, setIsQrChecked] = useState(club ? club.useStaticCode : false);
+    const [isSelfChecked, setIsSelfChecked] = useState(club ? club.allowSelfRegistration : false);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [hasRendered, setHasRendered] = useState(false);
@@ -28,6 +25,8 @@ function Settings({ club }: { club: Club | null }) {
 
     const [isQrModalOpen, setIsQrModalOpen] = useState(false);
     const [isQrModalVisible, setIsQrModalVisible] = useState(false);
+
+    if (!club) return
 
     const handleOpenModal = (field: string, currentValue: string) => {
         if (!hasRendered) return;

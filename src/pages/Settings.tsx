@@ -8,7 +8,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { User } from "../types/models";
 
 function Settings({ user }: { user: User | null }) {
-    if (!user) return null;
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isModalVisible, setIsModalVisible] = useState(false);
@@ -17,6 +16,8 @@ function Settings({ user }: { user: User | null }) {
     const [newPassword, setNewPassword] = useState("");
     const [repeatNewPassword, setRepeatNewPassword] = useState("");
     const navigate = useNavigate();
+
+    if (!user) return null;
 
     const handleOpenModal = (field: string) => {
         setFieldToEdit(field);

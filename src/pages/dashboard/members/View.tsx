@@ -1,6 +1,6 @@
 import { Link, Navigate, useParams } from "react-router-dom";
 import Table from "../../../components/Table";
-import FetchData from "../../../services/FetchData";
+import { FetchData } from "../../../services/FetchData";
 import { useState, useEffect } from "react";
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import Loading from "../../../components/Loading";
@@ -9,9 +9,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { User } from "../../../types/models";
 
 function Member({ user }: { user: User | null }) {
-
-    if (!user)
-        return
 
     const { id } = useParams<{ id: string }>();
     const [member, setMember] = useState<any>(null);
@@ -22,7 +19,7 @@ function Member({ user }: { user: User | null }) {
             try {
                 const data = await FetchData({ type: 'members', id });
                 setMember(data);
-            } catch (error) {
+            } catch {
                 setMember(null)
             } finally {
                 setLoading(false);
@@ -31,6 +28,9 @@ function Member({ user }: { user: User | null }) {
 
         fetchMember();
     }, [id]);
+
+    if (!user)
+        return
 
     if (loading) {
         return <Loading />;

@@ -57,7 +57,7 @@ const Handler = () => {
         } else {
           setClub(null);
         }
-      } catch (error) {
+      } catch {
         setUser(null);
         setClub(null);
       } finally {

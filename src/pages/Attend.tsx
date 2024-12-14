@@ -63,7 +63,7 @@ function Attend() {
                     return;
                 }
                 setData(fetchedData);
-            } catch (error) {
+            } catch {
                 setError("Error fetching data, please try again later");
             } finally {
                 setLoading(false);

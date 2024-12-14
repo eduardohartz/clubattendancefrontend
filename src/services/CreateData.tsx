@@ -19,7 +19,7 @@ export async function createMeeting() {
             errorToast("Error creating meeting")
             return null
         }
-    } catch (error) {
+    } catch {
         errorToast("Error creating meeting")
         return null
     }
@@ -46,7 +46,7 @@ export async function createMember(firstName: string, lastName: string) {
             errorToast("Error creating member")
             return null;
         }
-    } catch (err) {
+    } catch {
         errorToast("Error creating member")
     }
 };
@@ -122,7 +122,7 @@ export async function createCustomField(fieldName: string, fieldType: string, dr
             errorToast("Error creating field.")
             return false
         }
-    } catch (error) {
+    } catch {
         errorToast("Error creating field.")
         return false
     }

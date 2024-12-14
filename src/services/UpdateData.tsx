@@ -33,7 +33,7 @@ export async function updateMeeting(id: string, newNotes: string = "", volunteer
         } else {
             errorToast("Error updating meeting")
         }
-    } catch (error) {
+    } catch {
         errorToast("Error updating meeting")
     }
 };
@@ -63,7 +63,7 @@ export async function updateMemberStatus({ id }: { id: number }, newValue: strin
         } else {
             errorToast("Error updating member")
         }
-    } catch (error) {
+    } catch {
         errorToast("Error updating member")
     }
 };
@@ -95,7 +95,7 @@ export async function updateMeetingStatus({ id }: { id: number }, newValue: stri
             errorToast("Error updating meeting")
             return false;
         }
-    } catch (error) {
+    } catch {
         errorToast("Error updating meeting")
         return false;
     }
@@ -125,7 +125,7 @@ export async function updateClubName(clubName: string) {
         } else {
             errorToast("Error updating club")
         }
-    } catch (error) {
+    } catch {
         errorToast("Error updating club")
     }
 
@@ -153,7 +153,7 @@ export async function updateOfficerName(officerName: string) {
         } else {
             errorToast("Error updating club")
         }
-    } catch (error) {
+    } catch {
         errorToast("Error updating club")
     }
 
@@ -181,7 +181,7 @@ export async function updateUseStaticCode(useStaticCode: boolean) {
         } else {
             errorToast("Error updating club")
         }
-    } catch (error) {
+    } catch {
         errorToast("Error updating club")
     }
 
@@ -209,7 +209,7 @@ export async function updateAllowSelfRegistration(allowSelfRegistration: boolean
         } else {
             errorToast("Error updating club")
         }
-    } catch (error) {
+    } catch {
         errorToast("Error updating club")
     }
 
@@ -268,7 +268,8 @@ export async function updateWelcome() {
                 'Authorization': `${token}`,
             }
         });
-    } catch (error) {
+    } catch {
+        return
     }
 }
 
@@ -296,7 +297,7 @@ export async function updateUserStatus({ id }: { id: number }, newValue: boolean
         } else {
             errorToast("Error updating user")
         }
-    } catch (error) {
+    } catch {
         errorToast("Error updating user")
     }
 };
@@ -325,7 +326,7 @@ export async function updateClubStatus({ id }: { id: number }, newValue: boolean
         } else {
             errorToast("Error updating club")
         }
-    } catch (error) {
+    } catch {
         errorToast("Error updating club")
     }
 };

@@ -1,6 +1,6 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { headersMap, dataKeyMap, getActions, getStatus } from '../utils/TableHelpers';
-import FetchData from '../services/FetchData';
+import { FetchData } from '../services/FetchData';
 import { formatDate, formatTime } from '../utils/Formatters';
 import { getWsUrl } from '../services/Api';
 import Cookies from 'js-cookie';
@@ -13,12 +13,12 @@ function Table({ type, id = "", user }: { type: 'meetings' | 'members' | 'attend
     const wsRef = useRef<WebSocket | null>(null);
     const token = Cookies.get('session');
 
-    const reloadData = async () => {
+    const reloadData = useCallback(async () => {
         setIsLoading(true);
         if (wsRef.current !== null) {
             wsRef.current.close();
         }
-        if (type == "attendees") {
+        if (type === "attendees") {
             wsRef.current = new WebSocket(getWsUrl());
             wsRef.current.onopen = () => {
                 wsRef.current?.send(JSON.stringify({
@@ -29,7 +29,7 @@ function Table({ type, id = "", user }: { type: 'meetings' | 'members' | 'attend
             }
             wsRef.current.onmessage = (event) => {
                 const message = JSON.parse(event.data);
-                if (message.type == "attendees") {
+                if (message.type === "attendees") {
                     setData(message.data);
                     setIsLoading(false);
                 }
@@ -39,7 +39,7 @@ function Table({ type, id = "", user }: { type: 'meetings' | 'members' | 'attend
         const result = await FetchData({ type, id });
         setData(result);
         setIsLoading(false);
-    };
+    }, [type, id, token]);
 
     useEffect(() => {
         if (user && (type !== "users" || user.admin)) {
@@ -51,7 +51,7 @@ function Table({ type, id = "", user }: { type: 'meetings' | 'members' | 'attend
                 wsRef.current.close();
             }
         };
-    }, [user]);
+    }, [user, type, reloadData]);
 
     if (!user || (type === "users" && !user.admin)) {
         return null;

@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { createCustomField } from '../../../services/CreateData';
 import { errorToast, successToast } from '../../../components/Toast';
-import FetchData from '../../../services/FetchData';
+import { FetchData } from '../../../services/FetchData';
 
 function CustomFields({ user }: { user: User | null }) {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -71,7 +71,7 @@ function CustomFields({ user }: { user: User | null }) {
             return;
         }
 
-        let success = await createCustomField(fieldName, fieldType, parsedDropdownOptions, defaultValue);
+        const success = await createCustomField(fieldName, fieldType, parsedDropdownOptions, defaultValue);
 
         if (success) {
             setFieldName("");

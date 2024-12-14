@@ -21,7 +21,7 @@ export async function getUser(): Promise<User | null> {
             return null;
         }
         return response.data;
-    } catch (error) {
+    } catch {
         Cookies.remove('session');
         return null;
     }
@@ -40,7 +40,7 @@ export async function getClub(): Promise<Club | null> {
             return null;
         }
         return response.data;
-    } catch (error) {
+    } catch {
         Cookies.remove('session');
         return null;
     }

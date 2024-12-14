@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { User, Club } from "../types/models";
 
 function Sidebar({ page, user, club }: { page: string, user: User | null, club: Club | null }) {
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     if (!user || !club) {
         return
@@ -14,8 +15,6 @@ function Sidebar({ page, user, club }: { page: string, user: User | null, club: 
     const textClass = "text-left text-xl transition-colors ml-4"
     const tselected = "font-bold"
     const selected = "bg-greyscale-200"
-
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);

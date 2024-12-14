@@ -2,14 +2,10 @@ import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faNewspaper } from '@fortawesome/free-solid-svg-icons'
 import { Club, User } from '../../types/models';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { updateWelcome } from '../../services/UpdateData';
 
 function Home({ club, user }: { club: Club | null, user: User | null }) {
-
-    if (!club || !user) {
-        return;
-    }
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isModalVisible, setIsModalVisible] = useState(false);
@@ -30,11 +26,13 @@ function Home({ club, user }: { club: Club | null, user: User | null }) {
 
     };
 
-    useEffect(() => {
-        if (user.seenStartPopup == false && !opened) {
-            handleOpenModal();
-        }
-    })
+    if (!club || !user) {
+        return;
+    }
+
+    if (user.seenStartPopup == false && !opened) {
+        handleOpenModal();
+    }
 
     return (
         <>

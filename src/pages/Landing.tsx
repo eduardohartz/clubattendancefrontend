@@ -4,7 +4,6 @@ import Lenis from 'lenis';
 
 function Landing() {
 
-    const texts = ['simplest', 'smoothest', 'no-cost', 'optimized', 'fastest'];
     const [currentText, setCurrentText] = useState("easiest");
     const [index, setIndex] = useState(0);
     const [isUp, setIsUp] = useState(false);
@@ -22,6 +21,8 @@ function Landing() {
     }
 
     useEffect(() => {
+        const texts = ['simplest', 'smoothest', 'no-cost', 'optimized', 'fastest'];
+
         const changeText = () => {
             setIsUp(true);
 
@@ -35,7 +36,7 @@ function Landing() {
         const interval = setInterval(changeText, 2000);
 
         return () => clearInterval(interval);
-    }, [index, texts]);
+    }, [index]);
 
     return (
         <>

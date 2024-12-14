@@ -8,10 +8,10 @@ function Logout() {
 
     useEffect(() => {
         const performLogout = async () => {
-            let logout = await DeleteSession();
+            const logout = await DeleteSession();
 
             if (logout) {
-                Cookies.remove('session'); 
+                Cookies.remove('session');
             }
             navigate('/');
         };

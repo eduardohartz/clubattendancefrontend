@@ -2,17 +2,7 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 import getBaseUrl from './Api';
 
-// TODO change member from type any
-// interface Member {
-//   id: number;
-//   name: string;
-//   role: string;
-//   email: string;
-// }
-
-// Fetch all data based on type, mostly for Table
-
-async function FetchData({ type, id = "" }: { type: 'meetings' | 'members' | 'attendees' | 'attendance' | 'users' | 'clubs' | 'customFields', id?: string }) {
+export async function FetchData({ type, id = "" }: { type: 'meetings' | 'members' | 'attendees' | 'attendance' | 'users' | 'clubs' | 'customFields', id?: string }) {
     const token = Cookies.get('session');
 
     if (!token) {
@@ -58,7 +48,7 @@ async function FetchData({ type, id = "" }: { type: 'meetings' | 'members' | 'at
             }
         });
         return response.data;
-    } catch (error) {
+    } catch {
         return null;
     }
 };
@@ -80,5 +70,3 @@ export async function fetchAttendData(code: string) {
         return null;
     }
 }
-
-export default FetchData;

@@ -18,7 +18,7 @@ async function DeleteSession() {
             }
         });
         return response.data.logout;
-    } catch (error) {
+    } catch {
         return false;
     }
 };

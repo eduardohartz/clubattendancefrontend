@@ -7,7 +7,10 @@ function ProtectedRoute({ path, element, user, club }: { path: string, element: 
     const [shouldRender, setShouldRender] = useState(true);
 
     useEffect(() => {
-        if (!user || !club) {
+        if (!user) {
+            navigate("/login?redirect=" + path);
+            setShouldRender(false);
+        } else if (!club && path !== "/settings" && path !== "/dashboard/admin") {
             navigate("/login?redirect=" + path);
             setShouldRender(false);
         } else if (user.status === false) {
@@ -18,10 +21,7 @@ function ProtectedRoute({ path, element, user, club }: { path: string, element: 
             alert("You do not have permission to access this page.");
             navigate("/dashboard");
             setShouldRender(false);
-        } else if (!club && path !== "/settings" && path !== "/dashboard/admin") {
-            navigate("/login?redirect=" + path);
-            setShouldRender(false);
-        } else if (club.status === false && path !== "/settings" && path !== "/dashboard/admin") {
+        } else if (path !== "/settings" && path !== "/dashboard/admin" && club && club.status === false) {
             alert("Your club has been disabled. Please contact an administrator.");
             navigate("/settings");
             setShouldRender(false);

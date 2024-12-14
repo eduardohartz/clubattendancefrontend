@@ -10,10 +10,9 @@ import { User } from '../../types/models';
 
 function Admin({ user }: { user: User | null }) {
 
-    if (!user)
-        return
-
     const [isSubmitting, setIsSubmitting] = useState(false);
+
+    if (!user) return
 
     const handleAddUser = async () => {
         const username = prompt("Enter the username for the new user:");
@@ -40,7 +39,7 @@ function Admin({ user }: { user: User | null }) {
             } else {
                 alert("Failed to create user");
             }
-        } catch (error) {
+        } catch {
             alert("An error occurred. Please try again.");
         } finally {
             setIsSubmitting(false);
