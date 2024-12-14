@@ -254,6 +254,24 @@ export async function updatePassword(currentPassword: string, newPassword: strin
     }
 }
 
+export async function updateWelcome() {
+
+    const token = Cookies.get('session');
+
+    if (!token) {
+        return null;
+    }
+
+    try {
+        await axios.post(getBaseUrl() + '/user/welcome', {}, {
+            headers: {
+                'Authorization': `${token}`,
+            }
+        });
+    } catch (error) {
+    }
+}
+
 //Update a user's status (admin only)
 export async function updateUserStatus({ id }: { id: number }, newValue: boolean) {
 

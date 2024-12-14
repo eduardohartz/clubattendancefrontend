@@ -1,14 +1,15 @@
 import { Link } from "react-router-dom";
-import { deleteMeeting, deleteMember, removeAttendee, deleteAttendance, adminDeleteUser, adminDeleteClub } from "../services/DeleteData";
+import { deleteMeeting, deleteMember, removeAttendee, deleteAttendance, adminDeleteUser, adminDeleteClub, deleteCustomField } from "../services/DeleteData";
 import { updateMeetingStatus, updateMemberStatus, updateUserStatus, updateClubStatus } from "../services/UpdateData";
 
-export const headersMap: { [key in 'meetings' | 'members' | 'attendees' | 'attendance' | 'users' | 'clubs']: string[] } = {
+export const headersMap: { [key in 'meetings' | 'members' | 'attendees' | 'attendance' | 'users' | 'clubs' | 'customFields']: string[] } = {
     meetings: ["Date", "Start Time", "End Time", "Status", "Volunteering", "Actions"],
     members: ["First Name", "Last Name", "Status", "Join Date", "Actions"],
     attendees: ["First Name", "Last Name", "Time Attended", "Actions"],
-    attendance: ["Date", "Time Added", "Volunteering", "Actions"],
+    attendance: ["Meeting Date", "Time Attended", "Volunteered", "Actions"],
     users: ["ID", "Username", "Status", "Admin", "Seen at", "IP", "Actions"],
     clubs: ["ID", "Owner", "Status", "Display Name", "External ID", "Volunteering", "Actions"],
+    customFields: ["Field Name", "Field Type", "Default value", "Actions"],
 };
 
 export const dataKeyMap = {
@@ -18,6 +19,7 @@ export const dataKeyMap = {
     attendance: ["date", "time", "volunteering", "actions"],
     users: ["id", "username", "status", "admin", "seenAt", "lastIp", "actions"],
     clubs: ["id", "ownerId", "status", "displayName", "externalId", "volunteering", "actions"],
+    customFields: ["fieldName", "fieldType", "defaultValue", "actions"],
 };
 
 export const getActions = (type: string, row: any, reloadData: () => void) => {
@@ -57,6 +59,14 @@ export const getActions = (type: string, row: any, reloadData: () => void) => {
             return (
                 <>
                     <span className="text-red-500 hover:underline cursor-pointer ml-2" onClick={() => adminDeleteClub({ id: row.ownerId }, reloadData)}>Delete</span>
+                </>
+            );
+        //TODO: Add custom fields actions
+        case 'customFields':
+            return (
+                <>
+                    <Link to={`/dashboard/members/fields?id=${row.id}`} className="text-blue-500 hover:underline">Edit</Link>
+                    <span className="text-red-500 hover:underline cursor-pointer ml-2" onClick={() => deleteCustomField({ id: row.id }, reloadData)}>Delete</span>
                 </>
             );
         default:

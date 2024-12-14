@@ -7,6 +7,7 @@ export interface User {
     seenAt?: number;
     lastIp?: string;
     clubs?: Club[];
+    seenStartPopup?: boolean;
 }
 
 export interface Club {

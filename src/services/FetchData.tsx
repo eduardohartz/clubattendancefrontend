@@ -12,7 +12,7 @@ import getBaseUrl from './Api';
 
 // Fetch all data based on type, mostly for Table
 
-async function FetchData({ type, id = "" }: { type: 'meetings' | 'members' | 'attendees' | 'attendance' | 'users' | 'clubs', id?: string }) {
+async function FetchData({ type, id = "" }: { type: 'meetings' | 'members' | 'attendees' | 'attendance' | 'users' | 'clubs' | 'customFields', id?: string }) {
     const token = Cookies.get('session');
 
     if (!token) {
@@ -20,23 +20,37 @@ async function FetchData({ type, id = "" }: { type: 'meetings' | 'members' | 'at
     }
 
     let endpoint = ""
-    if (type == "meetings")
-        endpoint = "/meetings/fetch";
-    else if (type == "members")
-        endpoint = "/members/fetch";
-    else if (type == "attendees")
-        endpoint = "/meetings/attendees";
-    else if (type == "attendance")
-        endpoint = "/attendance/fetch";
-    else if (type == "users") // (admin only)
-        endpoint = "/admin/users/fetch";
-    else if (type == "clubs") // (admin only)
-        endpoint = "/admin/clubs/fetch";
+    switch (type) {
+        case "meetings":
+            endpoint = "/meetings/fetch";
+            break;
+        case "members":
+            endpoint = "/members/fetch";
+            break;
+        case "customFields":
+            endpoint = "/members/fields/fetch";
+            break;
+        case "attendees":
+            endpoint = "/meetings/attendees";
+            break;
+        case "attendance":
+            endpoint = "/attendance/fetch";
+            break;
+        case "users": // (admin only)
+            endpoint = "/admin/users/fetch";
+            break;
+        case "clubs": // (admin only)
+            endpoint = "/admin/clubs/fetch";
+            break;
+        default:
+            endpoint = "";
+            break;
+    }
 
     try {
         const response = await axios.get<any>(getBaseUrl() + endpoint, {
             params: {
-                id: (type == 'attendance' || type == 'attendees' || type == 'members' || type == 'meetings') ? id : undefined
+                id: (type == 'attendance' || type == 'attendees' || type == 'members' || type == 'meetings' || type == 'customFields') ? id : undefined
             },
             headers: {
                 'Authorization': `${token}`,

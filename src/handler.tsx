@@ -18,6 +18,7 @@ import ClubSettings from "./pages/dashboard/Settings";
 import Members from "./pages/dashboard/members/Home";
 import Member from "./pages/dashboard/members/View";
 import CreateMember from "./pages/dashboard/members/Create";
+import CustomFields from "./pages/dashboard/members/Fields";
 import Meetings from "./pages/dashboard/meetings/Home";
 import Meeting from "./pages/dashboard/meetings/View";
 import Logout from "./pages/Logout";
@@ -47,10 +48,15 @@ const Handler = () => {
     const fetchData = async () => {
       setIsLoading(true);
       try {
-        const user = await getUser();
-        const club = user ? await getClub() : null;
-        setUser(user);
-        setClub(club);
+        const userData = await getUser();
+        setUser(userData);
+
+        if (userData) {
+          const clubData = await getClub();
+          setClub(clubData);
+        } else {
+          setClub(null);
+        }
       } catch (error) {
         setUser(null);
         setClub(null);
@@ -62,21 +68,30 @@ const Handler = () => {
     fetchData();
   }, [currentRoute]);
 
-  const showNavbar = currentRoute.startsWith("/dashboard") || currentRoute === "/settings";
+  const showNavbar =
+    (currentRoute.startsWith("/dashboard") || currentRoute === "/settings") &&
+    user &&
+    club;
 
   return (
     <>
-      {showNavbar && club && <PageTransition><Sidebar page={currentRoute} user={user} club={club} /></PageTransition>}
+      {showNavbar && club && (
+        <Sidebar page={currentRoute} user={user} club={club} />
+      )}
 
-      {isLoading && currentRoute != "/" ? (
-        <Loading />
-      ) : (
-        <AnimatePresence mode="wait">
+
+      <AnimatePresence mode="wait">
+        {isLoading && currentRoute !== "/" ? (
+          <PageTransition key={"loading"}>
+            <Loading />
+          </PageTransition>
+        ) : (
           <Routes location={location} key={location.pathname}>
+            {/* Public Routes */}
             <Route
               path="/"
               element={
-                <PageTransition>
+                <PageTransition key={location.pathname}>
                   <Landing />
                 </PageTransition>
               }
@@ -84,7 +99,7 @@ const Handler = () => {
             <Route
               path="/attend"
               element={
-                <PageTransition>
+                <PageTransition key={location.pathname}>
                   <Attend />
                 </PageTransition>
               }
@@ -92,7 +107,7 @@ const Handler = () => {
             <Route
               path="/login"
               element={
-                <PageTransition>
+                <PageTransition key={location.pathname}>
                   <Login />
                 </PageTransition>
               }
@@ -100,46 +115,25 @@ const Handler = () => {
             <Route
               path="/setup"
               element={
-                <PageTransition>
+                <PageTransition key={location.pathname}>
                   <Setup />
                 </PageTransition>
               }
             />
-            <Route
-              path="/*"
-              element={
-                <PageTransition>
-                  <Unknown />
-                </PageTransition>
-              }
-            />
-            <Route
-              path="/logout"
-              element={
-                <ProtectedRoute
-                  element={
-                    <PageTransition>
-                      <Logout />
-                    </PageTransition>
-                  }
-                  path={currentRoute}
-                  user={user}
-                  club={club}
-                />
-              }
-            />
+
+            {/* Protected Routes */}
             <Route
               path="/dashboard"
               element={
                 <ProtectedRoute
-                  element={
-                    <PageTransition>
-                      <Dashboard club={club} />
-                    </PageTransition>
-                  }
                   path={currentRoute}
                   user={user}
                   club={club}
+                  element={
+                    <PageTransition key={location.pathname}>
+                      <Dashboard club={club} user={user} />
+                    </PageTransition>
+                  }
                 />
               }
             />
@@ -147,14 +141,14 @@ const Handler = () => {
               path="/settings"
               element={
                 <ProtectedRoute
-                  element={
-                    <PageTransition>
-                      <Settings user={user} />
-                    </PageTransition>
-                  }
                   path={currentRoute}
                   user={user}
                   club={club}
+                  element={
+                    <PageTransition key={location.pathname}>
+                      <Settings user={user} />
+                    </PageTransition>
+                  }
                 />
               }
             />
@@ -162,14 +156,14 @@ const Handler = () => {
               path="/dashboard/settings"
               element={
                 <ProtectedRoute
-                  element={
-                    <PageTransition>
-                      <ClubSettings club={club} />
-                    </PageTransition>
-                  }
                   path={currentRoute}
                   user={user}
                   club={club}
+                  element={
+                    <PageTransition key={location.pathname}>
+                      <ClubSettings club={club} />
+                    </PageTransition>
+                  }
                 />
               }
             />
@@ -177,14 +171,14 @@ const Handler = () => {
               path="/dashboard/members"
               element={
                 <ProtectedRoute
-                  element={
-                    <PageTransition>
-                      <Members user={user} />
-                    </PageTransition>
-                  }
                   path={currentRoute}
                   user={user}
                   club={club}
+                  element={
+                    <PageTransition key={location.pathname}>
+                      <Members user={user} />
+                    </PageTransition>
+                  }
                 />
               }
             />
@@ -192,14 +186,29 @@ const Handler = () => {
               path="/dashboard/members/create"
               element={
                 <ProtectedRoute
-                  element={
-                    <PageTransition>
-                      <CreateMember />
-                    </PageTransition>
-                  }
                   path={currentRoute}
                   user={user}
                   club={club}
+                  element={
+                    <PageTransition key={location.pathname}>
+                      <CreateMember />
+                    </PageTransition>
+                  }
+                />
+              }
+            />
+            <Route
+              path="/dashboard/members/fields"
+              element={
+                <ProtectedRoute
+                  path={currentRoute}
+                  user={user}
+                  club={club}
+                  element={
+                    <PageTransition key={location.pathname}>
+                      <CustomFields user={user} />
+                    </PageTransition>
+                  }
                 />
               }
             />
@@ -207,14 +216,14 @@ const Handler = () => {
               path="/dashboard/member/:id"
               element={
                 <ProtectedRoute
-                  element={
-                    <PageTransition>
-                      <Member user={user} />
-                    </PageTransition>
-                  }
                   path={currentRoute}
                   user={user}
                   club={club}
+                  element={
+                    <PageTransition key={location.pathname}>
+                      <Member user={user} />
+                    </PageTransition>
+                  }
                 />
               }
             />
@@ -222,14 +231,14 @@ const Handler = () => {
               path="/dashboard/meetings"
               element={
                 <ProtectedRoute
-                  element={
-                    <PageTransition>
-                      <Meetings user={user} />
-                    </PageTransition>
-                  }
                   path={currentRoute}
                   user={user}
                   club={club}
+                  element={
+                    <PageTransition key={location.pathname}>
+                      <Meetings user={user} />
+                    </PageTransition>
+                  }
                 />
               }
             />
@@ -237,35 +246,63 @@ const Handler = () => {
               path="/dashboard/meeting/:id"
               element={
                 <ProtectedRoute
-                  element={
-                    <PageTransition>
-                      <Meeting user={user} club={club} />
-                    </PageTransition>
-                  }
                   path={currentRoute}
                   user={user}
                   club={club}
+                  element={
+                    <PageTransition key={location.pathname}>
+                      <Meeting user={user} club={club} />
+                    </PageTransition>
+                  }
                 />
               }
             />
             <Route
-              path="/dashboard/admin"
+              path="/logout"
               element={
                 <ProtectedRoute
-                  element={
-                    <PageTransition>
-                      <Admin user={user} />
-                    </PageTransition>
-                  }
                   path={currentRoute}
                   user={user}
                   club={club}
+                  element={
+                    <PageTransition key={location.pathname}>
+                      <Logout />
+                    </PageTransition>
+                  }
                 />
               }
             />
+
+            {/* Admin Route */}
+            <Route
+              path="/dashboard/admin"
+              element={
+                <ProtectedRoute
+                  path={currentRoute}
+                  user={user}
+                  club={club}
+                  element={
+                    <PageTransition key={location.pathname}>
+                      <Admin user={user} />
+                    </PageTransition>
+                  }
+                />
+              }
+            />
+
+            {/* 404 Route */}
+            <Route
+              path="*"
+              element={
+                <PageTransition key={location.pathname}>
+                  <Unknown />
+                </PageTransition>
+              }
+            />
           </Routes>
-        </AnimatePresence>
-      )}
+        )}
+      </AnimatePresence>
+
     </>
   );
 };

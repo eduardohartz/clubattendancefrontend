@@ -224,6 +224,42 @@ export async function deleteUser() {
 
 };
 
+// Delete custom field
+
+export async function deleteCustomField({ id }: { id: number }, callback: () => void) {
+
+    const token = Cookies.get('session');
+
+    if (!token) {
+        return null;
+    }
+
+    const confirmation = confirm("Are you sure you want to delete this field? THIS WILL DELETE ALL MEMBER DATA ASSOCIATED WITH THIS FIELD!");
+
+    if (!confirmation) {
+        return;
+    }
+
+    try {
+        const response = await axios.delete(getBaseUrl() + '/members/fields/delete', {
+            headers: {
+                'Authorization': `${token}`,
+                'Id': `${id}`
+            }
+        });
+
+        if (response.data.success == "true") {
+            successToast("Field deleted")
+            callback();
+        } else {
+            errorToast("Error deleting field")
+        }
+    } catch (error) {
+        errorToast("Error deleting field")
+    }
+
+};
+
 // Delete user (admin only)
 
 export async function adminDeleteUser({ id }: { id: number }, callback: () => void) {

@@ -101,3 +101,30 @@ export async function attendMeeting(code: string, memberId: string, lastName: st
         return false
     }
 };
+
+export async function createCustomField(fieldName: string, fieldType: string, dropdownValues: string[] = [], defaultValue: string = "") {
+    const token = Cookies.get('session');
+
+    try {
+        const response = await axios.post(getBaseUrl() + '/members/fields/create', {
+            fieldName,
+            fieldType,
+            defaultValue,
+            dropdownValues
+        }, {
+            headers: {
+                'Authorization': `${token}`
+            }
+        });
+        if (response.data.success) {
+            return true
+        } else {
+            errorToast("Error creating field.")
+            return false
+        }
+    } catch (error) {
+        errorToast("Error creating field.")
+        return false
+    }
+
+}

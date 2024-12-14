@@ -253,7 +253,7 @@ function Meeting({ user, club }: { user: User | null, club: Club | null }) {
                         className={`bg-white w-[500px] p-6 rounded-lg shadow-lg transform transition-transform duration-300 ${isModalOpen ? "scale-100" : "scale-95"}`}
                     >
                         <h2 className="text-2xl font-bold mb-4">Add member manually</h2>
-                        <select className="rounded-lg my-4 block w-64" onChange={(e) => setSelectedMember(e.target.value)} defaultValue={selectedMember}>
+                        <select className="border my-4 block w-full mb-5 border-greyscale-200 bg-greyscale-100 rounded-lg transition-all focus:ring-accent-100 hover:cursor-pointer" onChange={(e) => setSelectedMember(e.target.value)} defaultValue={selectedMember}>
                             <option value="" disabled>Select member</option>
                             {members.map((member: Member) => (
                                 <option key={member.id} value={member.id}>{member.firstName} {member.lastName}</option>
@@ -265,14 +265,14 @@ function Meeting({ user, club }: { user: User | null, club: Club | null }) {
                                 <input
                                     type="text"
                                     placeholder="First name"
-                                    className="rounded-lg w-64"
+                                    className="rounded-lg w-full"
                                     onChange={(e) => setFirstName(e.target.value)}
                                     value={firstName}
                                 />
                                 <input
                                     type="text"
                                     placeholder="Last name"
-                                    className="rounded-lg w-64"
+                                    className="rounded-lg w-full"
                                     onChange={(e) => setLastName(e.target.value)}
                                     value={lastName}
                                 />

@@ -9,10 +9,10 @@ const pageVariants = {
 
 const pageTransition = {
   type: "tween",
-  duration: 0.2,
+  duration: 0.15,
   ease: "easeInOut",
-  stiffness: 20,
-  damping: 10,
+  stiffness: 50,
+  damping: 20,
   mass: 1,
 };
 

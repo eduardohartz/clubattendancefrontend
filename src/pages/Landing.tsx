@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import Lenis from 'lenis';
 
-function Home() {
+function Landing() {
 
     const texts = ['simplest', 'smoothest', 'no-cost', 'optimized', 'fastest'];
     const [currentText, setCurrentText] = useState("easiest");
@@ -101,4 +101,4 @@ function Home() {
     );
 }
 
-export default Home;
+export default Landing;

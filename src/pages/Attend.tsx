@@ -193,7 +193,7 @@ function Attend() {
                                         required
                                         value={memberId}
                                         onChange={(e) => setMemberId(e.target.value)}
-                                        className="block w-full border-none rounded-md py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-accent-200 sm:text-sm transition-all"
+                                        className="border block py-2 w-full mb-5 border-greyscale-200 bg-greyscale-100 rounded-lg transition-all focus:ring-accent-100 hover:cursor-pointer"
                                     >
                                         <option value="" disabled>
                                             Select

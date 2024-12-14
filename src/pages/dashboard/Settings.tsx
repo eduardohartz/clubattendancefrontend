@@ -3,7 +3,7 @@ import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { deleteClub } from "../../services/DeleteData";
 import { updateAllowSelfRegistration, updateClubName, updateOfficerName, updateUseStaticCode } from "../../services/UpdateData";
 import { useNavigate } from "react-router-dom";
-import { faDownload, faQrcode, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faDownload, faPenToSquare, faQrcode, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Club } from "../../types/models";
 
@@ -111,17 +111,11 @@ function Settings({ club }: { club: Club | null }) {
                         <div className="flex flex-col w-full gap-2">
                             <span className="text-xl">
                                 Club name: {club.displayName}
-                                <i
-                                    className="fa-solid fa-pen-to-square hover:cursor-pointer ml-1"
-                                    onClick={() => handleOpenModal("Club Name", club.displayName || "")}
-                                />
+                                <FontAwesomeIcon icon={faPenToSquare} className="hover:cursor-pointer ml-1" onClick={() => handleOpenModal("Club Name", club.displayName || "")} />
                             </span>
                             <span className="text-xl">
                                 Club officer name: {club.officer}
-                                <i
-                                    className="fa-solid fa-pen-to-square hover:cursor-pointer ml-1"
-                                    onClick={() => handleOpenModal("Officer Name", club.officer || "")}
-                                />
+                                <FontAwesomeIcon icon={faPenToSquare} className="hover:cursor-pointer ml-1" onClick={() => handleOpenModal("Officer Name", club.officer || "")} />
                             </span>
                             <span className="text-xl">
                                 Allow Member self-registration:

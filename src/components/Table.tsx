@@ -7,7 +7,7 @@ import Cookies from 'js-cookie';
 import Loading from './Loading';
 import { User } from '../types/models';
 
-function Table({ type, id = "", user }: { type: 'meetings' | 'members' | 'attendees' | 'attendance' | 'users' | 'clubs', id?: string, user: User | null }) {
+function Table({ type, id = "", user }: { type: 'meetings' | 'members' | 'attendees' | 'attendance' | 'users' | 'clubs' | 'customFields', id?: string, user: User | null }) {
     const [data, setData] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const wsRef = useRef<WebSocket | null>(null);
@@ -82,6 +82,10 @@ function Table({ type, id = "", user }: { type: 'meetings' | 'members' | 'attend
                 return row.member ? row.member.firstName : "";
             case "memberLastName":
                 return row.member ? row.member.lastName : "";
+            case "fieldType":
+                return row[key].charAt(0).toUpperCase() + row[key].slice(1);
+            case "defaultValue":
+                return row[key] || "None";
             default:
                 return row[key];
         }
