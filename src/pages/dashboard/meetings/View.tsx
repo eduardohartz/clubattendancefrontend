@@ -1,110 +1,114 @@
-import { useState, useEffect, useRef, useCallback } from "react";
-import { Helmet, HelmetProvider } from 'react-helmet-async';
-import { useParams, Navigate, Link } from "react-router-dom";
-import { FetchData } from "../../../services/FetchData";
-import { formatDate, formatTime } from "../../../utils/Formatters";
-import Table from "../../../components/Table";
-import Loading from "../../../components/Loading";
-import { updateMeeting } from "../../../services/UpdateData";
-import PageTransition from "../../../components/PageTransition";
-import { createAttendee, createMember } from "../../../services/CreateData";
-import { errorToast } from "../../../components/Toast";
-import { faArrowLeft, faDownload, faPlus, faPowerOff, faQrcode } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import type { User, Club, Member, Meeting } from "../../../types/models";
+/* eslint ts/no-redeclare: 0 */ // --> OFF
+
+import type { Club, Meeting, Member, User } from "../../../types/models"
+import { faArrowLeft, faDownload, faPlus, faPowerOff, faQrcode } from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { useCallback, useEffect, useRef, useState } from "react"
+import { Helmet, HelmetProvider } from "react-helmet-async"
+import { Link, Navigate, useParams } from "react-router-dom"
+import Loading from "../../../components/Loading"
+import PageTransition from "../../../components/PageTransition"
+import Table from "../../../components/Table"
+import { errorToast } from "../../../components/Toast"
+import { createAttendee, createMember } from "../../../services/CreateData"
+import { FetchData } from "../../../services/FetchData"
+import { updateMeeting } from "../../../services/UpdateData"
+import { formatDate, formatTime } from "../../../utils/Formatters"
 
 function Meeting({ user, club }: { user: User | null, club: Club | null }) {
 
-    const { id } = useParams<{ id: string }>();
-    const [meeting, setMeeting] = useState<Meeting | null>(null);
-    const [loading, setLoading] = useState(true);
-    const [showAttendees, setShowAttendees] = useState(true);
-    const [duration, setDuration] = useState<string>("");
-    const [volunteering, setVolunteering] = useState<boolean>(false);
-    const [notes, setNotes] = useState<string>("");
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [isModalVisible, setIsModalVisible] = useState(false);
-    const [isQrModalOpen, setIsQrModalOpen] = useState(false);
-    const [isQrModalVisible, setIsQrModalVisible] = useState(false);
-    const qrCodeRef = useRef<HTMLImageElement>(null);
-    const [members, setMembers] = useState<Member[]>([]);
-    const [selectedMember, setSelectedMember] = useState<string>("");
-    const [firstName, setFirstName] = useState<string>("");
-    const [lastName, setLastName] = useState<string>("");
+    const { id } = useParams<{ id: string }>()
+    const [meeting, setMeeting] = useState<Meeting | null>(null)
+    const [loading, setLoading] = useState(true)
+    const [showAttendees, setShowAttendees] = useState(true)
+    const [duration, setDuration] = useState<string>("")
+    const [volunteering, setVolunteering] = useState<boolean>(false)
+    const [notes, setNotes] = useState<string>("")
+    const [isModalOpen, setIsModalOpen] = useState(false)
+    const [isModalVisible, setIsModalVisible] = useState(false)
+    const [isQrModalOpen, setIsQrModalOpen] = useState(false)
+    const [isQrModalVisible, setIsQrModalVisible] = useState(false)
+    const qrCodeRef = useRef<HTMLImageElement>(null)
+    const [members, setMembers] = useState<Member[]>([])
+    const [selectedMember, setSelectedMember] = useState<string>("")
+    const [firstName, setFirstName] = useState<string>("")
+    const [lastName, setLastName] = useState<string>("")
 
     useEffect(() => {
         const fetchMembers = async () => {
-            const data = await FetchData({ type: 'members' });
-            setMembers(data);
-        };
-        fetchMembers();
-    }, []);
+            const data = await FetchData({ type: "members" })
+            setMembers(data)
+        }
+        fetchMembers()
+    }, [])
 
     const fetchMeeting = useCallback(async () => {
-        setLoading(true);
+        setLoading(true)
         try {
-            const data = await FetchData({ type: 'meetings', id });
-            setMeeting(data);
+            const data = await FetchData({ type: "meetings", id })
+            setMeeting(data)
         } catch {
-            setMeeting(null);
+            setMeeting(null)
         } finally {
-            setLoading(false);
+            setLoading(false)
         }
-    }, [id]);
+    }, [id])
 
     useEffect(() => {
-        fetchMeeting();
-    }, [id, fetchMeeting]);
+        fetchMeeting()
+    }, [id, fetchMeeting])
 
     useEffect(() => {
-        if (meeting == null) return;
+        if (meeting === null)
+            return
 
-        setVolunteering(meeting.volunteering || false);
-        setNotes(meeting.notes || "");
+        setVolunteering(meeting.volunteering || false)
+        setNotes(meeting.notes || "")
 
         const updateDuration = () => {
-            const now = new Date().getTime();
-            const durationMs = ((meeting.endTime ?? now / 1000) * 1000) - (meeting.startTime * 1000);
-            const durationSec = Math.floor(durationMs / 1000);
-            const hours = Math.floor(durationSec / 3600);
-            const minutes = Math.floor((durationSec % 3600) / 60);
-            const seconds = durationSec % 60;
+            const now = new Date().getTime()
+            const durationMs = ((meeting.endTime ?? now / 1000) * 1000) - (meeting.startTime * 1000)
+            const durationSec = Math.floor(durationMs / 1000)
+            const hours = Math.floor(durationSec / 3600)
+            const minutes = Math.floor((durationSec % 3600) / 60)
+            const seconds = durationSec % 60
 
             const durationStr = `${hours.toString().padStart(2, "0")}h:${minutes
                 .toString()
-                .padStart(2, "0")}m:${seconds.toString().padStart(2, "0")}s`;
-            setDuration(durationStr);
+                .padStart(2, "0")}m:${seconds.toString().padStart(2, "0")}s`
+            setDuration(durationStr)
 
             if (meeting.endTime) {
-                clearInterval(intervalId);
+                clearInterval(intervalId)
             }
-        };
+        }
 
-        const intervalId = setInterval(updateDuration, 1000);
-        updateDuration();
+        const intervalId = setInterval(updateDuration, 1000)
+        updateDuration()
 
-        return () => clearInterval(intervalId);
-    }, [meeting]);
+        return () => clearInterval(intervalId)
+    }, [meeting])
 
-    if (!user || !club) return null;
+    if (!user || !club)
+        return null
 
     if (loading) {
-        return <Loading />;
+        return <Loading />
     }
 
     if (!meeting) {
-        return <Navigate to="/dashboard/meetings" />;
+        return <Navigate to="/dashboard/meetings" />
     }
 
     const handleOpenModal = () => {
-        setIsModalVisible(true);
-        setTimeout(() => setIsModalOpen(true), 200);
-    };
+        setIsModalVisible(true)
+        setTimeout(() => setIsModalOpen(true), 200)
+    }
 
     const handleCloseModal = () => {
-        setIsModalOpen(false);
-        setTimeout(() => setIsModalVisible(false), 300);
-    };
+        setIsModalOpen(false)
+        setTimeout(() => setIsModalVisible(false), 300)
+    }
 
     const handleSubmit = async () => {
         if (selectedMember === "") {
@@ -116,48 +120,48 @@ function Meeting({ user, club }: { user: User | null, club: Club | null }) {
                 errorToast("Please fill in all fields!")
                 return
             }
-            const id = await createMember(firstName, lastName);
+            const id = await createMember(firstName, lastName)
             if (!id) {
-                return;
+                return
             }
-            await createAttendee(id, meeting.id);
-            handleCloseModal();
+            await createAttendee(id, meeting.id)
+            handleCloseModal()
             return
         }
-        await createAttendee(selectedMember, meeting.id);
-        handleCloseModal();
-    };
+        await createAttendee(selectedMember, meeting.id)
+        handleCloseModal()
+    }
 
     const handleSaveChanges = async () => {
-        await updateMeeting(meeting.id, notes, volunteering);
-    };
+        await updateMeeting(meeting.id, notes, volunteering)
+    }
 
     const handleEndMeeting = async () => {
-        await updateMeeting(meeting.id, notes, volunteering, true);
-        fetchMeeting();
-    };
+        await updateMeeting(meeting.id, notes, volunteering, true)
+        fetchMeeting()
+    }
 
     const handleOpenQrModal = () => {
-        setIsQrModalVisible(true);
-        setTimeout(() => setIsQrModalOpen(true), 200);
-    };
+        setIsQrModalVisible(true)
+        setTimeout(() => setIsQrModalOpen(true), 200)
+    }
 
     const handleCloseQrModal = () => {
-        setIsQrModalOpen(false);
-        setTimeout(() => setIsQrModalVisible(false), 300);
-    };
+        setIsQrModalOpen(false)
+        setTimeout(() => setIsQrModalVisible(false), 300)
+    }
 
     const handleDownloadQrCode = () => {
         if (qrCodeRef.current) {
-            const link = document.createElement('a');
-            link.href = qrCodeRef.current.src;
-            link.target = '_blank';
-            link.download = 'qr_code.png';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
+            const link = document.createElement("a")
+            link.href = qrCodeRef.current.src
+            link.target = "_blank"
+            link.download = "qr_code.png"
+            document.body.appendChild(link)
+            link.click()
+            document.body.removeChild(link)
         }
-    };
+    }
 
     return (
         <PageTransition>
@@ -169,10 +173,15 @@ function Meeting({ user, club }: { user: User | null, club: Club | null }) {
             <div className="usablesize h-[100vh] absolute top-0 right-0 flex flex-col items-center gap-10">
                 <div className="absolute top-[100px] w-[80%] max-w-[1000px]">
                     <div className="mx-auto flex w-full items-center justify-between mb-5">
-                        <span className="justify-start text-2xl font-bold ml-2">Meeting {formatDate(meeting.startTime.toString())}</span>
-                        <Link to={"/dashboard/meetings"}>
+                        <span className="justify-start text-2xl font-bold ml-2">
+                            Meeting
+                            {formatDate(meeting.startTime.toString())}
+                        </span>
+                        <Link to="/dashboard/meetings">
                             <button className="bg-greyscale-200 hover:bg-greyscale-300 transition-colors px-[25px] py-[12px] rounded-lg text-[13.5px] mr-2 justify-end">
-                                <FontAwesomeIcon icon={faArrowLeft} size="lg" /> Back
+                                <FontAwesomeIcon icon={faArrowLeft} size="lg" />
+                                {" "}
+                                Back
                             </button>
                         </Link>
                     </div>
@@ -195,13 +204,19 @@ function Meeting({ user, club }: { user: User | null, club: Club | null }) {
                             <div className="w-1/2">
                                 <div className="w-full h-full flex items-end gap-2">
                                     <button className="right-1 relative bg-accent-100 hover:bg-accent-200 transition-colors px-[25px] py-[12px] rounded-lg text-[13.5px] justify-end ml-1 disabled:cursor-not-allowed disabled:bg-accent-90 disabled:hover:bg-accent-90" onClick={handleOpenQrModal} disabled={meeting.endTime != null}>
-                                        <FontAwesomeIcon icon={faQrcode} size="lg" /> QR-Code
+                                        <FontAwesomeIcon icon={faQrcode} size="lg" />
+                                        {" "}
+                                        QR-Code
                                     </button>
                                     <button className="right-1 relative bg-accent-100 hover:bg-accent-200 transition-colors px-[25px] py-[12px] rounded-lg text-[13.5px] justify-end ml-1" onClick={handleOpenModal}>
-                                        <FontAwesomeIcon icon={faPlus} size="lg" /> Add manually
+                                        <FontAwesomeIcon icon={faPlus} size="lg" />
+                                        {" "}
+                                        Add manually
                                     </button>
                                     <button className="right-1 relative text-warningred bg-greyscale-200 hover:bg-greyscale-300 transition-colors px-[25px] py-[12px] rounded-lg text-[13.5px] justify-end ml-1 disabled:cursor-not-allowed disabled:hover:bg-greyscale-200" onClick={handleEndMeeting} disabled={meeting.endTime != null}>
-                                        <FontAwesomeIcon icon={faPowerOff} size="lg" /> End Meeting
+                                        <FontAwesomeIcon icon={faPowerOff} size="lg" />
+                                        {" "}
+                                        End Meeting
                                     </button>
                                 </div>
                             </div>
@@ -210,7 +225,7 @@ function Meeting({ user, club }: { user: User | null, club: Club | null }) {
                                     className="h-36 w-full rounded-lg bg-greyscale-200 border-none resize-none transition-all focus:ring-2 focus:ring-accent-100"
                                     placeholder="Meeting notes"
                                     value={notes}
-                                    onChange={(e) => setNotes(e.currentTarget.value)}
+                                    onChange={e => setNotes(e.currentTarget.value)}
                                 />
                                 <div className="flex justify-between items-center mt-2">
                                     <span className="text-lg">
@@ -223,7 +238,9 @@ function Meeting({ user, club }: { user: User | null, club: Club | null }) {
                                         />
                                     </span>
                                     <button className="right-0 relative bg-accent-100 hover:bg-accent-200 transition-colors px-[25px] py-[12px] rounded-lg text-[13.5px] justify-end" onClick={handleSaveChanges}>
-                                        <FontAwesomeIcon icon={faDownload} size="lg" /> Save
+                                        <FontAwesomeIcon icon={faDownload} size="lg" />
+                                        {" "}
+                                        Save
                                     </button>
                                 </div>
                             </div>
@@ -240,7 +257,7 @@ function Meeting({ user, club }: { user: User | null, club: Club | null }) {
                     </div>
                     {showAttendees && (
                         <div className="mt-4">
-                            <Table type={"attendees"} id={id} user={user} />
+                            <Table type="attendees" id={id} user={user} />
                         </div>
                     )}
                 </div>
@@ -253,10 +270,14 @@ function Meeting({ user, club }: { user: User | null, club: Club | null }) {
                         className={`bg-white w-[500px] p-6 rounded-lg shadow-lg transform transition-transform duration-300 ${isModalOpen ? "scale-100" : "scale-95"}`}
                     >
                         <h2 className="text-2xl font-bold mb-4">Add member manually</h2>
-                        <select className="border my-4 block w-full mb-5 border-greyscale-200 bg-greyscale-100 rounded-lg transition-all focus:ring-accent-100 hover:cursor-pointer" onChange={(e) => setSelectedMember(e.target.value)} defaultValue={selectedMember}>
+                        <select className="border my-4 block w-full mb-5 border-greyscale-200 bg-greyscale-100 rounded-lg transition-all focus:ring-accent-100 hover:cursor-pointer" onChange={e => setSelectedMember(e.target.value)} defaultValue={selectedMember}>
                             <option value="" disabled>Select member</option>
                             {members.map((member: Member) => (
-                                <option key={member.id} value={member.id}>{member.firstName} {member.lastName}</option>
+                                <option key={member.id} value={member.id}>
+                                    {member.firstName}
+                                    {" "}
+                                    {member.lastName}
+                                </option>
                             ))}
                             <option value="new"> -Add new member</option>
                         </select>
@@ -266,14 +287,14 @@ function Meeting({ user, club }: { user: User | null, club: Club | null }) {
                                     type="text"
                                     placeholder="First name"
                                     className="rounded-lg w-full"
-                                    onChange={(e) => setFirstName(e.target.value)}
+                                    onChange={e => setFirstName(e.target.value)}
                                     value={firstName}
                                 />
                                 <input
                                     type="text"
                                     placeholder="Last name"
                                     className="rounded-lg w-full"
-                                    onChange={(e) => setLastName(e.target.value)}
+                                    onChange={e => setLastName(e.target.value)}
                                     value={lastName}
                                 />
                             </div>
@@ -321,7 +342,7 @@ function Meeting({ user, club }: { user: User | null, club: Club | null }) {
                 </div>
             )}
         </PageTransition>
-    );
+    )
 }
 
-export default Meeting;
+export default Meeting

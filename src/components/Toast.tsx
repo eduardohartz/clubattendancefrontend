@@ -1,4 +1,4 @@
-import { Slide, toast } from "react-toastify";
+import { Slide, toast } from "react-toastify"
 
 export function successToast(message: string) {
     toast.success(message, {
@@ -11,7 +11,7 @@ export function successToast(message: string) {
         progress: undefined,
         theme: "light",
         transition: Slide,
-    });
+    })
 }
 
 export function errorToast(message: string) {
@@ -25,7 +25,7 @@ export function errorToast(message: string) {
         progress: undefined,
         theme: "light",
         transition: Slide,
-    });
+    })
 }
 
 export function warningToast(message: string) {
@@ -39,7 +39,7 @@ export function warningToast(message: string) {
         progress: undefined,
         theme: "light",
         transition: Slide,
-    });
+    })
 }
 
 export function infoToast(message: string) {
@@ -53,5 +53,5 @@ export function infoToast(message: string) {
         progress: undefined,
         theme: "light",
         transition: Slide,
-    });
+    })
 }

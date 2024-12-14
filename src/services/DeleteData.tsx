@@ -1,35 +1,35 @@
-import axios from "axios";
-import Cookies from "js-cookie";
-import getBaseUrl from "./Api";
-import { errorToast, successToast } from "../components/Toast";
+import axios from "axios"
+import Cookies from "js-cookie"
+import { errorToast, successToast } from "../components/Toast"
+import getBaseUrl from "./Api"
 
 // Delete member from members table
 
 export async function deleteMember({ id }: { id: number }, callback: () => void) {
 
-    const token = Cookies.get('session');
+    const token = Cookies.get("session")
 
     if (!token) {
-        return null;
+        return null
     }
 
-    const confirmation = confirm("Are you sure you want to delete this member? THIS WILL DELETE ALL ASSOCIATED ATTENDANCE RECORDS!");
+    const confirmation = confirm("Are you sure you want to delete this member? THIS WILL DELETE ALL ASSOCIATED ATTENDANCE RECORDS!")
 
     if (!confirmation) {
-        return;
+        return
     }
 
     try {
-        const response = await axios.delete(getBaseUrl() + '/members/delete', {
+        const response = await axios.delete(`${getBaseUrl()}/members/delete`, {
             headers: {
-                'Authorization': `${token}`,
-                'Id': `${id}`
-            }
-        });
+                Authorization: `${token}`,
+                Id: `${id}`,
+            },
+        })
 
-        if (response.data.success == "true") {
+        if (response.data.success === "true") {
             successToast("Member deleted")
-            callback();
+            callback()
         } else {
             errorToast("Error deleting member")
         }
@@ -43,29 +43,29 @@ export async function deleteMember({ id }: { id: number }, callback: () => void)
 
 export async function deleteMeeting({ id }: { id: number }, callback: () => void) {
 
-    const token = Cookies.get('session');
+    const token = Cookies.get("session")
 
     if (!token) {
-        return null;
+        return null
     }
 
-    const confirmation = confirm("Are you sure you want to delete this meeting? THIS WILL DELETE ALL ASSOCIATED ATTENDANCE RECORDS!");
+    const confirmation = confirm("Are you sure you want to delete this meeting? THIS WILL DELETE ALL ASSOCIATED ATTENDANCE RECORDS!")
 
     if (!confirmation) {
-        return;
+        return
     }
 
     try {
-        const response = await axios.delete(getBaseUrl() + '/meetings/delete', {
+        const response = await axios.delete(`${getBaseUrl()}/meetings/delete`, {
             headers: {
-                'Authorization': `${token}`,
-                'Id': `${id}`
-            }
-        });
+                Authorization: `${token}`,
+                Id: `${id}`,
+            },
+        })
 
-        if (response.data.success == "true") {
+        if (response.data.success === "true") {
             successToast("Meeting deleted")
-            callback();
+            callback()
         } else {
             errorToast("Error deleting meeting")
         }
@@ -79,29 +79,29 @@ export async function deleteMeeting({ id }: { id: number }, callback: () => void
 
 export async function deleteAttendance({ id }: { id: number }, callback: () => void) {
 
-    const token = Cookies.get('session');
+    const token = Cookies.get("session")
 
     if (!token) {
-        return null;
+        return null
     }
 
-    const confirmation = confirm("Are you sure you want to delete this attendance record? THIS IS IRREVERSABLE!");
+    const confirmation = confirm("Are you sure you want to delete this attendance record? THIS IS IRREVERSABLE!")
 
     if (!confirmation) {
-        return;
+        return
     }
 
     try {
-        const response = await axios.delete(getBaseUrl() + '/attendance/delete', {
+        const response = await axios.delete(`${getBaseUrl()}/attendance/delete`, {
             headers: {
-                'Authorization': `${token}`,
-                'Id': `${id}`
-            }
-        });
+                Authorization: `${token}`,
+                Id: `${id}`,
+            },
+        })
 
-        if (response.data.success == "true") {
+        if (response.data.success === "true") {
             successToast("Record deleted")
-            callback();
+            callback()
         } else {
             errorToast("Error deleting record")
         }
@@ -115,21 +115,21 @@ export async function deleteAttendance({ id }: { id: number }, callback: () => v
 
 export async function removeAttendee({ id }: { id: number }) {
 
-    const token = Cookies.get('session');
+    const token = Cookies.get("session")
 
     if (!token) {
-        return null;
+        return null
     }
 
     try {
-        const response = await axios.delete(getBaseUrl() + '/meetings/attendee', {
+        const response = await axios.delete(`${getBaseUrl()}/meetings/attendee`, {
             headers: {
-                'Authorization': `${token}`,
-                'Id': `${id}`
-            }
-        });
+                Authorization: `${token}`,
+                Id: `${id}`,
+            },
+        })
 
-        if (response.data.success != "true") {
+        if (response.data.success !== "true") {
             errorToast("Error deleting attendee")
         }
     } catch {
@@ -142,41 +142,41 @@ export async function removeAttendee({ id }: { id: number }) {
 
 export async function deleteClub() {
 
-    const token = Cookies.get('session');
+    const token = Cookies.get("session")
 
     if (!token) {
-        return null;
+        return null
     }
 
-    const confirmation = confirm("Are you sure you want to delete your club? THIS WILL DELETE ALL ASSOCIATED ATTENDANCE DATA!");
+    const confirmation = confirm("Are you sure you want to delete your club? THIS WILL DELETE ALL ASSOCIATED ATTENDANCE DATA!")
 
     if (!confirmation) {
-        return false;
+        return false
     }
 
-    const confirmation2 = confirm("This will put your account back in the setup phase, and will reset your password. Are you sure you want to continue?");
+    const confirmation2 = confirm("This will put your account back in the setup phase, and will reset your password. Are you sure you want to continue?")
 
     if (!confirmation2) {
-        return false;
+        return false
     }
 
     try {
-        const response = await axios.delete(getBaseUrl() + '/club/delete', {
+        const response = await axios.delete(`${getBaseUrl()}/club/delete`, {
             headers: {
-                'Authorization': `${token}`,
-            }
-        });
+                Authorization: `${token}`,
+            },
+        })
 
-        if (response.data.success == "true") {
-            Cookies.remove('session')
-            return true;
+        if (response.data.success === "true") {
+            Cookies.remove("session")
+            return true
         } else {
             errorToast("Error deleting club")
-            return false;
+            return false
         }
     } catch {
         errorToast("Error deleting club")
-        return false;
+        return false
     }
 
 };
@@ -185,41 +185,41 @@ export async function deleteClub() {
 
 export async function deleteUser() {
 
-    const token = Cookies.get('session');
+    const token = Cookies.get("session")
 
     if (!token) {
-        return null;
+        return null
     }
 
-    const confirmation = confirm("Are you sure you want to delete your user? THIS WILL DELETE ALL ASSOCIATED ATTENDANCE DATA!");
+    const confirmation = confirm("Are you sure you want to delete your user? THIS WILL DELETE ALL ASSOCIATED ATTENDANCE DATA!")
 
     if (!confirmation) {
-        return false;
+        return false
     }
 
-    const confirmation2 = confirm("This action is irrevarsable, you will not be able to login anymore. Are you sure you want to continue?");
+    const confirmation2 = confirm("This action is irrevarsable, you will not be able to login anymore. Are you sure you want to continue?")
 
     if (!confirmation2) {
-        return false;
+        return false
     }
 
     try {
-        const response = await axios.delete(getBaseUrl() + '/user/delete', {
+        const response = await axios.delete(`${getBaseUrl()}/user/delete`, {
             headers: {
-                'Authorization': `${token}`,
-            }
-        });
+                Authorization: `${token}`,
+            },
+        })
 
-        if (response.data.success == "true") {
-            Cookies.remove('session')
-            return true;
+        if (response.data.success === "true") {
+            Cookies.remove("session")
+            return true
         } else {
             errorToast("Error deleting account")
-            return false;
+            return false
         }
     } catch {
         errorToast("Error deleting account")
-        return false;
+        return false
     }
 
 };
@@ -228,29 +228,29 @@ export async function deleteUser() {
 
 export async function deleteCustomField({ id }: { id: number }, callback: () => void) {
 
-    const token = Cookies.get('session');
+    const token = Cookies.get("session")
 
     if (!token) {
-        return null;
+        return null
     }
 
-    const confirmation = confirm("Are you sure you want to delete this field? THIS WILL DELETE ALL MEMBER DATA ASSOCIATED WITH THIS FIELD!");
+    const confirmation = confirm("Are you sure you want to delete this field? THIS WILL DELETE ALL MEMBER DATA ASSOCIATED WITH THIS FIELD!")
 
     if (!confirmation) {
-        return;
+        return
     }
 
     try {
-        const response = await axios.delete(getBaseUrl() + '/members/fields/delete', {
+        const response = await axios.delete(`${getBaseUrl()}/members/fields/delete`, {
             headers: {
-                'Authorization': `${token}`,
-                'Id': `${id}`
-            }
-        });
+                Authorization: `${token}`,
+                Id: `${id}`,
+            },
+        })
 
-        if (response.data.success == "true") {
+        if (response.data.success === "true") {
             successToast("Field deleted")
-            callback();
+            callback()
         } else {
             errorToast("Error deleting field")
         }
@@ -264,29 +264,29 @@ export async function deleteCustomField({ id }: { id: number }, callback: () => 
 
 export async function adminDeleteUser({ id }: { id: number }, callback: () => void) {
 
-    const token = Cookies.get('session');
+    const token = Cookies.get("session")
 
     if (!token) {
-        return null;
+        return null
     }
 
-    const confirmation = confirm("Are you sure you want to delete this user? THE CLUB WILL AND ITS DATA WILL BE DELETED!");
+    const confirmation = confirm("Are you sure you want to delete this user? THE CLUB WILL AND ITS DATA WILL BE DELETED!")
 
     if (!confirmation) {
-        return;
+        return
     }
 
     try {
-        const response = await axios.delete(getBaseUrl() + '/admin/users/delete', {
+        const response = await axios.delete(`${getBaseUrl()}/admin/users/delete`, {
             headers: {
-                'Authorization': `${token}`,
-                'Id': `${id}`
-            }
-        });
+                Authorization: `${token}`,
+                Id: `${id}`,
+            },
+        })
 
-        if (response.data.success == "true") {
+        if (response.data.success === "true") {
             successToast("User deleted")
-            callback();
+            callback()
         } else {
             errorToast("Error deleting user")
         }
@@ -300,29 +300,29 @@ export async function adminDeleteUser({ id }: { id: number }, callback: () => vo
 
 export async function adminDeleteClub({ id }: { id: number }, callback: () => void) {
 
-    const token = Cookies.get('session');
+    const token = Cookies.get("session")
 
     if (!token) {
-        return null;
+        return null
     }
 
-    const confirmation = confirm("Are you sure you want to delete this club? ITS DATA WILL BE DELETED!");
+    const confirmation = confirm("Are you sure you want to delete this club? ITS DATA WILL BE DELETED!")
 
     if (!confirmation) {
-        return;
+        return
     }
 
     try {
-        const response = await axios.delete(getBaseUrl() + '/admin/clubs/delete', {
+        const response = await axios.delete(`${getBaseUrl()}/admin/clubs/delete`, {
             headers: {
-                'Authorization': `${token}`,
-                'Id': `${id}`
-            }
-        });
+                Authorization: `${token}`,
+                Id: `${id}`,
+            },
+        })
 
-        if (response.data.success == "true") {
+        if (response.data.success === "true") {
             successToast("Club deleted")
-            callback();
+            callback()
         } else {
             errorToast("Error deleting club")
         }

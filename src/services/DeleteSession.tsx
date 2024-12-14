@@ -1,26 +1,26 @@
-import axios from 'axios';
-import Cookies from "js-cookie";
-import getBaseUrl from './Api';
+import axios from "axios"
+import Cookies from "js-cookie"
+import getBaseUrl from "./Api"
 
 // Used to log out
 
 async function DeleteSession() {
-    const token = Cookies.get('session');
+    const token = Cookies.get("session")
 
     if (!token) {
-        return null;
+        return null
     }
 
     try {
-        const response = await axios.post<any>(getBaseUrl() + '/auth/logout', {}, {
+        const response = await axios.post<any>(`${getBaseUrl()}/auth/logout`, {}, {
             headers: {
-                'Authorization': `${token}`
-            }
-        });
-        return response.data.logout;
+                Authorization: `${token}`,
+            },
+        })
+        return response.data.logout
     } catch {
-        return false;
+        return false
     }
 };
 
-export default DeleteSession;
+export default DeleteSession

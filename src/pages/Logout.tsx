@@ -1,28 +1,28 @@
-import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import Cookies from 'js-cookie';
-import DeleteSession from '../services/DeleteSession';
+import Cookies from "js-cookie"
+import { useEffect } from "react"
+import { useNavigate } from "react-router-dom"
+import DeleteSession from "../services/DeleteSession"
 
 function Logout() {
-    const navigate = useNavigate();
+    const navigate = useNavigate()
 
     useEffect(() => {
         const performLogout = async () => {
-            const logout = await DeleteSession();
+            const logout = await DeleteSession()
 
             if (logout) {
-                Cookies.remove('session');
+                Cookies.remove("session")
             }
-            navigate('/');
-        };
+            navigate("/")
+        }
 
-        performLogout();
-    }, [navigate]);
+        performLogout()
+    }, [navigate])
 
     return (
         <div>
         </div>
-    );
+    )
 }
 
-export default Logout;
+export default Logout

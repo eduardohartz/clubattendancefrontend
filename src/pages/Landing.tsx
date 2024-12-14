@@ -1,42 +1,42 @@
-import { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
-import Lenis from 'lenis';
+import Lenis from "lenis"
+import { useEffect, useRef, useState } from "react"
+import { Link } from "react-router-dom"
 
 function Landing() {
 
-    const [currentText, setCurrentText] = useState("easiest");
-    const [index, setIndex] = useState(0);
-    const [isUp, setIsUp] = useState(false);
-    const infoRef = useRef<HTMLDivElement>(null);
+    const [currentText, setCurrentText] = useState("easiest")
+    const [index, setIndex] = useState(0)
+    const [isUp, setIsUp] = useState(false)
+    const infoRef = useRef<HTMLDivElement>(null)
 
     const lenis = new Lenis({
         autoRaf: true,
-    });
+    })
 
     const scroll = async () => {
         lenis.scrollTo((infoRef.current || 0), {
             duration: 2,
-            easing: (t) => 1 - Math.pow(1 - t, 3)
-        });
+            easing: t => 1 - (1 - t) ** 3,
+        })
     }
 
     useEffect(() => {
-        const texts = ['simplest', 'smoothest', 'no-cost', 'optimized', 'fastest'];
+        const texts = ["simplest", "smoothest", "no-cost", "optimized", "fastest"]
 
         const changeText = () => {
-            setIsUp(true);
+            setIsUp(true)
 
             setTimeout(() => {
-                setCurrentText(texts[index]);
-                setIndex((prevIndex) => (prevIndex + 1) % texts.length);
-                setIsUp(false);
-            }, 500);
-        };
+                setCurrentText(texts[index])
+                setIndex(prevIndex => (prevIndex + 1) % texts.length)
+                setIsUp(false)
+            }, 500)
+        }
 
-        const interval = setInterval(changeText, 2000);
+        const interval = setInterval(changeText, 2000)
 
-        return () => clearInterval(interval);
-    }, [index]);
+        return () => clearInterval(interval)
+    }, [index])
 
     return (
         <>
@@ -58,14 +58,24 @@ function Landing() {
                         </a>
                     </div>
                     <div className="lg:flex lg:flex-1 lg:justify-end">
-                        <Link to={"/login"}><button className="text-sm/6 font-semibold text-white bg-purple-400 px-7 py-3 rounded-lg hover:bg-accent-200 transition-colors">Log in <span aria-hidden="true">&rarr;</span></button></Link>
+                        <Link to="/login">
+                            <button className="text-sm/6 font-semibold text-white bg-purple-400 px-7 py-3 rounded-lg hover:bg-accent-200 transition-colors">
+                                Log in
+                                <span aria-hidden="true">&rarr;</span>
+                            </button>
+                        </Link>
                     </div>
                 </nav>
             </header>
 
             <div className="flex flex-1 items-center justify-center mt-40 flex-col gap-10">
                 <span className="text-5xl max-lg:ml-5 lg:text-7xl font-['Galano']">Club Attendance</span>
-                <span className="text-3xl max-lg:ml-2 max-lg:text-left font-['Galano']">The <span id="change" className={`text-accent-200 change ${isUp ? 'up' : ''}`}>{currentText}</span> club attendance tracker</span>
+                <span className="text-3xl max-lg:ml-2 max-lg:text-left font-['Galano']">
+                    The
+                    <span id="change" className={`text-accent-200 change ${isUp ? "up" : ""}`}>{currentText}</span>
+                    {" "}
+                    club attendance tracker
+                </span>
                 <a href="mailto:support@clubattendance.com?subject=Requesting%20access&body=Hi!%0A%0AI%20run%20the%20club%20%5B%5D%20at%20the%20school%20%5B%5D.%20Can%20I%20request%20early%20access%20to%20your%20program%3F%0A%0AThanks!">
                     <button className="text-sm/6 font-semibold text-white bg-purple-400 px-7 py-3 rounded-lg hover:bg-accent-200 transition-colors">Request Access</button>
                 </a>
@@ -99,7 +109,7 @@ function Landing() {
             </div>
             <div className="relative h-[450px]"></div>
         </>
-    );
+    )
 }
 
-export default Landing;
+export default Landing

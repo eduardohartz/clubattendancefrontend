@@ -1,43 +1,43 @@
-import { Link, Navigate, useParams } from "react-router-dom";
-import Table from "../../../components/Table";
-import { FetchData } from "../../../services/FetchData";
-import { useState, useEffect } from "react";
-import { Helmet, HelmetProvider } from 'react-helmet-async';
-import Loading from "../../../components/Loading";
-import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { User } from "../../../types/models";
+import type { User } from "../../../types/models"
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { useEffect, useState } from "react"
+import { Helmet, HelmetProvider } from "react-helmet-async"
+import { Link, Navigate, useParams } from "react-router-dom"
+import Loading from "../../../components/Loading"
+import Table from "../../../components/Table"
+import { FetchData } from "../../../services/FetchData"
 
 function Member({ user }: { user: User | null }) {
 
-    const { id } = useParams<{ id: string }>();
-    const [member, setMember] = useState<any>(null);
-    const [loading, setLoading] = useState(true);
+    const { id } = useParams<{ id: string }>()
+    const [member, setMember] = useState<any>(null)
+    const [loading, setLoading] = useState(true)
 
     useEffect(() => {
         const fetchMember = async () => {
             try {
-                const data = await FetchData({ type: 'members', id });
-                setMember(data);
+                const data = await FetchData({ type: "members", id })
+                setMember(data)
             } catch {
                 setMember(null)
             } finally {
-                setLoading(false);
+                setLoading(false)
             }
-        };
+        }
 
-        fetchMember();
-    }, [id]);
+        fetchMember()
+    }, [id])
 
     if (!user)
         return
 
     if (loading) {
-        return <Loading />;
+        return <Loading />
     }
 
     if (!member) {
-        return <Navigate to="/dashboard/members" />;
+        return <Navigate to="/dashboard/members" />
     }
 
     return (
@@ -51,14 +51,23 @@ function Member({ user }: { user: User | null }) {
             <div className="usablesize h-[100vh] absolute top-0 right-0 flex flex-col items-center gap-10">
                 <div className="absolute top-[100px] min-w-[80%]">
                     <div className="mx-auto flex w-[100%] items-center justify-between mb-5">
-                        <span className="justify-start text-2xl font-bold ml-2">Attendance for: {member.firstName + " " + member.lastName}</span>
-                        <Link to={"/dashboard/members"}><button className="bg-greyscale-200 hover:bg-greyscale-300 transition-colors px-[25px] py-[12px] rounded-lg text-[13.5px] mr-2 justify-end"><FontAwesomeIcon icon={faArrowLeft} size="lg" /> Back</button></Link>
+                        <span className="justify-start text-2xl font-bold ml-2">
+                            Attendance for:
+                            {`${member.firstName} ${member.lastName}`}
+                        </span>
+                        <Link to="/dashboard/members">
+                            <button className="bg-greyscale-200 hover:bg-greyscale-300 transition-colors px-[25px] py-[12px] rounded-lg text-[13.5px] mr-2 justify-end">
+                                <FontAwesomeIcon icon={faArrowLeft} size="lg" />
+                                {" "}
+                                Back
+                            </button>
+                        </Link>
                     </div>
-                    <Table type={"attendance"} id={id} user={user} />
+                    <Table type="attendance" id={id} user={user} />
                 </div>
             </div>
         </>
-    );
+    )
 }
 
-export default Member;
+export default Member

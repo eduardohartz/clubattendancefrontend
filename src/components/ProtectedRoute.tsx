@@ -1,40 +1,48 @@
-import { JSX, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { User, Club } from '../types/models';
+import type { JSX } from "react"
+import type { Club, User } from "../types/models"
+import { useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom"
+import Loading from "../components/Loading" // Assuming you have a Loading component
+import PageText from "./PageText"
 
 function ProtectedRoute({ path, element, user, club }: { path: string, element: JSX.Element, user: User | null, club: Club | null }) {
-    const navigate = useNavigate();
-    const [shouldRender, setShouldRender] = useState(true);
+    const navigate = useNavigate()
+    const [shouldRender, setShouldRender] = useState(false)
+    const [error, setError] = useState<string | null>(null)
+    const [isLoading, setIsLoading] = useState(true)
 
     useEffect(() => {
         if (!user) {
-            navigate("/login?redirect=" + path);
-            setShouldRender(false);
+            navigate(`/login?redirect=${path}`)
+            setShouldRender(false)
         } else if (!club && path !== "/settings" && path !== "/dashboard/admin") {
-            navigate("/login?redirect=" + path);
-            setShouldRender(false);
+            navigate(`/login?redirect=${path}`)
+            setShouldRender(false)
         } else if (user.status === false) {
-            alert("Your account has been disabled. Please contact an administrator.");
-            navigate("/");
-            setShouldRender(false);
+            setError("Your account has been disabled. Please contact an administrator.")
+            setShouldRender(false)
         } else if (path.includes("admin") && !user.admin) {
-            alert("You do not have permission to access this page.");
-            navigate("/dashboard");
-            setShouldRender(false);
+            setError("You do not have permission to access this page.")
+            setShouldRender(false)
         } else if (path !== "/settings" && path !== "/dashboard/admin" && club && club.status === false) {
-            alert("Your club has been disabled. Please contact an administrator.");
-            navigate("/settings");
-            setShouldRender(false);
+            setError("Your club has been disabled. Please contact an administrator.")
+            setShouldRender(false)
         } else {
-            setShouldRender(true);
+            setShouldRender(true)
         }
-    }, [user, club, path, navigate]);
+        setIsLoading(false)
+    }, [user, club, path, navigate])
 
-    if (!shouldRender) {
-        return null;
-    }
+    if (isLoading)
+        return <Loading />
 
-    return element;
+    if (error)
+        return <PageText text={error} sidebar={true} />
+
+    if (shouldRender)
+        return element
+    else
+        return null
 }
 
-export default ProtectedRoute;
+export default ProtectedRoute

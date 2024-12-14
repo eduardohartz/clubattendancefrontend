@@ -1,50 +1,51 @@
-import { useState } from 'react';
-import Table from "../../components/Table";
-import axios from 'axios';
-import Cookies from 'js-cookie';
-import { Helmet, HelmetProvider } from 'react-helmet-async';
-import getBaseUrl from '../../services/Api';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
-import { User } from '../../types/models';
+import type { User } from "../../types/models"
+import { faPlus } from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import axios from "axios"
+import Cookies from "js-cookie"
+import { useState } from "react"
+import { Helmet, HelmetProvider } from "react-helmet-async"
+import Table from "../../components/Table"
+import getBaseUrl from "../../services/Api"
 
 function Admin({ user }: { user: User | null }) {
 
-    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [isSubmitting, setIsSubmitting] = useState(false)
 
-    if (!user) return
+    if (!user)
+        return
 
     const handleAddUser = async () => {
-        const username = prompt("Enter the username for the new user:");
+        const username = prompt("Enter the username for the new user:")
 
         if (!username) {
-            return;
+            return
         }
 
-        setIsSubmitting(true);
+        setIsSubmitting(true)
 
         try {
-            const token = Cookies.get('session');
-            const response = await axios.post(getBaseUrl() + '/admin/users/create', {
-                username
+            const token = Cookies.get("session")
+            const response = await axios.post(`${getBaseUrl()}/admin/users/create`, {
+                username,
             }, {
                 headers: {
-                    'Authorization': `${token}`,
-                }
-            });
+                    Authorization: `${token}`,
+                },
+            })
 
             if (response.data.success) {
-                alert("User created successfully");
-                window.location.reload();
+                alert("User created successfully")
+                window.location.reload()
             } else {
-                alert("Failed to create user");
+                alert("Failed to create user")
             }
         } catch {
-            alert("An error occurred. Please try again.");
+            alert("An error occurred. Please try again.")
         } finally {
-            setIsSubmitting(false);
+            setIsSubmitting(false)
         }
-    };
+    }
 
     return (
         <>
@@ -62,20 +63,22 @@ function Admin({ user }: { user: User | null }) {
                             onClick={handleAddUser}
                             disabled={isSubmitting}
                         >
-                            <FontAwesomeIcon icon={faPlus} size="lg" /> Add User
+                            <FontAwesomeIcon icon={faPlus} size="lg" />
+                            {" "}
+                            Add User
                         </button>
                     </div>
-                    <Table type={"users"} user={user} />
+                    <Table type="users" user={user} />
                 </div>
                 <div className="relative top-[100px] min-w-[80%]">
                     <div className="mx-auto flex w-[100%] items-center justify-between mb-5">
                         <span className="justify-start text-2xl font-bold ml-2">Clubs</span>
                     </div>
-                    <Table type={"clubs"} user={user} />
+                    <Table type="clubs" user={user} />
                 </div>
             </div>
         </>
-    );
+    )
 }
 
-export default Admin;
+export default Admin

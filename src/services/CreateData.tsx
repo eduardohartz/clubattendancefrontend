@@ -1,17 +1,17 @@
-import axios from "axios";
-import Cookies from "js-cookie";
-import getBaseUrl from "./Api";
-import { errorToast, successToast } from "../components/Toast";
+import axios from "axios"
+import Cookies from "js-cookie"
+import { errorToast, successToast } from "../components/Toast"
+import getBaseUrl from "./Api"
 
 export async function createMeeting() {
-    const token = Cookies.get('session');
+    const token = Cookies.get("session")
 
     try {
-        const response = await axios.post<any>(getBaseUrl() + '/meetings/create', {}, {
+        const response = await axios.post<any>(`${getBaseUrl()}/meetings/create`, {}, {
             headers: {
-                'Authorization': `${token}`,
-            }
-        });
+                Authorization: `${token}`,
+            },
+        })
         if (response.data.id) {
             successToast("Meeting created")
             return response.data.id
@@ -26,25 +26,25 @@ export async function createMeeting() {
 };
 
 export async function createMember(firstName: string, lastName: string) {
-    const token = Cookies.get('session');
+    const token = Cookies.get("session")
 
     try {
 
-        const response = await axios.post(getBaseUrl() + '/members/create', {
+        const response = await axios.post(`${getBaseUrl()}/members/create`, {
             firstName,
-            lastName
+            lastName,
         }, {
             headers: {
-                'Authorization': `${token}`
-            }
-        });
+                Authorization: `${token}`,
+            },
+        })
 
         if (response.data.id) {
             successToast("Member created")
-            return response.data.id;
+            return response.data.id
         } else {
             errorToast("Error creating member")
-            return null;
+            return null
         }
     } catch {
         errorToast("Error creating member")
@@ -52,17 +52,17 @@ export async function createMember(firstName: string, lastName: string) {
 };
 
 export async function createAttendee(memberId: string, meetingId: string) {
-    const token = Cookies.get('session');
+    const token = Cookies.get("session")
 
     try {
-        const response = await axios.post(getBaseUrl() + '/meetings/attendee', {
+        const response = await axios.post(`${getBaseUrl()}/meetings/attendee`, {
             memberId,
-            meetingId
+            meetingId,
         }, {
             headers: {
-                'Authorization': `${token}`
-            }
-        });
+                Authorization: `${token}`,
+            },
+        })
         if (response.data.success) {
             successToast("Attendee added")
             return response.data.id
@@ -82,13 +82,13 @@ export async function createAttendee(memberId: string, meetingId: string) {
 
 export async function attendMeeting(code: string, memberId: string, lastName: string, register: boolean, firstName: string = "") {
     try {
-        const response = await axios.post(getBaseUrl() + '/attend', {
+        const response = await axios.post(`${getBaseUrl()}/attend`, {
             code,
             memberId,
             lastName,
             register,
-            firstName
-        });
+            firstName,
+        })
         if (response.data.success) {
             return true
         } else {
@@ -103,19 +103,19 @@ export async function attendMeeting(code: string, memberId: string, lastName: st
 };
 
 export async function createCustomField(fieldName: string, fieldType: string, dropdownValues: string[] = [], defaultValue: string = "") {
-    const token = Cookies.get('session');
+    const token = Cookies.get("session")
 
     try {
-        const response = await axios.post(getBaseUrl() + '/members/fields/create', {
+        const response = await axios.post(`${getBaseUrl()}/members/fields/create`, {
             fieldName,
             fieldType,
             defaultValue,
-            dropdownValues
+            dropdownValues,
         }, {
             headers: {
-                'Authorization': `${token}`
-            }
-        });
+                Authorization: `${token}`,
+            },
+        })
         if (response.data.success) {
             return true
         } else {

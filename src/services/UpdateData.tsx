@@ -1,32 +1,32 @@
-import axios from "axios";
-import Cookies from "js-cookie";
-import getBaseUrl from "./Api";
-import { errorToast, successToast } from "../components/Toast";
+import axios from "axios"
+import Cookies from "js-cookie"
+import { errorToast, successToast } from "../components/Toast"
+import getBaseUrl from "./Api"
 
 export async function updateMeeting(id: string, newNotes: string = "", volunteering: boolean = false, endMeeting: boolean = false) {
 
-    const token = Cookies.get('session');
+    const token = Cookies.get("session")
 
     if (!token) {
-        return null;
+        return null
     }
 
-    const data: any = {};
+    const data: any = {}
 
-    data.id = id;
-    data.notes = newNotes;
-    data.volunteering = volunteering;
+    data.id = id
+    data.notes = newNotes
+    data.volunteering = volunteering
 
-    if (endMeeting == true) {
-        data.status = "ended";
+    if (endMeeting === true) {
+        data.status = "ended"
     }
 
     try {
-        const response = await axios.post(getBaseUrl() + '/meetings/update', data, {
+        const response = await axios.post(`${getBaseUrl()}/meetings/update`, data, {
             headers: {
-                'Authorization': `${token}`,
-            }
-        });
+                Authorization: `${token}`,
+            },
+        })
 
         if (response.data.success) {
             successToast("Meeting updated")
@@ -38,25 +38,25 @@ export async function updateMeeting(id: string, newNotes: string = "", volunteer
     }
 };
 
-//Update statuses, origin from Table.tsx
+// Update statuses, origin from Table.tsx
 
 export async function updateMemberStatus({ id }: { id: number }, newValue: string) {
 
-    const token = Cookies.get('session');
+    const token = Cookies.get("session")
 
     if (!token) {
-        return null;
+        return null
     }
 
     try {
-        const response = await axios.post(getBaseUrl() + '/members/update', {
+        const response = await axios.post(`${getBaseUrl()}/members/update`, {
             id,
-            status: newValue
+            status: newValue,
         }, {
             headers: {
-                'Authorization': `${token}`,
-            }
-        });
+                Authorization: `${token}`,
+            },
+        })
 
         if (response.data.success) {
             successToast("Member updated")
@@ -70,55 +70,56 @@ export async function updateMemberStatus({ id }: { id: number }, newValue: strin
 
 export async function updateMeetingStatus({ id }: { id: number }, newValue: string) {
 
-    const token = Cookies.get('session');
+    const token = Cookies.get("session")
 
     if (!token) {
-        return null;
+        return null
     }
 
-    if (newValue === "ongoing") return;
+    if (newValue === "ongoing")
+        return
 
     try {
-        const response = await axios.post(getBaseUrl() + '/meetings/update', {
+        const response = await axios.post(`${getBaseUrl()}/meetings/update`, {
             id,
-            status: newValue
+            status: newValue,
         }, {
             headers: {
-                'Authorization': `${token}`,
-            }
-        });
+                Authorization: `${token}`,
+            },
+        })
 
         if (response.data.success) {
             successToast("Meeting updated")
-            return true;
+            return true
         } else {
             errorToast("Error updating meeting")
-            return false;
+            return false
         }
     } catch {
         errorToast("Error updating meeting")
-        return false;
+        return false
     }
 };
 
-//Club Settings
+// Club Settings
 
 export async function updateClubName(clubName: string) {
 
-    const token = Cookies.get('session');
+    const token = Cookies.get("session")
 
     if (!token) {
-        return null;
+        return null
     }
 
     try {
-        const response = await axios.post(getBaseUrl() + '/club/update', {
+        const response = await axios.post(`${getBaseUrl()}/club/update`, {
             clubName,
         }, {
             headers: {
-                'Authorization': `${token}`,
-            }
-        });
+                Authorization: `${token}`,
+            },
+        })
 
         if (response.data.success) {
             successToast("Club updated")
@@ -133,20 +134,20 @@ export async function updateClubName(clubName: string) {
 
 export async function updateOfficerName(officerName: string) {
 
-    const token = Cookies.get('session');
+    const token = Cookies.get("session")
 
     if (!token) {
-        return null;
+        return null
     }
 
     try {
-        const response = await axios.post(getBaseUrl() + '/club/update', {
+        const response = await axios.post(`${getBaseUrl()}/club/update`, {
             officerName,
         }, {
             headers: {
-                'Authorization': `${token}`,
-            }
-        });
+                Authorization: `${token}`,
+            },
+        })
 
         if (response.data.success) {
             successToast("Club updated")
@@ -161,20 +162,20 @@ export async function updateOfficerName(officerName: string) {
 
 export async function updateUseStaticCode(useStaticCode: boolean) {
 
-    const token = Cookies.get('session');
+    const token = Cookies.get("session")
 
     if (!token) {
-        return null;
+        return null
     }
 
     try {
-        const response = await axios.post(getBaseUrl() + '/club/update', {
+        const response = await axios.post(`${getBaseUrl()}/club/update`, {
             useStaticCode,
         }, {
             headers: {
-                'Authorization': `${token}`,
-            }
-        });
+                Authorization: `${token}`,
+            },
+        })
 
         if (response.data.success) {
             successToast("Club updated")
@@ -189,20 +190,20 @@ export async function updateUseStaticCode(useStaticCode: boolean) {
 
 export async function updateAllowSelfRegistration(allowSelfRegistration: boolean) {
 
-    const token = Cookies.get('session');
+    const token = Cookies.get("session")
 
     if (!token) {
-        return null;
+        return null
     }
 
     try {
-        const response = await axios.post(getBaseUrl() + '/club/update', {
+        const response = await axios.post(`${getBaseUrl()}/club/update`, {
             allowSelfRegistration,
         }, {
             headers: {
-                'Authorization': `${token}`,
-            }
-        });
+                Authorization: `${token}`,
+            },
+        })
 
         if (response.data.success) {
             successToast("Club updated")
@@ -215,30 +216,30 @@ export async function updateAllowSelfRegistration(allowSelfRegistration: boolean
 
 }
 
-//User Settings
+// User Settings
 
 export async function updatePassword(currentPassword: string, newPassword: string, repeatNewPassword: string) {
 
-    const token = Cookies.get('session');
+    const token = Cookies.get("session")
 
     if (!token) {
-        return null;
+        return null
     }
 
     if (newPassword !== repeatNewPassword) {
         errorToast("Passwords do not match!")
-        return;
+        return
     }
 
     try {
-        const response = await axios.post(getBaseUrl() + '/user/update', {
+        const response = await axios.post(`${getBaseUrl()}/user/update`, {
             currentPassword,
-            newPassword
+            newPassword,
         }, {
             headers: {
-                'Authorization': `${token}`,
-            }
-        });
+                Authorization: `${token}`,
+            },
+        })
 
         if (response.data.success) {
             successToast("Password updated")
@@ -256,41 +257,41 @@ export async function updatePassword(currentPassword: string, newPassword: strin
 
 export async function updateWelcome() {
 
-    const token = Cookies.get('session');
+    const token = Cookies.get("session")
 
     if (!token) {
-        return null;
+        return null
     }
 
     try {
-        await axios.post(getBaseUrl() + '/user/welcome', {}, {
+        await axios.post(`${getBaseUrl()}/user/welcome`, {}, {
             headers: {
-                'Authorization': `${token}`,
-            }
-        });
+                Authorization: `${token}`,
+            },
+        })
     } catch {
-        return
+
     }
 }
 
-//Update a user's status (admin only)
+// Update a user's status (admin only)
 export async function updateUserStatus({ id }: { id: number }, newValue: boolean) {
 
-    const token = Cookies.get('session');
+    const token = Cookies.get("session")
 
     if (!token) {
-        return null;
+        return null
     }
 
     try {
-        const response = await axios.post(getBaseUrl() + '/admin/users/update', {
+        const response = await axios.post(`${getBaseUrl()}/admin/users/update`, {
             id,
-            status: newValue
+            status: newValue,
         }, {
             headers: {
-                'Authorization': `${token}`,
-            }
-        });
+                Authorization: `${token}`,
+            },
+        })
 
         if (response.data.success) {
             successToast("User updated")
@@ -302,24 +303,24 @@ export async function updateUserStatus({ id }: { id: number }, newValue: boolean
     }
 };
 
-//Update a club's status (admin only)
+// Update a club's status (admin only)
 export async function updateClubStatus({ id }: { id: number }, newValue: boolean) {
 
-    const token = Cookies.get('session');
+    const token = Cookies.get("session")
 
     if (!token) {
-        return null;
+        return null
     }
 
     try {
-        const response = await axios.post(getBaseUrl() + '/admin/clubs/update', {
+        const response = await axios.post(`${getBaseUrl()}/admin/clubs/update`, {
             id,
-            status: newValue
+            status: newValue,
         }, {
             headers: {
-                'Authorization': `${token}`,
-            }
-        });
+                Authorization: `${token}`,
+            },
+        })
 
         if (response.data.success) {
             successToast("Club updated")

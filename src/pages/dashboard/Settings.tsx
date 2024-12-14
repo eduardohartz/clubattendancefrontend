@@ -1,98 +1,101 @@
-import { useEffect, useRef, useState } from "react";
-import { Helmet, HelmetProvider } from 'react-helmet-async';
-import { deleteClub } from "../../services/DeleteData";
-import { updateAllowSelfRegistration, updateClubName, updateOfficerName, updateUseStaticCode } from "../../services/UpdateData";
-import { useNavigate } from "react-router-dom";
-import { faDownload, faPenToSquare, faQrcode, faTrash } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Club } from "../../types/models";
+import type { Club } from "../../types/models"
+import { faDownload, faPenToSquare, faQrcode, faTrash } from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { useEffect, useRef, useState } from "react"
+import { Helmet, HelmetProvider } from "react-helmet-async"
+import { useNavigate } from "react-router-dom"
+import { deleteClub } from "../../services/DeleteData"
+import { updateAllowSelfRegistration, updateClubName, updateOfficerName, updateUseStaticCode } from "../../services/UpdateData"
 
 function Settings({ club }: { club: Club | null }) {
 
-    const [isQrChecked, setIsQrChecked] = useState(club ? club.useStaticCode : false);
-    const [isSelfChecked, setIsSelfChecked] = useState(club ? club.allowSelfRegistration : false);
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [isModalVisible, setIsModalVisible] = useState(false);
-    const [hasRendered, setHasRendered] = useState(false);
-    const [fieldToEdit, setFieldToEdit] = useState("");
-    const [newFieldValue, setNewFieldValue] = useState("");
-    const qrCodeRef = useRef<HTMLImageElement>(null);
-    const navigate = useNavigate();
+    const [isQrChecked, setIsQrChecked] = useState(club ? club.useStaticCode : false)
+    const [isSelfChecked, setIsSelfChecked] = useState(club ? club.allowSelfRegistration : false)
+    const [isModalOpen, setIsModalOpen] = useState(false)
+    const [isModalVisible, setIsModalVisible] = useState(false)
+    const [hasRendered, setHasRendered] = useState(false)
+    const [fieldToEdit, setFieldToEdit] = useState("")
+    const [newFieldValue, setNewFieldValue] = useState("")
+    const qrCodeRef = useRef<HTMLImageElement>(null)
+    const navigate = useNavigate()
 
     useEffect(() => {
         setHasRendered(true)
-    }, []);
+    }, [])
 
-    const [isQrModalOpen, setIsQrModalOpen] = useState(false);
-    const [isQrModalVisible, setIsQrModalVisible] = useState(false);
+    const [isQrModalOpen, setIsQrModalOpen] = useState(false)
+    const [isQrModalVisible, setIsQrModalVisible] = useState(false)
 
-    if (!club) return
+    if (!club)
+        return
 
     const handleOpenModal = (field: string, currentValue: string) => {
-        if (!hasRendered) return;
-        setFieldToEdit(field);
-        setNewFieldValue(currentValue);
-        setIsModalVisible(true);
-        setTimeout(() => setIsModalOpen(true), 200);
-    };
+        if (!hasRendered)
+            return
+        setFieldToEdit(field)
+        setNewFieldValue(currentValue)
+        setIsModalVisible(true)
+        setTimeout(() => setIsModalOpen(true), 200)
+    }
 
     const handleCloseModal = () => {
-        setIsModalOpen(false);
-        setTimeout(() => setIsModalVisible(false), 300);
-        setFieldToEdit("");
-        setNewFieldValue("");
-    };
+        setIsModalOpen(false)
+        setTimeout(() => setIsModalVisible(false), 300)
+        setFieldToEdit("")
+        setNewFieldValue("")
+    }
 
     const handleSubmit = () => {
         if (fieldToEdit === "Club Name") {
-            updateClubName(newFieldValue);
-            club.displayName = newFieldValue;
+            updateClubName(newFieldValue)
+            club.displayName = newFieldValue
         } else if (fieldToEdit === "Officer Name") {
-            updateOfficerName(newFieldValue);
-            club.officer = newFieldValue;
+            updateOfficerName(newFieldValue)
+            club.officer = newFieldValue
         }
-        handleCloseModal();
-    };
+        handleCloseModal()
+    }
 
     const handleQrCheckboxChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-        const checked = e.target.checked;
-        setIsQrChecked(checked);
-        await updateUseStaticCode(checked);
-    };
+        const checked = e.target.checked
+        setIsQrChecked(checked)
+        await updateUseStaticCode(checked)
+    }
 
     const handleSelfCheckboxChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-        const checked = e.target.checked;
-        setIsSelfChecked(checked);
-        await updateAllowSelfRegistration(checked);
-    };
+        const checked = e.target.checked
+        setIsSelfChecked(checked)
+        await updateAllowSelfRegistration(checked)
+    }
 
     const handleDeleteClub = async () => {
-        const result = await deleteClub();
+        const result = await deleteClub()
         if (result) {
             navigate("/")
         }
-    };
+    }
 
     const handleOpenQrModal = () => {
-        if (!hasRendered) return;
+        if (!hasRendered)
+            return
         setIsQrModalVisible(true)
         setTimeout(() => setIsQrModalOpen(true), 200)
-    };
+    }
 
     const handleCloseQrModal = () => {
         setIsQrModalOpen(false)
         setTimeout(() => setIsQrModalVisible(false), 300)
-    };
+    }
 
     const handleDownloadQrCode = () => {
         if (qrCodeRef.current) {
-            const link = document.createElement('a');
-            link.href = qrCodeRef.current.src;
-            link.target = '_blank';
-            link.download = 'qr_code.png';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
+            const link = document.createElement("a")
+            link.href = qrCodeRef.current.src
+            link.target = "_blank"
+            link.download = "qr_code.png"
+            document.body.appendChild(link)
+            link.click()
+            document.body.removeChild(link)
         }
     }
 
@@ -109,11 +112,15 @@ function Settings({ club }: { club: Club | null }) {
                         <span className="text-3xl font-bold ml-2 self-center">Club Settings</span>
                         <div className="flex flex-col w-full gap-2">
                             <span className="text-xl">
-                                Club name: {club.displayName}
+                                Club name:
+                                {" "}
+                                {club.displayName}
                                 <FontAwesomeIcon icon={faPenToSquare} className="hover:cursor-pointer ml-1" onClick={() => handleOpenModal("Club Name", club.displayName || "")} />
                             </span>
                             <span className="text-xl">
-                                Club officer name: {club.officer}
+                                Club officer name:
+                                {" "}
+                                {club.officer}
                                 <FontAwesomeIcon icon={faPenToSquare} className="hover:cursor-pointer ml-1" onClick={() => handleOpenModal("Officer Name", club.officer || "")} />
                             </span>
                             <span className="text-xl">
@@ -139,13 +146,17 @@ function Settings({ club }: { club: Club | null }) {
                                 className="bg-accent-100 hover:bg-accent-200 transition-colors px-[20px] py-[10px] rounded-lg text-[15.5px] mr-2 w-full  disabled:bg-slate-300 disabled:hover:cursor-not-allowed disabled:hover:bg-slate-300"
                                 onClick={handleOpenQrModal}
                             >
-                                <FontAwesomeIcon icon={faQrcode} size="lg" /> QR Code
+                                <FontAwesomeIcon icon={faQrcode} size="lg" />
+                                {" "}
+                                QR Code
                             </button>
                             <button
                                 className="bg-red-400 hover:bg-red-500 transition-colors px-[20px] py-[10px] rounded-lg text-[15.5px] mr-2 w-full"
                                 onClick={handleDeleteClub}
                             >
-                                <FontAwesomeIcon icon={faTrash} size="lg" /> Delete club
+                                <FontAwesomeIcon icon={faTrash} size="lg" />
+                                {" "}
+                                Delete club
                             </button>
                         </div>
                     </div>
@@ -158,12 +169,15 @@ function Settings({ club }: { club: Club | null }) {
                     <div
                         className={`bg-white w-[500px] p-6 rounded-lg shadow-lg transform transition-transform duration-300 ${isModalOpen ? "scale-100" : "scale-95"}`}
                     >
-                        <h2 className="text-2xl font-bold mb-4">Edit {fieldToEdit}</h2>
+                        <h2 className="text-2xl font-bold mb-4">
+                            Edit
+                            {fieldToEdit}
+                        </h2>
                         <input
                             type="text"
                             className="border p-2 w-full mb-4 border-greyscale-200 bg-greyscale-100 rounded-lg transition-all focus:ring-accent-100"
                             value={newFieldValue}
-                            onChange={(e) => setNewFieldValue(e.target.value)}
+                            onChange={e => setNewFieldValue(e.target.value)}
                             required
                         />
                         <button
@@ -197,7 +211,9 @@ function Settings({ club }: { club: Club | null }) {
                             className="bg-accent-100 mr-3 hover:bg-accent-100 text-white px-4 py-2 rounded-lg transition-colors mt-6"
                             onClick={handleDownloadQrCode}
                         >
-                            <FontAwesomeIcon icon={faDownload} size="lg" /> Save
+                            <FontAwesomeIcon icon={faDownload} size="lg" />
+                            {" "}
+                            Save
 
                         </button>
                         <button
@@ -210,7 +226,7 @@ function Settings({ club }: { club: Club | null }) {
                 </div>
             )}
         </>
-    );
+    )
 }
 
-export default Settings;
+export default Settings

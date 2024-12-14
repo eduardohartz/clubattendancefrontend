@@ -1,55 +1,56 @@
-import { useState } from "react";
-import { Helmet, HelmetProvider } from 'react-helmet-async';
-import { updatePassword } from "../services/UpdateData";
-import { deleteUser } from "../services/DeleteData";
-import { useNavigate } from "react-router-dom";
-import { faKey, faTrash } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { User } from "../types/models";
+import type { User } from "../types/models"
+import { faKey, faTrash } from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { useState } from "react"
+import { Helmet, HelmetProvider } from "react-helmet-async"
+import { useNavigate } from "react-router-dom"
+import { deleteUser } from "../services/DeleteData"
+import { updatePassword } from "../services/UpdateData"
 
 function Settings({ user }: { user: User | null }) {
 
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [isModalVisible, setIsModalVisible] = useState(false);
-    const [fieldToEdit, setFieldToEdit] = useState("");
-    const [currentPassword, setCurrentPassword] = useState("");
-    const [newPassword, setNewPassword] = useState("");
-    const [repeatNewPassword, setRepeatNewPassword] = useState("");
-    const navigate = useNavigate();
+    const [isModalOpen, setIsModalOpen] = useState(false)
+    const [isModalVisible, setIsModalVisible] = useState(false)
+    const [fieldToEdit, setFieldToEdit] = useState("")
+    const [currentPassword, setCurrentPassword] = useState("")
+    const [newPassword, setNewPassword] = useState("")
+    const [repeatNewPassword, setRepeatNewPassword] = useState("")
+    const navigate = useNavigate()
 
-    if (!user) return null;
+    if (!user)
+        return null
 
     const handleOpenModal = (field: string) => {
-        setFieldToEdit(field);
-        setIsModalVisible(true);
+        setFieldToEdit(field)
+        setIsModalVisible(true)
         setTimeout(() => setIsModalOpen(true), 200)
-    };
+    }
 
     const handleCloseModal = () => {
-        setIsModalOpen(false);
+        setIsModalOpen(false)
         setTimeout(() => setIsModalVisible(false), 300)
-        setFieldToEdit("");
-        setCurrentPassword("");
-        setNewPassword("");
-        setRepeatNewPassword("");
-    };
+        setFieldToEdit("")
+        setCurrentPassword("")
+        setNewPassword("")
+        setRepeatNewPassword("")
+    }
 
     const handleSubmit = () => {
         if (fieldToEdit === "Change Password") {
             if (!currentPassword || !newPassword || !repeatNewPassword) {
-                return;
+                return
             }
-            updatePassword(currentPassword, newPassword, repeatNewPassword);
+            updatePassword(currentPassword, newPassword, repeatNewPassword)
         }
-        handleCloseModal();
-    };
+        handleCloseModal()
+    }
 
     const handleDeleteUser = async () => {
-        const result = await deleteUser();
+        const result = await deleteUser()
         if (result) {
             navigate("/")
         }
-    };
+    }
 
     return (
         <>
@@ -63,19 +64,29 @@ function Settings({ user }: { user: User | null }) {
                     <div className="mx-auto flex w-[100%] flex-col gap-8 mb-5 items-left">
                         <span className="text-3xl font-bold ml-2 self-center">User Settings</span>
                         <div className="flex flex-col w-full gap-2">
-                            <span className="text-xl">User ID: {user.id}</span>
-                            <span className="text-xl">Username: {user.username}</span>
+                            <span className="text-xl">
+                                User ID:
+                                {user.id}
+                            </span>
+                            <span className="text-xl">
+                                Username:
+                                {user.username}
+                            </span>
                             <button
                                 className="bg-accent-100 hover:bg-accent-200 transition-colors px-[20px] py-[10px] rounded-lg text-[15.5px] mr-2 justify-end w-full"
                                 onClick={() => handleOpenModal("Change Password")}
                             >
-                                <FontAwesomeIcon icon={faKey} size="lg" /> Change Password
+                                <FontAwesomeIcon icon={faKey} size="lg" />
+                                {" "}
+                                Change Password
                             </button>
                             <button
                                 className="bg-red-400 hover:bg-red-500 transition-colors px-[20px] py-[10px] rounded-lg text-[15.5px] mr-2 justify-end w-full"
                                 onClick={() => handleDeleteUser}
                             >
-                                <FontAwesomeIcon icon={faTrash} size="lg" />  Delete Account
+                                <FontAwesomeIcon icon={faTrash} size="lg" />
+                                {" "}
+                                Delete Account
                             </button>
                         </div>
                     </div>
@@ -94,7 +105,7 @@ function Settings({ user }: { user: User | null }) {
                             type="password"
                             className="border mt-1 p-2 w-full mb-10 border-greyscale-200 bg-greyscale-100 rounded-lg transition-all focus:ring-accent-100"
                             value={currentPassword}
-                            onChange={(e) => setCurrentPassword(e.target.value)}
+                            onChange={e => setCurrentPassword(e.target.value)}
                             required
                         />
                         <label className="text-lg">New password</label>
@@ -102,7 +113,7 @@ function Settings({ user }: { user: User | null }) {
                             type="password"
                             className="border mt-1 p-2 w-full mb-4 border-greyscale-200 bg-greyscale-100 rounded-lg transition-all focus:ring-accent-100"
                             value={newPassword}
-                            onChange={(e) => setNewPassword(e.target.value)}
+                            onChange={e => setNewPassword(e.target.value)}
                             required
                         />
                         <label className="text-lg">Repeat new password</label>
@@ -110,7 +121,7 @@ function Settings({ user }: { user: User | null }) {
                             type="password"
                             className="border p-2 w-full mb-4 border-greyscale-200 bg-greyscale-100 rounded-lg transition-all focus:ring-accent-100"
                             value={repeatNewPassword}
-                            onChange={(e) => setRepeatNewPassword(e.target.value)}
+                            onChange={e => setRepeatNewPassword(e.target.value)}
                             required
                         />
 
@@ -130,7 +141,7 @@ function Settings({ user }: { user: User | null }) {
                 </div>
             )}
         </>
-    );
+    )
 }
 
-export default Settings;
+export default Settings
