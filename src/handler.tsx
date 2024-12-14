@@ -69,9 +69,9 @@ function Handler() {
     }, [currentRoute])
 
     const showNavbar
-    = (currentRoute.startsWith("/dashboard") || currentRoute === "/settings")
-    && user
-    && club
+        = (currentRoute.startsWith("/dashboard") || currentRoute === "/settings")
+        && user
+        && club
 
     return (
         <>
@@ -175,7 +175,7 @@ function Handler() {
                                     club={club}
                                     element={(
                                         <PageTransition key={location.pathname}>
-                                            <Members user={user} />
+                                            <Members user={user} club={club} />
                                         </PageTransition>
                                     )}
                                 />
@@ -205,7 +205,7 @@ function Handler() {
                                     club={club}
                                     element={(
                                         <PageTransition key={location.pathname}>
-                                            <CustomFields user={user} />
+                                            <CustomFields user={user} club={club} />
                                         </PageTransition>
                                     )}
                                 />
@@ -220,7 +220,7 @@ function Handler() {
                                     club={club}
                                     element={(
                                         <PageTransition key={location.pathname}>
-                                            <Member user={user} />
+                                            <Member user={user} club={club} />
                                         </PageTransition>
                                     )}
                                 />
@@ -235,7 +235,7 @@ function Handler() {
                                     club={club}
                                     element={(
                                         <PageTransition key={location.pathname}>
-                                            <Meetings user={user} />
+                                            <Meetings user={user} club={club} />
                                         </PageTransition>
                                     )}
                                 />

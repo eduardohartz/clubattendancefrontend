@@ -1,4 +1,4 @@
-import type { User } from "../../../types/models"
+import type { Club, User } from "../../../types/models"
 import { faArrowLeft, faPlus } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { useEffect, useState } from "react"
@@ -9,7 +9,7 @@ import { errorToast, successToast } from "../../../components/Toast"
 import { createCustomField } from "../../../services/CreateData"
 import { FetchData } from "../../../services/FetchData"
 
-function CustomFields({ user }: { user: User | null }) {
+function CustomFields({ user, club }: { user: User | null, club: Club | null }) {
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [isModalVisible, setIsModalVisible] = useState(false)
     const [modalTitle, setModalTitle] = useState("Add custom field")
@@ -111,7 +111,7 @@ function CustomFields({ user }: { user: User | null }) {
                             </button>
                         </div>
                     </div>
-                    <Table type="customFields" user={user} />
+                    <Table type="customFields" user={user} club={club} />
                 </div>
             </div>
             {isModalVisible && (
@@ -162,41 +162,41 @@ function CustomFields({ user }: { user: User | null }) {
                         <label className="text-lg">Default value</label>
                         {fieldType === "dropdown"
                             ? (
+                                <select
+                                    className="border mt-2 p-2 w-full mb-5 border-greyscale-200 bg-greyscale-100 rounded-lg transition-all focus:ring-accent-100"
+                                    required
+                                    defaultValue=""
+                                    onChange={e => setDefaultValue(e.target.value)}
+                                >
+                                    <option value="">None</option>
+                                    {parsedDropdownOptions.map((option, index) => (
+                                        <option key={index} value={option}>
+                                            {option}
+                                        </option>
+                                    ))}
+                                </select>
+                            )
+                            : fieldType === "checkbox"
+                                ? (
                                     <select
                                         className="border mt-2 p-2 w-full mb-5 border-greyscale-200 bg-greyscale-100 rounded-lg transition-all focus:ring-accent-100"
                                         required
-                                        defaultValue=""
+                                        defaultValue="false"
                                         onChange={e => setDefaultValue(e.target.value)}
                                     >
-                                        <option value="">None</option>
-                                        {parsedDropdownOptions.map((option, index) => (
-                                            <option key={index} value={option}>
-                                                {option}
-                                            </option>
-                                        ))}
+                                        <option value="false">Not checked</option>
+                                        <option value="true">Checked</option>
                                     </select>
                                 )
-                            : fieldType === "checkbox"
-                                ? (
-                                        <select
-                                            className="border mt-2 p-2 w-full mb-5 border-greyscale-200 bg-greyscale-100 rounded-lg transition-all focus:ring-accent-100"
-                                            required
-                                            defaultValue="false"
-                                            onChange={e => setDefaultValue(e.target.value)}
-                                        >
-                                            <option value="false">Not checked</option>
-                                            <option value="true">Checked</option>
-                                        </select>
-                                    )
                                 : (
-                                        <input
-                                            type="text"
-                                            className="border mt-2 p-2 w-full mb-5 border-greyscale-200 bg-greyscale-100 rounded-lg transition-all focus:ring-accent-100"
-                                            required
-                                            value={defaultValue}
-                                            onChange={e => setDefaultValue(e.target.value)}
-                                        />
-                                    )}
+                                    <input
+                                        type="text"
+                                        className="border mt-2 p-2 w-full mb-5 border-greyscale-200 bg-greyscale-100 rounded-lg transition-all focus:ring-accent-100"
+                                        required
+                                        value={defaultValue}
+                                        onChange={e => setDefaultValue(e.target.value)}
+                                    />
+                                )}
 
                         <button
                             className="bg-accent-100 hover:bg-accent-200 text-white px-4 py-2 rounded-lg mr-2 transition-colors"

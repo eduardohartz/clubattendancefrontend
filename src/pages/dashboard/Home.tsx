@@ -42,7 +42,7 @@ function Home({ club, user }: { club: Club | null, user: User | null }) {
                 </Helmet>
             </HelmetProvider>
             <div className="usablesize h-[100vh] absolute top-0 right-0 flex flex-col items-center gap-10">
-                <div className="absolute top-[100px] min-w-[80%]">
+                <div className="absolute top-[100px] max-w-[80%]">
                     <div className="mx-auto flex w-[100%] items-center justify-between mb-5">
                         <span className="justify-start text-3xl font-bold ml-2">
                             Welcome back
@@ -53,7 +53,7 @@ function Home({ club, user }: { club: Club | null, user: User | null }) {
                     <div>
 
                         <div className="grid grid-cols-5 grid-rows-5 gap-4 h-full">
-                            <div className="col-span-3 row-span-3 bg-greyscale-100 rounded-lg">
+                            <div className="col-span-3 row-span-2 col-start-1 bg-greyscale-100 rounded-lg">
 
                             </div>
                             <div className="col-span-2 row-span-1 col-start-4 bg-greyscale-100 rounded-lg">
@@ -81,7 +81,7 @@ function Home({ club, user }: { club: Club | null, user: User | null }) {
                             <div className="col-span-2 row-span-4 col-start-4 row-start-2 bg-greyscale-100 rounded-lg">
 
                             </div>
-                            <div className="col-span-3 row-span-2 row-start-4 bg-greyscale-100 rounded-lg">
+                            <div className="col-span-3 row-span-3 row-start-3 bg-greyscale-100 rounded-lg">
                                 <div className="flex flex-col p-2">
                                     <span className="text-2xl font-bold pt-3 pl-4">
                                         <FontAwesomeIcon icon={faNewspaper} />
@@ -90,6 +90,7 @@ function Home({ club, user }: { club: Club | null, user: User | null }) {
                                     </span>
                                     <span className="text-lg py-2 px-5">
                                         Club Attendance has just launched! Report any bugs or suggestions
+                                        {" "}
                                         <a href="https://google.com" target="_blank" className="text-accent-100 hover:text-accent-200 visited:text-accent-100 underline">here</a>
                                     </span>
                                     <span className="text-lg py-2 px-5">

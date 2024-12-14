@@ -1,12 +1,12 @@
-import type { User } from "../../../types/models"
+import type { Club, User } from "../../../types/models"
 import { faFilePen, faPlus } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { Helmet, HelmetProvider } from "react-helmet-async"
 import { Link } from "react-router-dom"
 import Table from "../../../components/Table"
 
-function Home({ user }: { user: User | null }) {
-    if (!user)
+function Home({ user, club }: { user: User | null, club: Club | null }) {
+    if (!user || !club)
         return
 
     return (
@@ -37,7 +37,7 @@ function Home({ user }: { user: User | null }) {
                             </Link>
                         </div>
                     </div>
-                    <Table type="members" user={user} />
+                    <Table type="members" user={user} club={club} />
                 </div>
             </div>
 

@@ -1,4 +1,4 @@
-import type { User } from "../types/models"
+import type { Club, User } from "../types/models"
 import Cookies from "js-cookie"
 import { useCallback, useEffect, useRef, useState } from "react"
 import { getWsUrl } from "../services/Api"
@@ -7,7 +7,7 @@ import { formatDate, formatTime } from "../utils/Formatters"
 import { dataKeyMap, getActions, getStatus, headersMap } from "../utils/TableHelpers"
 import Loading from "./Loading"
 
-function Table({ type, id = "", user }: { type: "meetings" | "members" | "attendees" | "attendance" | "users" | "clubs" | "customFields", id?: string, user: User | null }) {
+function Table({ type, id = "", user, club }: { type: "meetings" | "members" | "attendees" | "attendance" | "users" | "clubs" | "customFields", id?: string, user: User | null, club: Club | null }) {
     const [data, setData] = useState([])
     const [isLoading, setIsLoading] = useState(true)
     const wsRef = useRef<WebSocket | null>(null)
@@ -53,7 +53,7 @@ function Table({ type, id = "", user }: { type: "meetings" | "members" | "attend
         }
     }, [user, type, reloadData])
 
-    if (!user || (type === "users" && !user.admin)) {
+    if (!club || !user || (type === "users" && !user.admin)) {
         return null
     }
 
@@ -93,44 +93,45 @@ function Table({ type, id = "", user }: { type: "meetings" | "members" | "attend
 
     return (
         <>
-            {isLoading
-                ? (
-                        <Loading table={true} />
-                    )
-                : (
-                        <div className="bg-greyscale-100 outline-1 outline-greyscale-200 rounded-lg outline overflow-clip">
-                            <table className="w-[100%] m-0 border-collapse">
-                                <thead className="h-[45px]">
-                                    <tr>
-                                        {headers.map(header => (
-                                            <th key={header} className="px-4 py-2 border-b border-gray-200 text-left text-sm font-medium text-gray-700">
-                                                {header}
-                                            </th>
-                                        ))}
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {data.map((row, rowIndex) => (
-                                        <tr key={rowIndex} className="hover:bg-gray-100">
-                                            {dataKeys.map((key, colIndex) => (
-                                                <td
-                                                    key={colIndex}
-                                                    className={
-                                                        `hover:cursor-pointer px-4 py-2 border-gray-200 text-sm text-gray-700 ${
-                                                            rowIndex % 2 ? "" : "bg-greyscale-200"}`
-                                                    }
-                                                >
-                                                    {renderCellContent(key, row)}
-                                                </td>
-                                            ))}
-                                        </tr>
+            {isLoading ? (
+                <Loading table={true} />
+            ) : (
+                <div className="bg-greyscale-100 outline-1 outline-greyscale-200 rounded-lg outline overflow-clip">
+                    <table className="w-[100%] m-0 border-collapse">
+                        <thead className="h-[45px]">
+                            <tr>
+                                {headers.map(header => (
+                                    ((header !== 'Volunteering' && header !== 'Volunteered') || club.volunteering === true) && (
+                                        <th key={header} className="px-4 py-2 border-b border-gray-200 text-left text-sm font-medium text-gray-700">
+                                            {header}
+                                        </th>
+                                    )
+                                ))}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {data.map((row, rowIndex) => (
+                                <tr key={rowIndex} className="hover:bg-gray-100">
+                                    {dataKeys.map((key, colIndex) => (
+                                        (key !== 'volunteering' || club.volunteering !== false) && (
+                                            <td
+                                                key={colIndex}
+                                                className={
+                                                    `hover:cursor-pointer px-4 py-2 border-gray-200 text-sm text-gray-700 ${rowIndex % 2 ? "" : "bg-greyscale-200"}`
+                                                }
+                                            >
+                                                {renderCellContent(key, row)}
+                                            </td>
+                                        )
                                     ))}
-                                </tbody>
-                            </table>
-                        </div>
-                    )}
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+            )}
         </>
-    )
+    );
 }
 
 export default Table

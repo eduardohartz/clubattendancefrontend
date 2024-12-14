@@ -1,4 +1,4 @@
-import type { User } from "../../../types/models"
+import type { Club, User } from "../../../types/models"
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { useEffect, useState } from "react"
@@ -8,7 +8,7 @@ import Loading from "../../../components/Loading"
 import Table from "../../../components/Table"
 import { FetchData } from "../../../services/FetchData"
 
-function Member({ user }: { user: User | null }) {
+function Member({ user, club }: { user: User | null, club: Club | null }) {
 
     const { id } = useParams<{ id: string }>()
     const [member, setMember] = useState<any>(null)
@@ -29,7 +29,7 @@ function Member({ user }: { user: User | null }) {
         fetchMember()
     }, [id])
 
-    if (!user)
+    if (!user || !club)
         return
 
     if (loading) {
@@ -53,6 +53,7 @@ function Member({ user }: { user: User | null }) {
                     <div className="mx-auto flex w-[100%] items-center justify-between mb-5">
                         <span className="justify-start text-2xl font-bold ml-2">
                             Attendance for:
+                            {" "}
                             {`${member.firstName} ${member.lastName}`}
                         </span>
                         <Link to="/dashboard/members">
@@ -63,7 +64,7 @@ function Member({ user }: { user: User | null }) {
                             </button>
                         </Link>
                     </div>
-                    <Table type="attendance" id={id} user={user} />
+                    <Table type="attendance" id={id} user={user} club={club} />
                 </div>
             </div>
         </>

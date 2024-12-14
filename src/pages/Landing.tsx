@@ -61,6 +61,7 @@ function Landing() {
                         <Link to="/login">
                             <button className="text-sm/6 font-semibold text-white bg-purple-400 px-7 py-3 rounded-lg hover:bg-accent-200 transition-colors">
                                 Log in
+                                {" "}
                                 <span aria-hidden="true">&rarr;</span>
                             </button>
                         </Link>
@@ -72,6 +73,7 @@ function Landing() {
                 <span className="text-5xl max-lg:ml-5 lg:text-7xl font-['Galano']">Club Attendance</span>
                 <span className="text-3xl max-lg:ml-2 max-lg:text-left font-['Galano']">
                     The
+                    {" "}
                     <span id="change" className={`text-accent-200 change ${isUp ? "up" : ""}`}>{currentText}</span>
                     {" "}
                     club attendance tracker

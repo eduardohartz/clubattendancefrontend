@@ -228,15 +228,18 @@ function Meeting({ user, club }: { user: User | null, club: Club | null }) {
                                     onChange={e => setNotes(e.currentTarget.value)}
                                 />
                                 <div className="flex justify-between items-center mt-2">
-                                    <span className="text-lg">
-                                        Volunteering:
-                                        <input
-                                            type="checkbox"
-                                            className="w-6 h-6 ml-2 rounded-md border-0 text-accent-100 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-accent-200 transition-all hover:cursor-pointer"
-                                            checked={volunteering}
-                                            onChange={() => setVolunteering(!volunteering)}
-                                        />
-                                    </span>
+                                    {club.volunteering && (
+                                        <span className="text-lg">
+                                            Volunteering:
+                                            <input
+                                                type="checkbox"
+                                                className="w-6 h-6 ml-2 rounded-md border-0 text-accent-100 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-accent-200 transition-all hover:cursor-pointer"
+                                                checked={volunteering}
+                                                onChange={() => setVolunteering(!volunteering)}
+                                            />
+                                        </span>
+                                    )
+                                    }
                                     <button className="right-0 relative bg-accent-100 hover:bg-accent-200 transition-colors px-[25px] py-[12px] rounded-lg text-[13.5px] justify-end" onClick={handleSaveChanges}>
                                         <FontAwesomeIcon icon={faDownload} size="lg" />
                                         {" "}
@@ -257,7 +260,7 @@ function Meeting({ user, club }: { user: User | null, club: Club | null }) {
                     </div>
                     {showAttendees && (
                         <div className="mt-4">
-                            <Table type="attendees" id={id} user={user} />
+                            <Table type="attendees" id={id} user={user} club={club} />
                         </div>
                     )}
                 </div>
