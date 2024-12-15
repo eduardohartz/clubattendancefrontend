@@ -6,34 +6,24 @@ import { useNavigate } from "react-router-dom"
 import { deleteUser } from "../services/DeleteData"
 import { updatePassword } from "../services/UpdateData"
 import { useAuth } from "../utils/AuthContext"
+import Modal from "../components/Modal"
 
 function Settings() {
 
     const { user } = useAuth()
-    const [isModalOpen, setIsModalOpen] = useState(false)
-    const [isModalVisible, setIsModalVisible] = useState(false)
+    const [showModal, setShowModal] = useState(false)
     const [currentPassword, setCurrentPassword] = useState("")
     const [newPassword, setNewPassword] = useState("")
     const [repeatNewPassword, setRepeatNewPassword] = useState("")
     const navigate = useNavigate()
 
-    if (!user)
-        return null
-
-    const handleOpenModal = () => {
-        setIsModalVisible(true)
-        setTimeout(() => setIsModalOpen(true), 200)
-    }
+    if (!user) return null
 
     const handleCloseModal = () => {
-        setIsModalOpen(false)
-        setTimeout(() => {
-            setIsModalVisible(false)
-            setCurrentPassword("")
-            setNewPassword("")
-            setRepeatNewPassword("")
-        }, 300)
-
+        setShowModal(false)
+        setCurrentPassword("")
+        setNewPassword("")
+        setRepeatNewPassword("")
     }
 
     const handleSubmit = () => {
@@ -75,7 +65,7 @@ function Settings() {
                             </span>
                             <button
                                 className="bg-accent-100 hover:bg-accent-200 transition-colors px-[20px] py-[10px] rounded-lg text-[15.5px] mr-2 justify-end w-full"
-                                onClick={handleOpenModal}
+                                onClick={() => setShowModal(true)}
                             >
                                 <FontAwesomeIcon icon={faKey} size="lg" />
                                 {" "}
@@ -93,54 +83,40 @@ function Settings() {
                     </div>
                 </div>
             </div>
-            {isModalVisible && (
-                <div
-                    className={`fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 transition-opacity duration-300 ${isModalOpen ? "opacity-100" : "opacity-0"}`}
-                >
-                    <div
-                        className={`bg-white w-[500px] p-6 rounded-lg shadow-lg transform transition-transform duration-300 ${isModalOpen ? "scale-100" : "scale-95"}`}
-                    >
-                        <h2 className="text-2xl font-bold mb-4">Change Password</h2>
-                        <label className="text-lg">Current password</label>
-                        <input
-                            type="password"
-                            className="border mt-1 p-2 w-full mb-10 border-greyscale-200 bg-greyscale-100 rounded-lg transition-all focus:ring-accent-100"
-                            value={currentPassword}
-                            onChange={e => setCurrentPassword(e.target.value)}
-                            required
-                        />
-                        <label className="text-lg">New password</label>
-                        <input
-                            type="password"
-                            className="border mt-1 p-2 w-full mb-4 border-greyscale-200 bg-greyscale-100 rounded-lg transition-all focus:ring-accent-100"
-                            value={newPassword}
-                            onChange={e => setNewPassword(e.target.value)}
-                            required
-                        />
-                        <label className="text-lg">Repeat new password</label>
-                        <input
-                            type="password"
-                            className="border p-2 w-full mb-4 border-greyscale-200 bg-greyscale-100 rounded-lg transition-all focus:ring-accent-100"
-                            value={repeatNewPassword}
-                            onChange={e => setRepeatNewPassword(e.target.value)}
-                            required
-                        />
+            <Modal
+                isOpen={showModal}
+                onClose={handleCloseModal}
+                onSubmit={handleSubmit}
+                title="Change Password"
+                submitText="Submit"
+                closeText="Cancel"
+            >
+                <label className="text-lg">Current password</label>
+                <input
+                    type="password"
+                    className="border mt-1 p-2 w-full mb-10 border-greyscale-200 bg-greyscale-100 rounded-lg transition-all focus:ring-accent-100"
+                    value={currentPassword}
+                    onChange={e => setCurrentPassword(e.target.value)}
+                    required
+                />
+                <label className="text-lg">New password</label>
+                <input
+                    type="password"
+                    className="border mt-1 p-2 w-full mb-4 border-greyscale-200 bg-greyscale-100 rounded-lg transition-all focus:ring-accent-100"
+                    value={newPassword}
+                    onChange={e => setNewPassword(e.target.value)}
+                    required
+                />
+                <label className="text-lg">Repeat new password</label>
+                <input
+                    type="password"
+                    className="border p-2 w-full mb-4 border-greyscale-200 bg-greyscale-100 rounded-lg transition-all focus:ring-accent-100"
+                    value={repeatNewPassword}
+                    onChange={e => setRepeatNewPassword(e.target.value)}
+                    required
+                />
+            </Modal>
 
-                        <button
-                            className="bg-accent-100 hover:bg-accent-200 text-white px-4 py-2 rounded-lg mr-2 transition-colors"
-                            onClick={handleSubmit}
-                        >
-                            Submit
-                        </button>
-                        <button
-                            className="bg-gray-400 hover:bg-gray-500 text-white px-4 py-2 rounded-lg transition-colors"
-                            onClick={handleCloseModal}
-                        >
-                            Cancel
-                        </button>
-                    </div>
-                </div>
-            )}
         </>
     )
 }

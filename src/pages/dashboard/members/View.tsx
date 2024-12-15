@@ -52,8 +52,6 @@ function Member() {
                 <div className="absolute top-[100px] min-w-[80%]">
                     <div className="mx-auto flex w-[100%] items-center justify-between mb-5">
                         <span className="justify-start text-2xl font-bold ml-2">
-                            Attendance for:
-                            {" "}
                             {`${member.firstName} ${member.lastName}`}
                         </span>
                         <Link to="/dashboard/members">
@@ -64,7 +62,25 @@ function Member() {
                             </button>
                         </Link>
                     </div>
-                    <Table type="attendance" id={id} />
+                    <div className="w-full h-[300px] bg-greyscale-100 rounded-lg outline-1 outline-greyscale-200 outline mb-5">
+                        <div className="w-full px-5 grid grid-cols-1 md:grid-cols-3 gap-4 justify-center py-4">
+
+                        </div>
+                        <div className="w-full px-5 flex gap-4 justify-center py-1">
+                            <div className="w-1/2">
+
+                            </div>
+                            <div className="w-1/2">
+
+                            </div>
+                        </div>
+                    </div>
+                    <span className="justify-start text-xl font-bold ml-2">
+                        Attendance history
+                    </span>
+                    <div className="mt-3">
+                        <Table type="attendance" id={id} />
+                    </div>
                 </div>
             </div>
         </>

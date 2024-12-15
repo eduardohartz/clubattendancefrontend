@@ -4,16 +4,13 @@ import { useEffect, useState } from "react"
 import { Helmet, HelmetProvider } from "react-helmet-async"
 import { Link, useNavigate, useSearchParams } from "react-router-dom"
 import Table from "../../../components/Table"
+import Modal from "../../../components/Modal"
 import { errorToast, successToast } from "../../../components/Toast"
 import { createCustomField } from "../../../services/CreateData"
 import { FetchData } from "../../../services/FetchData"
 
 function CustomFields() {
-
-    const [isModalOpen, setIsModalOpen] = useState(false)
-    const [isModalVisible, setIsModalVisible] = useState(false)
-    const [modalTitle, setModalTitle] = useState("Add custom field")
-    const [modalBtnText, setModalBtnText] = useState("Add")
+    const [showModal, setShowModal] = useState(false)
     const [fieldName, setFieldName] = useState("")
     const [fieldType, setFieldType] = useState("text")
     const [dropdownOptions, setDropdownOptions] = useState<string>("")
@@ -23,47 +20,30 @@ function CustomFields() {
     const editId = searchParams.get("id")
 
     useEffect(() => {
-        // TODO Actually edit the field
         if (editId) {
             FetchData({ type: "customFields", id: editId }).then((data) => {
                 if (data.id) {
-                    setModalTitle("Edit custom field")
-                    setModalBtnText("Save")
                     setFieldName(data.fieldName)
                     setFieldType(data.fieldType)
                     if (data.fieldType === "dropdown") {
                         setDropdownOptions(data.dropdownOptions.join(", "))
                     }
                     setDefaultValue(data.defaultValue)
-                    handleOpenModal()
+                    setShowModal(true)
                 }
             })
         }
     }, [editId])
 
-    const parsedDropdownOptions = dropdownOptions === "" ? [] : dropdownOptions.split(",").map(value => value.trim())
-
-    const handleDropdownOptionssChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setDropdownOptions(event.target.value)
-    }
-
-    const handleOpenModal = () => {
-        setIsModalVisible(true)
-        setTimeout(() => setIsModalOpen(true), 200)
-    }
-
     const handleCloseModal = () => {
-        setIsModalOpen(false)
-        setTimeout(() => {
-            setIsModalVisible(false)
-            setFieldName("")
-            setFieldType("text")
-            setDropdownOptions("")
-            setDefaultValue("")
-            if (editId) {
-                navigate("/dashboard/members/fields")
-            }
-        }, 300)
+        setShowModal(false)
+        setFieldName("")
+        setFieldType("text")
+        setDropdownOptions("")
+        setDefaultValue("")
+        if (editId) {
+            navigate("/dashboard/members/fields")
+        }
     }
 
     const handleSubmit = async () => {
@@ -72,19 +52,90 @@ function CustomFields() {
             return
         }
 
+        const parsedDropdownOptions = dropdownOptions === "" ? [] : dropdownOptions.split(",").map(value => value.trim())
         const success = await createCustomField(fieldName, fieldType, parsedDropdownOptions, defaultValue)
 
         if (success) {
-            setFieldName("")
-            setFieldType("text")
-            setDropdownOptions("")
-            setDefaultValue("")
+            handleCloseModal()
             navigate(0)
             successToast("Field created")
         }
-
-        handleCloseModal()
     }
+
+    const modalContent = (
+        <>
+            <label className="text-lg">Field name</label>
+            <input
+                type="text"
+                className="border mt-2 p-2 w-full mb-5 border-greyscale-200 bg-greyscale-100 rounded-lg transition-all focus:ring-accent-100 hover:cursor-pointer"
+                value={fieldName}
+                onChange={e => setFieldName(e.target.value)}
+                required
+            />
+
+            <label className="text-lg">Field type</label>
+            <select
+                className="border mt-2 p-2 w-full mb-5 border-greyscale-200 bg-greyscale-100 rounded-lg transition-all focus:ring-accent-100 hover:cursor-pointer"
+                required
+                value={fieldType}
+                onChange={e => setFieldType(e.target.value)}
+            >
+                <option value="text">Text</option>
+                <option value="dropdown">Dropdown</option>
+                <option value="checkbox">Checkbox</option>
+                <option value="date">Date</option>
+            </select>
+
+            {fieldType === "dropdown" && (
+                <>
+                    <label className="text-lg">Dropdown values</label>
+                    <input
+                        type="text"
+                        className="border mt-2 p-2 w-full mb-5 border-greyscale-200 bg-greyscale-100 rounded-lg transition-all focus:ring-accent-100"
+                        required
+                        placeholder="value1, value2, value3"
+                        value={dropdownOptions}
+                        onChange={e => setDropdownOptions(e.target.value)}
+                    />
+                </>
+            )}
+
+            <label className="text-lg">Default value</label>
+            {fieldType === "dropdown" ? (
+                <select
+                    className="border mt-2 p-2 w-full mb-5 border-greyscale-200 bg-greyscale-100 rounded-lg transition-all focus:ring-accent-100"
+                    required
+                    value={defaultValue}
+                    onChange={e => setDefaultValue(e.target.value)}
+                >
+                    <option value="">None</option>
+                    {dropdownOptions.split(",").map((option, index) => (
+                        <option key={index} value={option.trim()}>
+                            {option.trim()}
+                        </option>
+                    ))}
+                </select>
+            ) : fieldType === "checkbox" ? (
+                <select
+                    className="border mt-2 p-2 w-full mb-5 border-greyscale-200 bg-greyscale-100 rounded-lg transition-all focus:ring-accent-100"
+                    required
+                    value={defaultValue}
+                    onChange={e => setDefaultValue(e.target.value)}
+                >
+                    <option value="false">Not checked</option>
+                    <option value="true">Checked</option>
+                </select>
+            ) : (
+                <input
+                    type="text"
+                    className="border mt-2 p-2 w-full mb-5 border-greyscale-200 bg-greyscale-100 rounded-lg transition-all focus:ring-accent-100"
+                    required
+                    value={defaultValue}
+                    onChange={e => setDefaultValue(e.target.value)}
+                />
+            )}
+        </>
+    )
 
     return (
         <>
@@ -100,120 +151,30 @@ function CustomFields() {
                         <div className="mr-2 justify-end flex gap-1">
                             <Link to="/dashboard/members">
                                 <button className="bg-greyscale-200 hover:bg-greyscale-300 transition-colors px-[25px] py-[12px] rounded-lg text-[13.5px] mr-2 justify-end">
-                                    <FontAwesomeIcon icon={faArrowLeft} size="lg" />
-                                    {" "}
-                                    Back
+                                    <FontAwesomeIcon icon={faArrowLeft} size="lg" /> Back
                                 </button>
                             </Link>
-                            <button className="bg-accent-100 hover:bg-accent-200 transition-colors px-[25px] py-[12px] rounded-lg text-[13.5px]" onClick={handleOpenModal}>
-                                <FontAwesomeIcon icon={faPlus} size="lg" />
-                                {" "}
-                                Add Field
+                            <button
+                                className="bg-accent-100 hover:bg-accent-200 transition-colors px-[25px] py-[12px] rounded-lg text-[13.5px]"
+                                onClick={() => setShowModal(true)}
+                            >
+                                <FontAwesomeIcon icon={faPlus} size="lg" /> Add Field
                             </button>
                         </div>
                     </div>
                     <Table type="customFields" />
                 </div>
             </div>
-            {isModalVisible && (
-                <div
-                    className={`fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 transition-opacity duration-300 ${isModalOpen ? "opacity-100" : "opacity-0"}`}
-                >
-                    <div
-                        className={`bg-white w-[500px] p-6 rounded-lg shadow-lg transform transition-transform duration-300 ${isModalOpen ? "scale-100" : "scale-95"}`}
-                    >
-                        <h2 className="text-2xl font-bold mb-4">{modalTitle}</h2>
 
-                        <label className="text-lg">Field name</label>
-                        <input
-                            type="text"
-                            className="border mt-2 p-2 w-full mb-5 border-greyscale-200 bg-greyscale-100 rounded-lg transition-all focus:ring-accent-100 hover:cursor-pointer"
-                            value={fieldName}
-                            onChange={e => setFieldName(e.target.value)}
-                            required
-                        />
-
-                        <label className="text-lg">Field type</label>
-                        <select
-                            className="border mt-2 p-2 w-full mb-5 border-greyscale-200 bg-greyscale-100 rounded-lg transition-all focus:ring-accent-100 hover:cursor-pointer"
-                            required
-                            defaultValue={fieldType}
-                            onChange={e => setFieldType(e.target.value)}
-                        >
-                            <option value="text">Text</option>
-                            <option value="dropdown">Dropdown</option>
-                            <option value="checkbox">Checkbox</option>
-                            <option value="date">Date</option>
-                        </select>
-
-                        {fieldType === "dropdown" && (
-                            <>
-                                <label className="text-lg">Dropdown values</label>
-                                <input
-                                    type="text"
-                                    className="border mt-2 p-2 w-full mb-5 border-greyscale-200 bg-greyscale-100 rounded-lg transition-all focus:ring-accent-100"
-                                    required
-                                    placeholder="value1, value2, value3"
-                                    value={dropdownOptions}
-                                    onChange={handleDropdownOptionssChange}
-                                />
-                            </>
-                        )}
-
-                        <label className="text-lg">Default value</label>
-                        {fieldType === "dropdown"
-                            ? (
-                                    <select
-                                        className="border mt-2 p-2 w-full mb-5 border-greyscale-200 bg-greyscale-100 rounded-lg transition-all focus:ring-accent-100"
-                                        required
-                                        defaultValue=""
-                                        onChange={e => setDefaultValue(e.target.value)}
-                                    >
-                                        <option value="">None</option>
-                                        {parsedDropdownOptions.map((option, index) => (
-                                            <option key={index} value={option}>
-                                                {option}
-                                            </option>
-                                        ))}
-                                    </select>
-                                )
-                            : fieldType === "checkbox"
-                                ? (
-                                        <select
-                                            className="border mt-2 p-2 w-full mb-5 border-greyscale-200 bg-greyscale-100 rounded-lg transition-all focus:ring-accent-100"
-                                            required
-                                            defaultValue="false"
-                                            onChange={e => setDefaultValue(e.target.value)}
-                                        >
-                                            <option value="false">Not checked</option>
-                                            <option value="true">Checked</option>
-                                        </select>
-                                    )
-                                : (
-                                        <input
-                                            type="text"
-                                            className="border mt-2 p-2 w-full mb-5 border-greyscale-200 bg-greyscale-100 rounded-lg transition-all focus:ring-accent-100"
-                                            required
-                                            value={defaultValue}
-                                            onChange={e => setDefaultValue(e.target.value)}
-                                        />
-                                    )}
-
-                        <button
-                            className="bg-accent-100 hover:bg-accent-200 text-white px-4 py-2 rounded-lg mr-2 transition-colors"
-                            onClick={handleSubmit}
-                        >
-                            {modalBtnText}
-                        </button>
-                        <button
-                            className="bg-gray-400 hover:bg-gray-500 text-white px-4 py-2 rounded-lg transition-colors"
-                            onClick={handleCloseModal}
-                        >
-                            Cancel
-                        </button>
-                    </div>
-                </div>
-            )}
+            <Modal
+                isOpen={showModal}
+                onClose={handleCloseModal}
+                onSubmit={handleSubmit}
+                title={editId ? "Edit custom field" : "Add custom field"}
+                submitText={editId ? "Save" : "Add"}
+            >
+                {modalContent}
+            </Modal>
         </>
     )
 }

@@ -4,26 +4,16 @@ import { useState } from "react"
 import { Helmet, HelmetProvider } from "react-helmet-async"
 import { updateWelcome } from "../../services/UpdateData"
 import { useAuth } from "../../utils/AuthContext"
+import Modal from "../../components/Modal"
 
 function Home() {
     const { user, club } = useAuth()
-    const [isModalOpen, setIsModalOpen] = useState(false)
-    const [isModalVisible, setIsModalVisible] = useState(false)
+    const [showModal, setShowModal] = useState(false)
     const [opened, setOpened] = useState(false)
-
-    const handleOpenModal = () => {
-        setIsModalVisible(true)
-        setOpened(true)
-        setTimeout(() => setIsModalOpen(true), 200)
-    }
 
     const handleCloseModal = () => {
         updateWelcome()
-        setIsModalOpen(false)
-        setTimeout(() => {
-            setIsModalVisible(false)
-        }, 300)
-
+        setShowModal(false)
     }
 
     if (!club || !user) {
@@ -31,7 +21,8 @@ function Home() {
     }
 
     if (user.seenStartPopup === false && !opened) {
-        handleOpenModal()
+        setOpened(true)
+        setShowModal(true)
     }
 
     return (
@@ -110,34 +101,27 @@ function Home() {
                     </div>
                 </div>
             </div>
-            {isModalVisible && (
-                <div
-                    className={`fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 transition-opacity duration-300 ${isModalOpen ? "opacity-100" : "opacity-0"}`}
-                >
-                    <div
-                        className={`bg-white w-[500px] p-6 rounded-lg shadow-lg transform transition-transform duration-300 ${isModalOpen ? "scale-100" : "scale-95"}`}
-                    >
-                        <div className="flex items-center mb-4 mt-3 ml-2 gap-2">
-                            <img className="h-12 w-auto rounded-md" src="/logo.png" alt=""></img>
-                            <h2 className="text-2xl font-bold">Welcome to Club Attendance!</h2>
-                        </div>
-                        <span className="mb-5 block">
-                            As this is your first time using our app, we recommend you read our documentation on how to use Club Attendance
-                            <a href="https://google.com" target="_blank" className="text-accent-100 hover:text-accent-200 visited:text-accent-100 underline">here.</a>
-                            {" "}
-                            Club Attendance has several different features, and you can choose if you want to use advanced features or just basic attendance taking. If you ever need any additional help,
-                            <a href="https://google.com" target="_blank" className="text-accent-100 hover:text-accent-200 visited:text-accent-100 underline">contact support</a>
-                            .
-                        </span>
-                        <button
-                            className="bg-gray-400 hover:bg-gray-500 text-white px-4 py-2 rounded-lg transition-colors mt-6"
-                            onClick={handleCloseModal}
-                        >
-                            Close
-                        </button>
-                    </div>
+            <Modal
+                isOpen={showModal}
+                onClose={handleCloseModal}
+                submitText=""
+                closeText="Close"
+            >
+                <div className="flex items-center mb-4 mt-3 ml-2 gap-2">
+                    <img className="h-12 w-auto rounded-md" src="/logo.png" alt=""></img>
+                    <h2 className="text-2xl font-bold">Welcome to Club Attendance!</h2>
                 </div>
-            )}
+                <span className="mb-5 block">
+                    As this is your first time using our app, we recommend you read our documentation on how to use Club Attendance
+                    {" "}
+                    <a href="https://google.com" target="_blank" className="text-accent-100 hover:text-accent-200 visited:text-accent-100 underline">here.</a>
+                    {" "}
+                    Club Attendance has several different features, and you can choose if you want to use advanced features or just basic attendance taking. If you ever need any additional help,
+                    {" "}
+                    <a href="https://google.com" target="_blank" className="text-accent-100 hover:text-accent-200 visited:text-accent-100 underline">contact support</a>
+                    .
+                </span>
+            </Modal>
         </>
     )
 }
