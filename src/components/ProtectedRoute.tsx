@@ -16,7 +16,8 @@ function ProtectedRoute({ path, children }: { path: string, children: ReactNode 
 
     useEffect(() => {
         const fetchData = async () => {
-            if (hasFetched) return
+            if (hasFetched)
+                return
 
             setIsLoading(true)
             setError(null)
@@ -67,12 +68,12 @@ function ProtectedRoute({ path, children }: { path: string, children: ReactNode 
         }
 
         fetchData()
-    }, [navigate, setUser, setClub, hasFetched])
+    }, [navigate, setUser, setClub, setIsLoading, user, hasFetched, path])
 
     if (isLoading)
-        return <PageTransition key={"loading"}><Loading /></PageTransition>
+        return <PageTransition key="loading"><Loading /></PageTransition>
     if (error)
-        return <PageTransition key={"errorText"}><PageText text={error} sidebar={true} /></PageTransition>
+        return <PageTransition key="errorText"><PageText text={error} sidebar={true} /></PageTransition>
     if (shouldRender)
         return children
 

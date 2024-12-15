@@ -3,10 +3,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { useRef, useState } from "react"
 import { Helmet, HelmetProvider } from "react-helmet-async"
 import { useNavigate } from "react-router-dom"
+import Modal from "../../components/Modal"
 import { deleteClub } from "../../services/DeleteData"
 import { updateAllowSelfRegistration, updateClubName, updateOfficerName, updateUseStaticCode } from "../../services/UpdateData"
 import { useAuth } from "../../utils/AuthContext"
-import Modal from "../../components/Modal"
 
 function Settings() {
     const { club } = useAuth()
@@ -19,7 +19,8 @@ function Settings() {
     const qrCodeRef = useRef<HTMLImageElement>(null)
     const navigate = useNavigate()
 
-    if (!club) return null
+    if (!club)
+        return null
 
     const handleOpenEditModal = (field: string, currentValue: string) => {
         setFieldToEdit(field)
@@ -173,7 +174,9 @@ function Settings() {
                     className="bg-accent-100 mr-3 hover:bg-accent-100 text-white px-4 py-2 rounded-lg transition-colors mt-6 inline"
                     onClick={handleDownloadQrCode}
                 >
-                    <FontAwesomeIcon icon={faDownload} size="lg" /> Save
+                    <FontAwesomeIcon icon={faDownload} size="lg" />
+                    {" "}
+                    Save
                 </button>
             </Modal>
         </>

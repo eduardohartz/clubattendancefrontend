@@ -3,10 +3,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { useState } from "react"
 import { Helmet, HelmetProvider } from "react-helmet-async"
 import { useNavigate } from "react-router-dom"
+import Modal from "../components/Modal"
 import { deleteUser } from "../services/DeleteData"
 import { updatePassword } from "../services/UpdateData"
 import { useAuth } from "../utils/AuthContext"
-import Modal from "../components/Modal"
 
 function Settings() {
 
@@ -17,7 +17,8 @@ function Settings() {
     const [repeatNewPassword, setRepeatNewPassword] = useState("")
     const navigate = useNavigate()
 
-    if (!user) return null
+    if (!user)
+        return null
 
     const handleCloseModal = () => {
         setShowModal(false)

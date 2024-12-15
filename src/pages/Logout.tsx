@@ -21,7 +21,7 @@ function Logout() {
         }
 
         performLogout()
-    }, [navigate])
+    }, [navigate, setClub, setUser])
 
     return (
         <div>

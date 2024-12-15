@@ -40,8 +40,6 @@ function Handler() {
     const currentRoute = location.pathname
     const { user, club, isLoading } = useAuth()
 
-    console.log(user)
-
     const showNavbar
         = (currentRoute.startsWith("/dashboard") || currentRoute === "/settings")
         && user

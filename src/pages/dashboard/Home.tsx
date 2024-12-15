@@ -2,9 +2,9 @@ import { faNewspaper } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { useState } from "react"
 import { Helmet, HelmetProvider } from "react-helmet-async"
+import Modal from "../../components/Modal"
 import { updateWelcome } from "../../services/UpdateData"
 import { useAuth } from "../../utils/AuthContext"
-import Modal from "../../components/Modal"
 
 function Home() {
     const { user, club } = useAuth()

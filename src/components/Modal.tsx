@@ -1,7 +1,7 @@
 import { faXmark } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { motion, AnimatePresence } from "framer-motion"
-import { useState, useEffect, useCallback } from "react"
+import { AnimatePresence, motion } from "framer-motion"
+import { useCallback, useEffect, useState } from "react"
 
 interface ModalProps {
     isOpen: boolean
@@ -13,7 +13,7 @@ interface ModalProps {
     submitText?: string
 }
 
-const Modal = ({
+function Modal({
     isOpen,
     onClose,
     onSubmit,
@@ -21,7 +21,7 @@ const Modal = ({
     children,
     closeText = "Cancel",
     submitText = "Submit",
-}: ModalProps) => {
+}: ModalProps) {
     const [shouldRender, setShouldRender] = useState(false)
 
     useEffect(() => {
@@ -54,7 +54,7 @@ const Modal = ({
                     onClick={handleClickOutside}
                 >
                     <motion.div
-                        className={`bg-white p-6 rounded-lg shadow-lg w-[500px]`}
+                        className="bg-white p-6 rounded-lg shadow-lg w-[500px]"
                         initial={{ scale: 0.95, opacity: 0 }}
                         animate={{ scale: 1, opacity: 1 }}
                         exit={{ scale: 0.95, opacity: 0 }}

@@ -3,8 +3,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { useEffect, useState } from "react"
 import { Helmet, HelmetProvider } from "react-helmet-async"
 import { Link, useNavigate, useSearchParams } from "react-router-dom"
-import Table from "../../../components/Table"
 import Modal from "../../../components/Modal"
+import Table from "../../../components/Table"
 import { errorToast, successToast } from "../../../components/Toast"
 import { createCustomField } from "../../../services/CreateData"
 import { FetchData } from "../../../services/FetchData"
@@ -151,14 +151,18 @@ function CustomFields() {
                         <div className="mr-2 justify-end flex gap-1">
                             <Link to="/dashboard/members">
                                 <button className="bg-greyscale-200 hover:bg-greyscale-300 transition-colors px-[25px] py-[12px] rounded-lg text-[13.5px] mr-2 justify-end">
-                                    <FontAwesomeIcon icon={faArrowLeft} size="lg" /> Back
+                                    <FontAwesomeIcon icon={faArrowLeft} size="lg" />
+                                    {" "}
+                                    Back
                                 </button>
                             </Link>
                             <button
                                 className="bg-accent-100 hover:bg-accent-200 transition-colors px-[25px] py-[12px] rounded-lg text-[13.5px]"
                                 onClick={() => setShowModal(true)}
                             >
-                                <FontAwesomeIcon icon={faPlus} size="lg" /> Add Field
+                                <FontAwesomeIcon icon={faPlus} size="lg" />
+                                {" "}
+                                Add Field
                             </button>
                         </div>
                     </div>

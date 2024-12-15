@@ -7,6 +7,7 @@ import { useCallback, useEffect, useRef, useState } from "react"
 import { Helmet, HelmetProvider } from "react-helmet-async"
 import { Link, Navigate, useParams } from "react-router-dom"
 import Loading from "../../../components/Loading"
+import Modal from "../../../components/Modal"
 import PageTransition from "../../../components/PageTransition"
 import Table from "../../../components/Table"
 import { errorToast } from "../../../components/Toast"
@@ -15,7 +16,6 @@ import { FetchData } from "../../../services/FetchData"
 import { updateMeeting } from "../../../services/UpdateData"
 import { useAuth } from "../../../utils/AuthContext"
 import { formatDate, formatTime } from "../../../utils/Formatters"
-import Modal from "../../../components/Modal"
 
 function Meeting() {
     const { user, club } = useAuth()
@@ -153,7 +153,9 @@ function Meeting() {
                 <option value="" disabled>Select member</option>
                 {members.map((member: Member) => (
                     <option key={member.id} value={member.id}>
-                        {member.firstName} {member.lastName}
+                        {member.firstName}
+                        {" "}
+                        {member.lastName}
                     </option>
                 ))}
                 <option value="new">-Add new member</option>
@@ -194,7 +196,9 @@ function Meeting() {
                 className="bg-accent-100 mr-3 hover:bg-accent-100 text-white px-4 py-2 rounded-lg transition-colors mt-6"
                 onClick={handleDownloadQrCode}
             >
-                <FontAwesomeIcon icon={faDownload} size="lg" /> Download
+                <FontAwesomeIcon icon={faDownload} size="lg" />
+                {" "}
+                Download
             </button>
         </>
     )
