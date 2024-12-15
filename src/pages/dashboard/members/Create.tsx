@@ -76,7 +76,7 @@ function Create() {
                             </Link>
                             <button
                                 type="submit"
-                                className="flex w-full justify-center rounded-md bg-purple-400 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm hover:bg-accent-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-200 transition-colors"
+                                className="flex w-full justify-center rounded-md bg-accent-100 hover:bg-accent-200 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm transition-colors"
                                 disabled={isSubmitting}
                             >
 

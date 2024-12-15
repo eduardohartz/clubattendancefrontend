@@ -59,7 +59,7 @@ function Landing() {
                     </div>
                     <div className="lg:flex lg:flex-1 lg:justify-end">
                         <Link to="/login">
-                            <button className="text-sm/6 font-semibold text-white bg-purple-400 px-7 py-3 rounded-lg hover:bg-accent-200 transition-colors">
+                            <button className="text-sm/6 font-semibold text-white bg-accent-100 px-7 py-3 rounded-lg hover:bg-accent-200 transition-colors">
                                 Log in
                                 {" "}
                                 <span aria-hidden="true">&rarr;</span>
@@ -79,7 +79,7 @@ function Landing() {
                     club attendance tracker
                 </span>
                 <a href="mailto:support@clubattendance.com?subject=Requesting%20access&body=Hi!%0A%0AI%20run%20the%20club%20%5B%5D%20at%20the%20school%20%5B%5D.%20Can%20I%20request%20early%20access%20to%20your%20program%3F%0A%0AThanks!">
-                    <button className="text-sm/6 font-semibold text-white bg-purple-400 px-7 py-3 rounded-lg hover:bg-accent-200 transition-colors">Request Access</button>
+                    <button className="text-sm/6 font-semibold text-white bg-accent-100 px-7 py-3 rounded-lg hover:bg-accent-200 transition-colors">Request Access</button>
                 </a>
             </div>
 

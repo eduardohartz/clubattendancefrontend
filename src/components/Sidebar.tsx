@@ -1,10 +1,11 @@
-import type { Club, User } from "../types/models"
 import { faBars, faCog, faComments, faHouse, faRightFromBracket, faUser, faUsers, faUserShield, faXmark } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { useState } from "react"
 import { Link } from "react-router-dom"
+import { useAuth } from "../utils/AuthContext"
 
-function Sidebar({ page, user, club }: { page: string, user: User | null, club: Club | null }) {
+function Sidebar({ page }: { page: string }) {
+    const { user, club } = useAuth()
     const [isMenuOpen, setIsMenuOpen] = useState(false)
 
     if (!user || !club) {

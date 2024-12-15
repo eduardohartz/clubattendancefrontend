@@ -1,4 +1,3 @@
-import type { User } from "../../types/models"
 import { faPlus } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import axios from "axios"
@@ -7,8 +6,11 @@ import { useState } from "react"
 import { Helmet, HelmetProvider } from "react-helmet-async"
 import Table from "../../components/Table"
 import getBaseUrl from "../../services/Api"
+import { useAuth } from "../../utils/AuthContext"
 
-function Admin({ user }: { user: User | null }) {
+function Admin() {
+
+    const { user } = useAuth()
 
     const [isSubmitting, setIsSubmitting] = useState(false)
 
@@ -68,13 +70,13 @@ function Admin({ user }: { user: User | null }) {
                             Add User
                         </button>
                     </div>
-                    <Table type="users" user={user} />
+                    <Table type="users" />
                 </div>
                 <div className="relative top-[100px] min-w-[80%]">
                     <div className="mx-auto flex w-[100%] items-center justify-between mb-5">
                         <span className="justify-start text-2xl font-bold ml-2">Clubs</span>
                     </div>
-                    <Table type="clubs" user={user} />
+                    <Table type="clubs" />
                 </div>
             </div>
         </>

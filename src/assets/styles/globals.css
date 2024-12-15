@@ -1,82 +1,84 @@
-@import "tailwindcss/base";
-@import "tailwindcss/components";
-@import "tailwindcss/utilities";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 @layer base {
   @font-face {
     font-family: 'Galano';
-    src: url("/fonts/galano.otf") format("opentype");
+    src: url('/fonts/galano.otf') format('opentype');
     font-weight: bold;
   }
-}
 
-@keyframes inout {
-
-  0%,
-  100% {
-    opacity: 1;
+  @font-face {
+    font-family: 'Montserrat';
+    src: url('/fonts/montserrat.ttf') format('truetype');
+    font-weight: 450;
   }
 
-  50% {
+  body {
+    font-family: 'Montserrat', system-ui, -apple-system, BlinkMacSystemFont, 'ui-sans-serif', sans-serif;
+  }
+}
+
+@layer components {
+  .fadeIn {
+    @apply animate-fadeIn;
+  }
+
+  .fadeOut {
+    @apply animate-fadeOut;
+  }
+
+  .change {
+    display: inline-block;
+    transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+  }
+
+  .up {
+    transform: translateY(-20px);
     opacity: 0;
   }
-}
 
-.fadeIn {
-  animation: 0.5s fadeIn forwards;
-}
-
-.fadeOut {
-  animation: 0.5s fadeOut forwards;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translate(-20px, 0);
+  .animate-inout {
+    display: inline-block;
+    animation: inout 2s infinite;
   }
 
-  to {
-    opacity: 1;
-    transform: translate(0px, 0px);
+  .usablesize {
+    width: calc(100vw - 225px);
   }
 }
 
-@keyframes fadeOut {
-  from {
-    opacity: 1;
-    transform: translate(0px, 0px);
+@layer utilities {
+  @keyframes inout {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0;
+    }
   }
 
-  to {
-    transform: translate(-20px, 0);
-    opacity: 0;
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translate(-20px, 0);
+    }
+    to {
+      opacity: 1;
+      transform: translate(0px, 0px);
+    }
   }
-}
 
-.change {
-  display: inline-block;
-  transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
-}
-
-.up {
-  transform: translateY(-20px);
-  opacity: 0;
-}
-
-.animate-inout {
-  display: inline-block;
-  animation: inout 2s infinite;
-}
-
-.fadeIn {
-  animation: 0.5s fadeIn forwards;
-}
-
-.fadeOut {
-  animation: 0.5s fadeOut forwards;
-}
-
-.usablesize {
-  width: calc(100vw - 225px);
+  @keyframes fadeOut {
+    from {
+      opacity: 1;
+      transform: translate(0px, 0px);
+    }
+    to {
+      transform: translate(-20px, 0);
+      opacity: 0;
+    }
+  }
 }

@@ -1,4 +1,3 @@
-import type { Club, User } from "../../../types/models"
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { useEffect, useState } from "react"
@@ -7,9 +6,10 @@ import { Link, Navigate, useParams } from "react-router-dom"
 import Loading from "../../../components/Loading"
 import Table from "../../../components/Table"
 import { FetchData } from "../../../services/FetchData"
+import { useAuth } from "../../../utils/AuthContext"
 
-function Member({ user, club }: { user: User | null, club: Club | null }) {
-
+function Member() {
+    const { user, club } = useAuth()
     const { id } = useParams<{ id: string }>()
     const [member, setMember] = useState<any>(null)
     const [loading, setLoading] = useState(true)
@@ -64,7 +64,7 @@ function Member({ user, club }: { user: User | null, club: Club | null }) {
                             </button>
                         </Link>
                     </div>
-                    <Table type="attendance" id={id} user={user} club={club} />
+                    <Table type="attendance" id={id} />
                 </div>
             </div>
         </>

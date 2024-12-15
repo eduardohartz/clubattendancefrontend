@@ -1,11 +1,12 @@
-import type { Club, User } from "../../../types/models"
 import { faFilePen, faPlus } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { Helmet, HelmetProvider } from "react-helmet-async"
 import { Link } from "react-router-dom"
 import Table from "../../../components/Table"
+import { useAuth } from "../../../utils/AuthContext"
 
-function Home({ user, club }: { user: User | null, club: Club | null }) {
+function Home() {
+    const { user, club } = useAuth()
     if (!user || !club)
         return
 
@@ -37,7 +38,7 @@ function Home({ user, club }: { user: User | null, club: Club | null }) {
                             </Link>
                         </div>
                     </div>
-                    <Table type="members" user={user} club={club} />
+                    <Table type="members" />
                 </div>
             </div>
 

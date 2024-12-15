@@ -1,13 +1,15 @@
-import type { Club, User } from "../types/models"
 import Cookies from "js-cookie"
 import { useCallback, useEffect, useRef, useState } from "react"
 import { getWsUrl } from "../services/Api"
 import { FetchData } from "../services/FetchData"
+import { useAuth } from "../utils/AuthContext"
 import { formatDate, formatTime } from "../utils/Formatters"
 import { dataKeyMap, getActions, getStatus, headersMap } from "../utils/TableHelpers"
 import Loading from "./Loading"
 
-function Table({ type, id = "", user, club }: { type: "meetings" | "members" | "attendees" | "attendance" | "users" | "clubs" | "customFields", id?: string, user: User | null, club: Club | null }) {
+function Table({ type, id = "" }: { type: "meetings" | "members" | "attendees" | "attendance" | "users" | "clubs" | "customFields", id?: string }) {
+
+    const { user, club } = useAuth()
     const [data, setData] = useState([])
     const [isLoading, setIsLoading] = useState(true)
     const wsRef = useRef<WebSocket | null>(null)
@@ -53,7 +55,7 @@ function Table({ type, id = "", user, club }: { type: "meetings" | "members" | "
         }
     }, [user, type, reloadData])
 
-    if (!club || !user || (type === "users" && !user.admin)) {
+    if ((!club && type !== "users" && type !== "clubs") || !user || (type === "users" && !user.admin)) {
         return null
     }
 
@@ -101,7 +103,7 @@ function Table({ type, id = "", user, club }: { type: "meetings" | "members" | "
                         <thead className="h-[45px]">
                             <tr>
                                 {headers.map(header => (
-                                    ((header !== 'Volunteering' && header !== 'Volunteered') || club.volunteering === true) && (
+                                    ((header !== "Volunteering" && header !== "Volunteered") || club?.volunteering === true) && (
                                         <th key={header} className="px-4 py-2 border-b border-gray-200 text-left text-sm font-medium text-gray-700">
                                             {header}
                                         </th>
@@ -113,7 +115,7 @@ function Table({ type, id = "", user, club }: { type: "meetings" | "members" | "
                             {data.map((row, rowIndex) => (
                                 <tr key={rowIndex} className="hover:bg-gray-100">
                                     {dataKeys.map((key, colIndex) => (
-                                        (key !== 'volunteering' || club.volunteering !== false) && (
+                                        (key !== "volunteering" || club?.volunteering !== false) && (
                                             <td
                                                 key={colIndex}
                                                 className={
@@ -131,7 +133,7 @@ function Table({ type, id = "", user, club }: { type: "meetings" | "members" | "
                 </div>
             )}
         </>
-    );
+    )
 }
 
 export default Table

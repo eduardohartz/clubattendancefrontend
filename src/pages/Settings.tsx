@@ -1,4 +1,3 @@
-import type { User } from "../types/models"
 import { faKey, faTrash } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { useState } from "react"
@@ -6,12 +5,13 @@ import { Helmet, HelmetProvider } from "react-helmet-async"
 import { useNavigate } from "react-router-dom"
 import { deleteUser } from "../services/DeleteData"
 import { updatePassword } from "../services/UpdateData"
+import { useAuth } from "../utils/AuthContext"
 
-function Settings({ user }: { user: User | null }) {
+function Settings() {
 
+    const { user } = useAuth()
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [isModalVisible, setIsModalVisible] = useState(false)
-    const [fieldToEdit, setFieldToEdit] = useState("")
     const [currentPassword, setCurrentPassword] = useState("")
     const [newPassword, setNewPassword] = useState("")
     const [repeatNewPassword, setRepeatNewPassword] = useState("")
@@ -20,28 +20,27 @@ function Settings({ user }: { user: User | null }) {
     if (!user)
         return null
 
-    const handleOpenModal = (field: string) => {
-        setFieldToEdit(field)
+    const handleOpenModal = () => {
         setIsModalVisible(true)
         setTimeout(() => setIsModalOpen(true), 200)
     }
 
     const handleCloseModal = () => {
         setIsModalOpen(false)
-        setTimeout(() => setIsModalVisible(false), 300)
-        setFieldToEdit("")
-        setCurrentPassword("")
-        setNewPassword("")
-        setRepeatNewPassword("")
+        setTimeout(() => {
+            setIsModalVisible(false)
+            setCurrentPassword("")
+            setNewPassword("")
+            setRepeatNewPassword("")
+        }, 300)
+
     }
 
     const handleSubmit = () => {
-        if (fieldToEdit === "Change Password") {
-            if (!currentPassword || !newPassword || !repeatNewPassword) {
-                return
-            }
-            updatePassword(currentPassword, newPassword, repeatNewPassword)
-        }
+        if (!currentPassword || !newPassword || !repeatNewPassword)
+            return
+
+        updatePassword(currentPassword, newPassword, repeatNewPassword)
         handleCloseModal()
     }
 
@@ -66,15 +65,17 @@ function Settings({ user }: { user: User | null }) {
                         <div className="flex flex-col w-full gap-2">
                             <span className="text-xl">
                                 User ID:
+                                {" "}
                                 {user.id}
                             </span>
                             <span className="text-xl">
                                 Username:
+                                {" "}
                                 {user.username}
                             </span>
                             <button
                                 className="bg-accent-100 hover:bg-accent-200 transition-colors px-[20px] py-[10px] rounded-lg text-[15.5px] mr-2 justify-end w-full"
-                                onClick={() => handleOpenModal("Change Password")}
+                                onClick={handleOpenModal}
                             >
                                 <FontAwesomeIcon icon={faKey} size="lg" />
                                 {" "}
@@ -99,7 +100,7 @@ function Settings({ user }: { user: User | null }) {
                     <div
                         className={`bg-white w-[500px] p-6 rounded-lg shadow-lg transform transition-transform duration-300 ${isModalOpen ? "scale-100" : "scale-95"}`}
                     >
-                        <h2 className="text-2xl font-bold mb-4">{fieldToEdit}</h2>
+                        <h2 className="text-2xl font-bold mb-4">Change Password</h2>
                         <label className="text-lg">Current password</label>
                         <input
                             type="password"

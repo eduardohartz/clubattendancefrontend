@@ -1,6 +1,6 @@
 /* eslint ts/no-redeclare: 0 */ // --> OFF
 
-import type { Club, Meeting, Member, User } from "../../../types/models"
+import type { Meeting, Member } from "../../../types/models"
 import { faArrowLeft, faDownload, faPlus, faPowerOff, faQrcode } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { useCallback, useEffect, useRef, useState } from "react"
@@ -13,10 +13,12 @@ import { errorToast } from "../../../components/Toast"
 import { createAttendee, createMember } from "../../../services/CreateData"
 import { FetchData } from "../../../services/FetchData"
 import { updateMeeting } from "../../../services/UpdateData"
+import { useAuth } from "../../../utils/AuthContext"
 import { formatDate, formatTime } from "../../../utils/Formatters"
 
-function Meeting({ user, club }: { user: User | null, club: Club | null }) {
+function Meeting() {
 
+    const { user, club } = useAuth()
     const { id } = useParams<{ id: string }>()
     const [meeting, setMeeting] = useState<Meeting | null>(null)
     const [loading, setLoading] = useState(true)
@@ -238,8 +240,7 @@ function Meeting({ user, club }: { user: User | null, club: Club | null }) {
                                                 onChange={() => setVolunteering(!volunteering)}
                                             />
                                         </span>
-                                    )
-                                    }
+                                    )}
                                     <button className="right-0 relative bg-accent-100 hover:bg-accent-200 transition-colors px-[25px] py-[12px] rounded-lg text-[13.5px] justify-end" onClick={handleSaveChanges}>
                                         <FontAwesomeIcon icon={faDownload} size="lg" />
                                         {" "}
@@ -260,7 +261,7 @@ function Meeting({ user, club }: { user: User | null, club: Club | null }) {
                     </div>
                     {showAttendees && (
                         <div className="mt-4">
-                            <Table type="attendees" id={id} user={user} club={club} />
+                            <Table type="attendees" id={id} />
                         </div>
                     )}
                 </div>

@@ -61,7 +61,7 @@ export function getActions(type: string, row: any, reloadData: () => void) {
                     <span className="text-red-500 hover:underline cursor-pointer ml-2" onClick={() => adminDeleteClub({ id: row.ownerId }, reloadData)}>Delete</span>
                 </>
             )
-        // TODO: Add custom fields actions
+
         case "customFields":
             return (
                 <>

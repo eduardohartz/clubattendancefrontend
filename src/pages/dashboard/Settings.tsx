@@ -1,4 +1,3 @@
-import type { Club } from "../../types/models"
 import { faDownload, faPenToSquare, faQrcode, faTrash } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { useEffect, useRef, useState } from "react"
@@ -6,9 +5,11 @@ import { Helmet, HelmetProvider } from "react-helmet-async"
 import { useNavigate } from "react-router-dom"
 import { deleteClub } from "../../services/DeleteData"
 import { updateAllowSelfRegistration, updateClubName, updateOfficerName, updateUseStaticCode } from "../../services/UpdateData"
+import { useAuth } from "../../utils/AuthContext"
 
-function Settings({ club }: { club: Club | null }) {
+function Settings() {
 
+    const { club } = useAuth()
     const [isQrChecked, setIsQrChecked] = useState(club ? club.useStaticCode : false)
     const [isSelfChecked, setIsSelfChecked] = useState(club ? club.allowSelfRegistration : false)
     const [isModalOpen, setIsModalOpen] = useState(false)
@@ -40,9 +41,11 @@ function Settings({ club }: { club: Club | null }) {
 
     const handleCloseModal = () => {
         setIsModalOpen(false)
-        setTimeout(() => setIsModalVisible(false), 300)
-        setFieldToEdit("")
-        setNewFieldValue("")
+        setTimeout(() => {
+            setIsModalVisible(false)
+            setFieldToEdit("")
+            setNewFieldValue("")
+        }, 300)
     }
 
     const handleSubmit = () => {
@@ -171,6 +174,7 @@ function Settings({ club }: { club: Club | null }) {
                     >
                         <h2 className="text-2xl font-bold mb-4">
                             Edit
+                            {" "}
                             {fieldToEdit}
                         </h2>
                         <input

@@ -1,12 +1,12 @@
-import type { Club, User } from "../../types/models"
 import { faNewspaper } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { useState } from "react"
 import { Helmet, HelmetProvider } from "react-helmet-async"
 import { updateWelcome } from "../../services/UpdateData"
+import { useAuth } from "../../utils/AuthContext"
 
-function Home({ club, user }: { club: Club | null, user: User | null }) {
-
+function Home() {
+    const { user, club } = useAuth()
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [isModalVisible, setIsModalVisible] = useState(false)
     const [opened, setOpened] = useState(false)
