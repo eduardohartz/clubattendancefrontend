@@ -25,7 +25,7 @@ function Sidebar({ page }: { page: string }) {
         <>
             <div className="hidden h-[100vh] w-[225px] bg-greyscale-100 border-r-2 border-r-greyscale-200 lg:flex flex-1 items-center flex-col">
                 <img className="h-12 w-auto rounded-md mt-3" src="/logo.png" alt=""></img>
-                <span className="text-2xl font-bold">Club Attendance</span>
+                <span className="text-[1.35rem] font-bold">Club Attendance</span>
                 <span className="text-base border-b-2 border-b-greyscale-200 w-[180px] text-center py-1">{club ? club.displayName : ""}</span>
 
                 <div className="flex flex-1 items-center flex-col gap-2 mt-[25px] mr-3">
@@ -59,14 +59,14 @@ function Sidebar({ page }: { page: string }) {
                     </Link>
                     {user.admin
                         ? (
-                                <Link to="/dashboard/admin">
-                                    <button className={`${buttonClass} ${page === "/dashboard/admin" ? selected : ""}`}>
-                                        <FontAwesomeIcon icon={faUserShield} size="lg" className="mr-1" />
-                                        {" "}
-                                        Admin
-                                    </button>
-                                </Link>
-                            )
+                            <Link to="/dashboard/admin">
+                                <button className={`${buttonClass} ${page === "/dashboard/admin" ? selected : ""}`}>
+                                    <FontAwesomeIcon icon={faUserShield} size="lg" className="mr-1" />
+                                    {" "}
+                                    Admin
+                                </button>
+                            </Link>
+                        )
                         : ""}
                     <span className="w-[180px] border-b-2 border-b-greyscale-200 mb-[40px]"></span>
                     <Link to="/settings">
