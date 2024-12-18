@@ -98,7 +98,7 @@ function Table({ type, id = "" }: { type: "meetings" | "members" | "attendees" |
             {isLoading ? (
                 <Loading table={true} />
             ) : (
-                <div className="bg-greyscale-100 outline-1 outline-greyscale-200 rounded-lg outline overflow-clip">
+                <div className="bg-greyscale-100 outline-1 outline-greyscale-200 rounded-lg outline overflow-clip mb-6">
                     <table className="w-[100%] m-0 border-collapse">
                         <thead className="h-[45px]">
                             <tr>

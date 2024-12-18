@@ -23,7 +23,7 @@ function Sidebar({ page }: { page: string }) {
 
     return (
         <>
-            <div className="hidden h-[100vh] w-[225px] bg-greyscale-100 border-r-2 border-r-greyscale-200 lg:flex flex-1 items-center flex-col">
+            <div className="fixed hidden h-[100vh] w-[225px] bg-greyscale-100 border-r-2 border-r-greyscale-200 lg:flex flex-1 items-center flex-col">
                 <img className="h-12 w-auto rounded-md mt-3" src="/logo.png" alt=""></img>
                 <span className="text-[1.35rem] font-bold">Club Attendance</span>
                 <span className="text-base border-b-2 border-b-greyscale-200 w-[180px] text-center py-1">{club ? club.displayName : ""}</span>
