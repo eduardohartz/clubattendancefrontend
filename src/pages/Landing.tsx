@@ -41,8 +41,8 @@ function Landing() {
     return (
         <>
             <header className="bg-white">
-                <nav className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-1" aria-label="Global">
-                    <div className="lg:flex lg:flex-1 hidden">
+                <nav className="mx-auto flex max-w-[90%] items-center justify-between p-6 lg:px-1" aria-label="Global">
+                    <div className="lg:flex hidden">
                         <div className="w-56 h-16 rounded-lg bg-gray-100 flex flex-row items-center">
                             <a href="#" className="">
                                 <img className="h-12 w-auto rounded-md ml-3" src="/logo.png" alt=""></img>
@@ -52,12 +52,15 @@ function Landing() {
                             </a>
                         </div>
                     </div>
-                    <div className="flex lg:flex-1 lg:hidden">
+                    <div className="flex lg:hidden">
                         <a href="#" className="">
                             <img className="h-12 w-auto rounded-md ml-3" src="/logo.png" alt=""></img>
                         </a>
                     </div>
-                    <div className="lg:flex lg:flex-1 lg:justify-end">
+                    <div className="flex lg:justify-end lg:gap-4 gap-3">
+                        <Link to="/setup" className="text-[14px] font-semibold text-accent-100 hover:text-accent-200 transition-colors self-center">
+                            Setup account
+                        </Link>
                         <Link to="/login">
                             <button className="text-sm/6 font-semibold text-white bg-accent-100 px-7 py-3 rounded-lg hover:bg-accent-200 transition-colors">
                                 Log in
