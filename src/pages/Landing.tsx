@@ -70,8 +70,8 @@ function Landing() {
             </header>
 
             <div className="flex flex-1 items-center justify-center mt-40 flex-col gap-10">
-                <span className="text-5xl max-lg:ml-5 lg:text-7xl font-['Galano']">Club Attendance</span>
-                <span className="text-3xl max-lg:ml-2 max-lg:text-left font-['Galano']">
+                <span className="text-5xl lg:mr-0 mr-2 max-lg:ml-10 lg:text-7xl font-['Galano']">Club Attendance</span>
+                <span className="text-3xl max-lg:ml-16 font-['Galano']">
                     The
                     {" "}
                     <span id="change" className={`text-accent-200 change ${isUp ? "up" : ""}`}>{currentText}</span>
