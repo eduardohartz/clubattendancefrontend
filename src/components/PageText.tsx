@@ -9,7 +9,7 @@ function PageText({ text, sidebar }: { text: string, sidebar: boolean }) {
         )
     } else {
         return (
-            <div className="usablesize h-[100vh] absolute top-0 right-0 flex items-center justify-center flex-col">
+            <div className="lg:usablesize w-full h-[100vh] absolute top-0 right-0 flex items-center justify-center flex-col">
                 <span className="text-2xl mt-46 font-['Galano'] select-none">
                     {text}
                 </span>

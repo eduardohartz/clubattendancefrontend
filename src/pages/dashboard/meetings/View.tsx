@@ -210,8 +210,8 @@ function Meeting() {
                     <title>Meeting | Club Attendance</title>
                 </Helmet>
             </HelmetProvider>
-            <div className="usablesize h-[100vh] absolute top-0 right-0 flex flex-col items-center gap-10">
-                <div className="absolute top-[100px] w-[80%] max-w-[1000px]">
+            <div className="lg:usablesize w-full h-[100vh] absolute top-0 right-0 flex flex-col items-center gap-10">
+                <div className="absolute top-[100px] max-w-[90%] w-[996px] 2xl:w-[1400px]">
                     <div className="mx-auto flex w-full items-center justify-between mb-5">
                         <span className="justify-start text-2xl font-bold ml-2">
                             Meeting

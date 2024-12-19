@@ -30,8 +30,8 @@ function Home() {
                     <title>Meetings | Club Attendance</title>
                 </Helmet>
             </HelmetProvider>
-            <div className="usablesize h-[100vh] absolute top-0 right-0 flex flex-col items-center gap-10">
-                <div className="absolute top-[100px] min-w-[80%]">
+            <div className="lg:usablesize w-full h-[100vh] absolute top-0 right-0 flex flex-col items-center gap-10">
+                <div className="absolute top-[100px] max-w-[90%] w-[996px] 2xl:w-[1400px]">
                     <div className="mx-auto flex w-[100%] items-center justify-between mb-5">
                         <span className="justify-start text-2xl font-bold ml-2">Meetings</span>
                         <button
@@ -41,18 +41,18 @@ function Home() {
                         >
                             {isCreatingMeeting
                                 ? (
-                                        <svg className="animate-spin h-6 w-6 text-black" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                                        </svg>
-                                    )
+                                    <svg className="animate-spin h-6 w-6 text-black" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                    </svg>
+                                )
                                 : (
-                                        <>
-                                            <FontAwesomeIcon icon={faPlus} size="lg" />
-                                            {" "}
-                                            New Meeting
-                                        </>
-                                    )}
+                                    <>
+                                        <FontAwesomeIcon icon={faPlus} size="lg" />
+                                        {" "}
+                                        New Meeting
+                                    </>
+                                )}
                         </button>
                     </div>
                     <Table type="meetings" />

@@ -85,12 +85,12 @@ function Sidebar({ page }: { page: string }) {
                     </Link>
                 </div>
             </div>
-            <div onClick={toggleMenu} className="lg:hidden flex flex-1 items-center flex-col fixed top-10 left-6 hover:cursor-pointer">
+            <div onClick={toggleMenu} className="lg:hidden flex flex-1 items-center flex-col fixed top-10 left-6 hover:cursor-pointer z-10">
                 <FontAwesomeIcon icon={faBars} size="2xl" />
             </div>
 
             <div className={`fixed inset-0 bg-greyscale-100 z-50 flex flex-col transition-transform duration-200 ${isMenuOpen ? "translate-x-0" : "-translate-x-full"}`}>
-                <div onClick={toggleMenu} className="lg:hidden flex flex-1 items-center flex-col fixed top-10 left-6 hover:cursor-pointer">
+                <div onClick={toggleMenu} className="lg:hidden flex flex-1 items-center flex-col fixed top-10 left-6 hover:cursor-pointer z-20">
                     <FontAwesomeIcon icon={faXmark} size="2xl" />
                 </div>
                 <div className="flex flex-col gap-4 ml-8">

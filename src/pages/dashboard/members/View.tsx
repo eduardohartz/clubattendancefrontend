@@ -48,8 +48,8 @@ function Member() {
                     <title>Member | Club Attendance</title>
                 </Helmet>
             </HelmetProvider>
-            <div className="usablesize h-[100vh] absolute top-0 right-0 flex flex-col items-center gap-10">
-                <div className="absolute top-[100px] min-w-[80%]">
+            <div className="lg:usablesize w-full h-[100vh] absolute top-0 right-0 flex flex-col items-center gap-10">
+                <div className="absolute top-[100px] max-w-[90%] w-[996px] 2xl:w-[1400px]">
                     <div className="mx-auto flex w-[100%] items-center justify-between mb-5">
                         <span className="justify-start text-2xl font-bold ml-2">
                             {`${member.firstName} ${member.lastName}`}

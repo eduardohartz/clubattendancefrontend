@@ -83,8 +83,8 @@ function Settings() {
                     <title>Club Settings | Club Attendance</title>
                 </Helmet>
             </HelmetProvider>
-            <div className="usablesize h-[100vh] absolute top-0 right-0 flex flex-col items-center gap-10">
-                <div className="absolute top-[100px] min-w-[40%] bg-greyscale-100 rounded-lg h-[365px] p-8">
+            <div className="lg:usablesize w-full h-[100vh] absolute top-0 right-0 flex flex-col items-center gap-10">
+                <div className="absolute top-[100px] bg-greyscale-100 rounded-lg h-[365px] max-w-[90%] w-[500px] p-8">
                     <div className="mx-auto flex w-[100%] flex-col gap-8 mb-5 items-left">
                         <span className="text-3xl font-bold ml-2 self-center">Club Settings</span>
                         <div className="flex flex-col w-full gap-2">
