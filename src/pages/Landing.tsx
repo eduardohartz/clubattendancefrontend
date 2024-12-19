@@ -91,7 +91,7 @@ function Landing() {
             <div ref={infoRef} className="relative w-[80%] max-w-[750px] flex flex-col items-center justify-center min-h-max gap-12 top-[380px] mb-10 left-[50%] transform translate-x-[-50%]">
                 <div className="flex flex-col w-[100%] gap-5">
                     <span className="text-4xl font-['Galano']">About</span>
-                    <span className="text-xl">Club Attendance is a club attendance tracker that allows you to easily track attendance and voluntering hours for your club meetings. It is made by a student attending Issaquah High School! If you need assistance, email support@clubattendance.com.</span>
+                    <span className="text-xl">Club Attendance is a club attendance tracker that allows you to easily track attendance and voluntering hours for your club meetings. {false ? "It is made by a student attending Issaquah High School!" : ""} If you need assistance, email support@clubattendance.com.</span>
                 </div>
                 <div className="flex flex-col w-[100%] gap-5">
                     <span className="text-4xl font-['Galano']">Features</span>

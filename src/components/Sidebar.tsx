@@ -95,7 +95,7 @@ function Sidebar({ page }: { page: string }) {
                 </div>
                 <div className="flex flex-col gap-4 ml-8">
                     <span className="text-4xl font-bold mt-20">Club Attendance</span>
-                    <span className="text-2xl ml-2">FCCLA 2024-25</span>
+                    <span className="text-2xl ml-2">{club ? club.displayName : ""}</span>
                     <Link to="/dashboard" onClick={toggleMenu}><span className={`${textClass} ${page === "/dashboard" ? tselected : ""}`}>Home</span></Link>
                     <Link to="/dashboard/meetings" onClick={toggleMenu}><span className={`${textClass} ${page.includes("meeting") ? tselected : ""}`}>Meetings</span></Link>
                     <Link to="/dashboard/members" onClick={toggleMenu}><span className={`${textClass} ${page.includes("member") ? tselected : ""}`}>Members</span></Link>
