@@ -93,7 +93,11 @@ function Meeting() {
         return null
 
     if (loading) {
-        return <Loading />
+        return (
+            <div className="lg:usablesize w-full h-[100vh] absolute top-0 right-0 flex flex-col items-center gap-10">
+                <Loading />
+            </div>
+        )
     }
 
     if (!meeting) {
