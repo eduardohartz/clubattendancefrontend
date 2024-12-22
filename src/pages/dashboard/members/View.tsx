@@ -48,25 +48,25 @@ function Member() {
                     <title>Member | Club Attendance</title>
                 </Helmet>
             </HelmetProvider>
-            <div className="lg:usablesize w-full h-[100vh] absolute top-0 right-0 flex flex-col items-center gap-10">
-                <div className="absolute top-[100px] max-w-[90%] w-[996px] 2xl:w-[1400px]">
-                    <div className="mx-auto flex w-[100%] items-center justify-between mb-5">
-                        <span className="justify-start text-2xl font-bold ml-2">
+            <div className="lg:usablesize absolute right-0 top-0 flex h-screen w-full flex-col items-center gap-10">
+                <div className="absolute top-[100px] w-[996px] max-w-[90%] 2xl:w-[1400px]">
+                    <div className="mx-auto mb-5 flex w-full items-center justify-between">
+                        <span className="ml-2 justify-start text-2xl font-bold">
                             {`${member.firstName} ${member.lastName}`}
                         </span>
                         <Link to="/dashboard/members">
-                            <button className="bg-greyscale-200 hover:bg-greyscale-300 transition-colors px-[25px] py-[12px] rounded-lg text-[13.5px] mr-2 justify-end">
+                            <button className="mr-2 justify-end rounded-lg bg-greyscale-200 px-[25px] py-[12px] text-[13.5px] transition-colors hover:bg-greyscale-300">
                                 <FontAwesomeIcon icon={faArrowLeft} size="lg" />
                                 {" "}
                                 Back
                             </button>
                         </Link>
                     </div>
-                    <div className="w-full h-[300px] bg-greyscale-100 rounded-lg outline-1 outline-greyscale-200 outline mb-5">
-                        <div className="w-full px-5 grid grid-cols-1 md:grid-cols-3 gap-4 justify-center py-4">
+                    <div className="mb-5 h-[300px] w-full rounded-lg bg-greyscale-100 outline outline-1 outline-greyscale-200">
+                        <div className="grid w-full grid-cols-1 justify-center gap-4 px-5 py-4 md:grid-cols-3">
 
                         </div>
-                        <div className="w-full px-5 flex gap-4 justify-center py-1">
+                        <div className="flex w-full justify-center gap-4 px-5 py-1">
                             <div className="w-1/2">
 
                             </div>
@@ -75,7 +75,7 @@ function Member() {
                             </div>
                         </div>
                     </div>
-                    <span className="justify-start text-xl font-bold ml-2">
+                    <span className="ml-2 justify-start text-xl font-bold">
                         Attendance history
                     </span>
                     <div className="mt-3">

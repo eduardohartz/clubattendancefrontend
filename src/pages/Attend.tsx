@@ -125,14 +125,14 @@ function Attend() {
     if (!data) {
         if (error) {
             return (
-                <div className="w-full h-screen flex items-center justify-center flex-col">
-                    <span className="text-2xl mt-46 font-['Galano'] select-none">{error}</span>
+                <div className="flex h-screen w-full flex-col items-center justify-center">
+                    <span className="mt-46 select-none font-['Galano'] text-2xl">{error}</span>
                 </div>
             )
         }
         return (
-            <div className="w-full h-screen flex items-center justify-center flex-col">
-                <span className="text-2xl mt-46 font-['Galano'] select-none">
+            <div className="flex h-screen w-full flex-col items-center justify-center">
+                <span className="mt-46 select-none font-['Galano'] text-2xl">
                     Meeting not found
                 </span>
             </div>
@@ -141,8 +141,8 @@ function Attend() {
 
     if (data.meeting.status !== "ongoing") {
         return (
-            <div className="w-full h-screen flex items-center justify-center flex-col">
-                <span className="text-2xl mt-46 font-['Galano'] select-none">
+            <div className="flex h-screen w-full flex-col items-center justify-center">
+                <span className="mt-46 select-none font-['Galano'] text-2xl">
                     Meeting not active
                 </span>
             </div>
@@ -182,7 +182,7 @@ function Attend() {
                                         required
                                         value={memberId}
                                         onChange={e => setMemberId(e.target.value)}
-                                        className="border block py-2 w-full mb-5 border-greyscale-200 bg-greyscale-100 rounded-lg transition-all focus:ring-accent-100 hover:cursor-pointer"
+                                        className="mb-5 block w-full rounded-lg border border-greyscale-200 bg-greyscale-100 py-2 transition-all hover:cursor-pointer focus:ring-accent-100"
                                     >
                                         <option value="" disabled>
                                             Select
@@ -210,7 +210,7 @@ function Attend() {
                                         required
                                         value={firstName}
                                         onChange={e => setFirstName(e.target.value)}
-                                        className="block w-full border-none rounded-md py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-accent-200 sm:text-sm transition-all"
+                                        className="block w-full rounded-md border-none py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 transition-all focus:ring-2 focus:ring-inset focus:ring-accent-200 sm:text-sm"
                                     />
                                 </div>
                             </div>
@@ -228,13 +228,13 @@ function Attend() {
                                     required
                                     value={lastName}
                                     onChange={e => setLastName(e.target.value)}
-                                    className="block w-full border-none rounded-md py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-accent-200 sm:text-sm transition-all"
+                                    className="block w-full rounded-md border-none py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 transition-all focus:ring-2 focus:ring-inset focus:ring-accent-200 sm:text-sm"
                                 />
                             </div>
                         </div>
 
                         <div>
-                            <span id="error" className="text-warningred block w-full text-center">
+                            <span id="error" className="block w-full text-center text-warningred">
                                 {error}
                             </span>
                         </div>
@@ -242,13 +242,13 @@ function Attend() {
                         <div>
                             <button
                                 type="submit"
-                                className="flex w-full justify-center rounded-md bg-accent-100 px-3 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-accent-200 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-accent-200 transition-colors disabled:cursor-not-allowed disabled:hover:bg-accent-100"
+                                className="flex w-full justify-center rounded-md bg-accent-100 px-3 py-1.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-accent-200 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-accent-200 disabled:cursor-not-allowed disabled:hover:bg-accent-100"
                                 disabled={isSubmitting}
                             >
                                 {isSubmitting
                                     ? (
                                             <svg
-                                                className="animate-spin h-5 w-5 text-white"
+                                                className="size-5 animate-spin text-white"
                                                 xmlns="http://www.w3.org/2000/svg"
                                                 fill="none"
                                                 viewBox="0 0 24 24"
@@ -285,7 +285,7 @@ function Attend() {
                         <p className="mt-10 text-center text-sm text-gray-500">
                             {register ? "Already a member?" : "Aren't a member yet?"}
                             <span
-                                className="font-semibold text-accent-200 hover:text-accent-100 transition-colors cursor-pointer"
+                                className="cursor-pointer font-semibold text-accent-200 transition-colors hover:text-accent-100"
                                 onClick={() => setRegister(!register)}
                             >
                                 {" "}

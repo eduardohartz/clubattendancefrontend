@@ -42,27 +42,27 @@ function Landing() {
         <>
             <header className="bg-white">
                 <nav className="mx-auto flex max-w-[90%] items-center justify-between p-6 lg:px-1" aria-label="Global">
-                    <div className="lg:flex hidden">
-                        <div className="w-56 h-16 rounded-lg bg-gray-100 flex flex-row items-center">
+                    <div className="hidden lg:flex">
+                        <div className="flex h-16 w-56 flex-row items-center rounded-lg bg-gray-100">
                             <a href="#" className="">
-                                <img className="h-12 w-auto rounded-md ml-3" src="/logo.png" alt=""></img>
+                                <img className="ml-3 h-12 w-auto rounded-md" src="/logo.png" alt=""></img>
                             </a>
                             <a href="#" className="">
-                                <span className="ml-3.5 text-md">Club Attendance</span>
+                                <span className="text-md ml-3.5">Club Attendance</span>
                             </a>
                         </div>
                     </div>
                     <div className="flex lg:hidden">
                         <a href="#" className="">
-                            <img className="h-12 w-auto rounded-md ml-3" src="/logo.png" alt=""></img>
+                            <img className="ml-3 h-12 w-auto rounded-md" src="/logo.png" alt=""></img>
                         </a>
                     </div>
-                    <div className="flex lg:justify-end lg:gap-4 gap-3">
-                        <Link to="/setup" className="text-[14px] font-semibold text-accent-100 hover:text-accent-200 transition-colors self-center">
+                    <div className="flex gap-3 lg:justify-end lg:gap-4">
+                        <Link to="/setup" className="self-center text-[14px] font-semibold text-accent-100 transition-colors hover:text-accent-200">
                             Setup account
                         </Link>
                         <Link to="/login">
-                            <button className="text-sm/6 font-semibold text-white bg-accent-100 px-7 py-3 rounded-lg hover:bg-accent-200 transition-colors">
+                            <button className="rounded-lg bg-accent-100 px-7 py-3 text-sm/6 font-semibold text-white transition-colors hover:bg-accent-200">
                                 Log in
                                 {" "}
                                 <span aria-hidden="true">&rarr;</span>
@@ -72,34 +72,39 @@ function Landing() {
                 </nav>
             </header>
 
-            <div className="flex flex-1 items-center justify-center mt-40 flex-col gap-10">
-                <span className="text-5xl lg:mr-0 mr-2 max-lg:ml-10 lg:text-7xl font-['Galano']">Club Attendance</span>
-                <span className="text-3xl max-lg:ml-16 font-['Galano']">
+            <div className="mt-40 flex flex-1 flex-col items-center justify-center gap-10">
+                <span className="mr-2 font-['Galano'] text-5xl max-lg:ml-10 lg:mr-0 lg:text-7xl">Club Attendance</span>
+                <span className="font-['Galano'] text-3xl max-lg:ml-16">
                     The
                     {" "}
-                    <span id="change" className={`text-accent-200 change ${isUp ? "up" : ""}`}>{currentText}</span>
+                    <span id="change" className={`change text-accent-200 ${isUp ? "up" : ""}`}>{currentText}</span>
                     {" "}
                     club attendance tracker
                 </span>
                 <a href="mailto:support@clubattendance.com?subject=Requesting%20access&body=Hi!%0A%0AI%20run%20the%20club%20%5B%5D%20at%20the%20school%20%5B%5D.%20Can%20I%20request%20early%20access%20to%20your%20program%3F%0A%0AThanks!">
-                    <button className="text-sm/6 font-semibold text-white bg-accent-100 px-7 py-3 rounded-lg hover:bg-accent-200 transition-colors">Request Access</button>
+                    <button className="rounded-lg bg-accent-100 px-7 py-3 text-sm/6 font-semibold text-white transition-colors hover:bg-accent-200">Request Access</button>
                 </a>
             </div>
 
-            <div className="flex flex-1 items-center justify-center flex-col gap-2 w-screen absolute top-[90vh] hover:cursor-pointer" onClick={scroll}>
+            <div className="absolute top-[90vh] flex w-screen flex-1 flex-col items-center justify-center gap-2 hover:cursor-pointer" onClick={scroll}>
                 <span className="font-bold">Learn more</span>
-                <span aria-hidden="true" className="text-xl animate-inout">&#x25BC;</span>
+                <span aria-hidden="true" className="animate-inout text-xl">&#x25BC;</span>
             </div>
 
-            <div ref={infoRef} className="relative w-[80%] max-w-[750px] flex flex-col items-center justify-center min-h-max gap-12 top-[380px] mb-10 left-[50%] transform translate-x-[-50%]">
-                <div className="flex flex-col w-[100%] gap-5">
-                    <span className="text-4xl font-['Galano']">About</span>
-                    <span className="text-xl">Club Attendance is a club attendance tracker that allows you to easily track attendance and voluntering hours for your club meetings. {false ? "It is made by a student attending Issaquah High School!" : ""} If you need assistance, email support@clubattendance.com.</span>
+            <div ref={infoRef} className="relative left-1/2 top-[380px] mb-10 flex min-h-max w-4/5 max-w-[750px] -translate-x-1/2 transform flex-col items-center justify-center gap-12">
+                <div className="flex w-full flex-col gap-5">
+                    <span className="font-['Galano'] text-4xl">About</span>
+                    <span className="text-xl">
+                        Club Attendance is a club attendance tracker that allows you to easily track attendance and voluntering hours for your club meetings.
+                        {false ? "It is made by a student attending Issaquah High School!" : ""}
+                        {" "}
+                        If you need assistance, email support@clubattendance.com.
+                    </span>
                 </div>
-                <div className="flex flex-col w-[100%] gap-5">
-                    <span className="text-4xl font-['Galano']">Features</span>
+                <div className="flex w-full flex-col gap-5">
+                    <span className="font-['Galano'] text-4xl">Features</span>
                     <span className="text-xl">Club Attendance has many features that make it the best club attendance tracker available. Send feature suggestions to suggestions@clubattendance.com</span>
-                    <ul className="text-xl list-disc ml-8">
+                    <ul className="ml-8 list-disc text-xl">
                         <li>Member hour tracking</li>
                         <li>Voluntering tracking</li>
                         <li>Export to Excel, Word, and PDF (ASB Friendly!!)</li>
@@ -107,8 +112,8 @@ function Landing() {
                         <li>+ More coming soon!</li>
                     </ul>
                 </div>
-                <div className="flex flex-col w-[100%] gap-5">
-                    <span className="text-4xl font-['Galano']">Pricing</span>
+                <div className="flex w-full flex-col gap-5">
+                    <span className="font-['Galano'] text-4xl">Pricing</span>
                     <span className="text-xl">Club Attendance is free to use for all clubs! Request access above.</span>
                 </div>
             </div>

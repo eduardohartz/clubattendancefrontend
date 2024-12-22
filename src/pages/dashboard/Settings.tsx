@@ -83,28 +83,28 @@ function Settings() {
                     <title>Club Settings | Club Attendance</title>
                 </Helmet>
             </HelmetProvider>
-            <div className="lg:usablesize w-full h-[100vh] absolute top-0 right-0 flex flex-col items-center gap-10">
-                <div className="absolute top-[100px] bg-greyscale-100 rounded-lg h-[365px] max-w-[90%] w-[500px] p-8">
-                    <div className="mx-auto flex w-[100%] flex-col gap-8 mb-5 items-left">
-                        <span className="text-3xl font-bold ml-2 self-center">Club Settings</span>
-                        <div className="flex flex-col w-full gap-2">
+            <div className="lg:usablesize absolute right-0 top-0 flex h-screen w-full flex-col items-center gap-10">
+                <div className="absolute top-[100px] h-[365px] w-[500px] max-w-[90%] rounded-lg bg-greyscale-100 p-8">
+                    <div className="items-left mx-auto mb-5 flex w-full flex-col gap-8">
+                        <span className="ml-2 self-center text-3xl font-bold">Club Settings</span>
+                        <div className="flex w-full flex-col gap-2">
                             <span className="text-xl">
                                 Club name:
                                 {" "}
                                 {club.displayName}
-                                <FontAwesomeIcon icon={faPenToSquare} className="hover:cursor-pointer ml-1" onClick={() => handleOpenEditModal("Club Name", club.displayName || "")} />
+                                <FontAwesomeIcon icon={faPenToSquare} className="ml-1 hover:cursor-pointer" onClick={() => handleOpenEditModal("Club Name", club.displayName || "")} />
                             </span>
                             <span className="text-xl">
                                 Club officer name:
                                 {" "}
                                 {club.officer}
-                                <FontAwesomeIcon icon={faPenToSquare} className="hover:cursor-pointer ml-1" onClick={() => handleOpenEditModal("Officer Name", club.officer || "")} />
+                                <FontAwesomeIcon icon={faPenToSquare} className="ml-1 hover:cursor-pointer" onClick={() => handleOpenEditModal("Officer Name", club.officer || "")} />
                             </span>
                             <span className="text-xl">
                                 Allow Member self-registration:
                                 <input
                                     type="checkbox"
-                                    className="w-6 h-6 ml-2 rounded-md border-0 text-accent-100 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-accent-200 transition-all hover:cursor-pointer"
+                                    className="ml-2 size-6 rounded-md border-0 text-accent-100 shadow-sm ring-1 ring-inset ring-gray-300 transition-all hover:cursor-pointer focus:ring-2 focus:ring-inset focus:ring-accent-200"
                                     onChange={handleSelfCheckboxChange}
                                     checked={isSelfChecked}
                                 />
@@ -113,14 +113,14 @@ function Settings() {
                                 Enable static QR-Code:
                                 <input
                                     type="checkbox"
-                                    className="w-6 h-6 ml-2 rounded-md border-0 text-accent-100 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-accent-200 transition-all hover:cursor-pointer"
+                                    className="ml-2 size-6 rounded-md border-0 text-accent-100 shadow-sm ring-1 ring-inset ring-gray-300 transition-all hover:cursor-pointer focus:ring-2 focus:ring-inset focus:ring-accent-200"
                                     onChange={handleQrCheckboxChange}
                                     checked={isQrChecked}
                                 />
                             </span>
                             <button
                                 disabled={!isQrChecked}
-                                className="bg-accent-100 hover:bg-accent-200 transition-colors px-[20px] py-[10px] rounded-lg text-[15.5px] mr-2 w-full  disabled:bg-slate-300 disabled:hover:cursor-not-allowed disabled:hover:bg-slate-300"
+                                className="mr-2 w-full rounded-lg bg-accent-100 px-[20px] py-[10px] text-[15.5px] transition-colors hover:bg-accent-200  disabled:bg-slate-300 disabled:hover:cursor-not-allowed disabled:hover:bg-slate-300"
                                 onClick={() => setShowQrModal(true)}
                             >
                                 <FontAwesomeIcon icon={faQrcode} size="lg" />
@@ -128,7 +128,7 @@ function Settings() {
                                 QR Code
                             </button>
                             <button
-                                className="bg-red-400 hover:bg-red-500 transition-colors px-[20px] py-[10px] rounded-lg text-[15.5px] mr-2 w-full"
+                                className="mr-2 w-full rounded-lg bg-red-400 px-[20px] py-[10px] text-[15.5px] transition-colors hover:bg-red-500"
                                 onClick={handleDeleteClub}
                             >
                                 <FontAwesomeIcon icon={faTrash} size="lg" />
@@ -148,7 +148,7 @@ function Settings() {
             >
                 <input
                     type="text"
-                    className="border p-2 w-full mb-4 border-greyscale-200 bg-greyscale-100 rounded-lg transition-all focus:ring-accent-100"
+                    className="mb-4 w-full rounded-lg border border-greyscale-200 bg-greyscale-100 p-2 transition-all focus:ring-accent-100"
                     value={newFieldValue}
                     onChange={e => setNewFieldValue(e.target.value)}
                     required
@@ -162,7 +162,7 @@ function Settings() {
                 closeText="Close"
             >
                 <span className="mb-4">This is used for attendance check-in. Your club members can scan this at every meeting to attend.</span>
-                <div className="flex justify-center mt-4">
+                <div className="mt-4 flex justify-center">
                     <img
                         ref={qrCodeRef}
                         className="w-64"
@@ -171,7 +171,7 @@ function Settings() {
                     />
                 </div>
                 <button
-                    className="bg-accent-100 mr-3 hover:bg-accent-100 text-white px-4 py-2 rounded-lg transition-colors mt-6 inline"
+                    className="mr-3 mt-6 inline rounded-lg bg-accent-100 px-4 py-2 text-white transition-colors hover:bg-accent-100"
                     onClick={handleDownloadQrCode}
                 >
                     <FontAwesomeIcon icon={faDownload} size="lg" />

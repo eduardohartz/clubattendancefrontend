@@ -98,13 +98,13 @@ function Table({ type, id = "" }: { type: "meetings" | "members" | "attendees" |
             {isLoading ? (
                 <Loading table={true} />
             ) : (
-                <div className="bg-greyscale-100 outline-1 outline-greyscale-200 rounded-lg outline overflow-scroll mb-6 scroll-smooth">
-                    <table className="w-[100%] m-0 border-collapse">
+                <div className="mb-6 overflow-scroll scroll-smooth rounded-lg bg-greyscale-100 outline outline-1 outline-greyscale-200">
+                    <table className="m-0 w-full border-collapse">
                         <thead className="h-[45px]">
                             <tr>
                                 {headers.map(header => (
                                     ((header !== "Volunteering" && header !== "Volunteered") || club?.volunteering === true) && (
-                                        <th key={header} className="px-4 py-2 border-b border-gray-200 text-left text-sm font-medium text-gray-700">
+                                        <th key={header} className="border-b border-gray-200 px-4 py-2 text-left text-sm font-medium text-gray-700">
                                             {header}
                                         </th>
                                     )
@@ -119,7 +119,7 @@ function Table({ type, id = "" }: { type: "meetings" | "members" | "attendees" |
                                             <td
                                                 key={colIndex}
                                                 className={
-                                                    `hover:cursor-pointer px-4 py-2 border-gray-200 text-sm text-gray-700 ${rowIndex % 2 ? "" : "bg-greyscale-200"}`
+                                                    `border-gray-200 px-4 py-2 text-sm text-gray-700 hover:cursor-pointer ${rowIndex % 2 ? "" : "bg-greyscale-200"}`
                                                 }
                                             >
                                                 {renderCellContent(key, row)}

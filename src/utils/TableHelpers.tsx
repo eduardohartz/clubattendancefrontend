@@ -28,37 +28,37 @@ export function getActions(type: string, row: any, reloadData: () => void) {
             return (
                 <>
                     <Link to={`/dashboard/meeting/${row.id}`} className="text-blue-500 hover:underline">View</Link>
-                    <span className="text-red-500 hover:underline cursor-pointer ml-2" onClick={() => deleteMeeting({ id: row.id }, reloadData)}>Delete</span>
+                    <span className="ml-2 cursor-pointer text-red-500 hover:underline" onClick={() => deleteMeeting({ id: row.id }, reloadData)}>Delete</span>
                 </>
             )
         case "members":
             return (
                 <>
                     <Link to={`/dashboard/member/${row.id}`} className="text-blue-500 hover:underline">View</Link>
-                    <span className="text-red-500 hover:underline cursor-pointer ml-2" onClick={() => deleteMember({ id: row.id }, reloadData)}>Delete</span>
+                    <span className="ml-2 cursor-pointer text-red-500 hover:underline" onClick={() => deleteMember({ id: row.id }, reloadData)}>Delete</span>
                 </>
             )
         case "attendees":
             return (
-                <span className="text-red-500 hover:underline cursor-pointer" onClick={() => removeAttendee({ id: row.externalId })}>Remove</span>
+                <span className="cursor-pointer text-red-500 hover:underline" onClick={() => removeAttendee({ id: row.externalId })}>Remove</span>
             )
         case "attendance":
             return (
                 <>
                     <Link to={`/dashboard/meeting/${row.meetingId}`} className="text-blue-500 hover:underline">View</Link>
-                    <span className="text-red-500 hover:underline cursor-pointer ml-2" onClick={() => deleteAttendance({ id: row.id }, reloadData)}>Delete</span>
+                    <span className="ml-2 cursor-pointer text-red-500 hover:underline" onClick={() => deleteAttendance({ id: row.id }, reloadData)}>Delete</span>
                 </>
             )
         case "users":
             return (
                 <>
-                    <span className="text-red-500 hover:underline cursor-pointer ml-2" onClick={() => adminDeleteUser({ id: row.id }, reloadData)}>Delete</span>
+                    <span className="ml-2 cursor-pointer text-red-500 hover:underline" onClick={() => adminDeleteUser({ id: row.id }, reloadData)}>Delete</span>
                 </>
             )
         case "clubs":
             return (
                 <>
-                    <span className="text-red-500 hover:underline cursor-pointer ml-2" onClick={() => adminDeleteClub({ id: row.ownerId }, reloadData)}>Delete</span>
+                    <span className="ml-2 cursor-pointer text-red-500 hover:underline" onClick={() => adminDeleteClub({ id: row.ownerId }, reloadData)}>Delete</span>
                 </>
             )
 
@@ -66,7 +66,7 @@ export function getActions(type: string, row: any, reloadData: () => void) {
             return (
                 <>
                     <Link to={`/dashboard/members/fields?id=${row.id}`} className="text-blue-500 hover:underline">Edit</Link>
-                    <span className="text-red-500 hover:underline cursor-pointer ml-2" onClick={() => deleteCustomField({ id: row.id }, reloadData)}>Delete</span>
+                    <span className="ml-2 cursor-pointer text-red-500 hover:underline" onClick={() => deleteCustomField({ id: row.id }, reloadData)}>Delete</span>
                 </>
             )
         default:
@@ -85,7 +85,7 @@ export function getStatus(type: string, row: any, current: any) {
         case "meetings":
             return (
                 <>
-                    <select defaultValue={current} disabled={current === "ended"} onChange={handleChange} className="py-[2px] px-1 rounded-md text-[13px] bg-none appearance-auto hover:cursor-pointer disabled:bg-greyscale-300 disabled:hover:cursor-not-allowed">
+                    <select defaultValue={current} disabled={current === "ended"} onChange={handleChange} className="appearance-auto rounded-md bg-none px-1 py-[2px] text-[13px] hover:cursor-pointer disabled:bg-greyscale-300 disabled:hover:cursor-not-allowed">
                         <option value="ongoing">Ongoing</option>
                         <option value="ended">Ended</option>
                     </select>
@@ -94,7 +94,7 @@ export function getStatus(type: string, row: any, current: any) {
         case "members":
             return (
                 <>
-                    <select defaultValue={current} onChange={async event => await updateMemberStatus({ id: row.id }, event.target.value)} className="py-[2px] px-1 rounded-md text-[13px] bg-none appearance-auto hover:cursor-pointer disabled:bg-greyscale-300">
+                    <select defaultValue={current} onChange={async event => await updateMemberStatus({ id: row.id }, event.target.value)} className="appearance-auto rounded-md bg-none px-1 py-[2px] text-[13px] hover:cursor-pointer disabled:bg-greyscale-300">
                         <option value="active">Active</option>
                         <option value="inactive">Inactive</option>
                         <option value="graduated">Graduated</option>
@@ -104,7 +104,7 @@ export function getStatus(type: string, row: any, current: any) {
         case "users":
             return (
                 <>
-                    <select defaultValue={current} onChange={async event => await updateUserStatus({ id: row.id }, event.target.value === "true")} className="py-[2px] px-1 rounded-md text-[13px] bg-none appearance-auto hover:cursor-pointer disabled:bg-greyscale-300">
+                    <select defaultValue={current} onChange={async event => await updateUserStatus({ id: row.id }, event.target.value === "true")} className="appearance-auto rounded-md bg-none px-1 py-[2px] text-[13px] hover:cursor-pointer disabled:bg-greyscale-300">
                         <option value="true">Active</option>
                         <option value="false">Inactive</option>
                     </select>
@@ -113,7 +113,7 @@ export function getStatus(type: string, row: any, current: any) {
         case "clubs":
             return (
                 <>
-                    <select defaultValue={current} onChange={async event => await updateClubStatus({ id: row.id }, event.target.value === "true")} className="py-[2px] px-1 rounded-md text-[13px] bg-none appearance-auto hover:cursor-pointer disabled:bg-greyscale-300">
+                    <select defaultValue={current} onChange={async event => await updateClubStatus({ id: row.id }, event.target.value === "true")} className="appearance-auto rounded-md bg-none px-1 py-[2px] text-[13px] hover:cursor-pointer disabled:bg-greyscale-300">
                         <option value="true">Active</option>
                         <option value="false">Inactive</option>
                     </select>

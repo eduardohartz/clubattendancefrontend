@@ -1,16 +1,16 @@
 function PageText({ text, sidebar }: { text: string, sidebar: boolean }) {
     if (sidebar === false) {
         return (
-            <div className="w-full h-screen flex align-middle items-center justify-center flex-col">
-                <span className="text-2xl mt-46 font-['Galano'] select-none">
+            <div className="flex h-screen w-full flex-col items-center justify-center align-middle">
+                <span className="mt-46 select-none font-['Galano'] text-2xl">
                     {text}
                 </span>
             </div>
         )
     } else {
         return (
-            <div className="lg:usablesize w-full h-[100vh] absolute top-0 right-0 flex items-center justify-center flex-col">
-                <span className="text-2xl mt-46 font-['Galano'] select-none">
+            <div className="lg:usablesize absolute right-0 top-0 flex h-screen w-full flex-col items-center justify-center">
+                <span className="mt-46 select-none font-['Galano'] text-2xl">
                     {text}
                 </span>
             </div>

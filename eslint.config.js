@@ -3,6 +3,7 @@ import js from "@eslint/js"
 import react from "eslint-plugin-react"
 import reactHooks from "eslint-plugin-react-hooks"
 import reactRefresh from "eslint-plugin-react-refresh"
+import eslintPluginTailwindCSS from "eslint-plugin-tailwindcss"
 import globals from "globals"
 import tseslint from "typescript-eslint"
 
@@ -32,6 +33,7 @@ export default antfu(
             "react-hooks": reactHooks,
             "react-refresh": reactRefresh,
             react,
+            "tailwindcss": eslintPluginTailwindCSS,
         },
         rules: {
             ...reactHooks.configs.recommended.rules,
@@ -43,6 +45,11 @@ export default antfu(
             "ts/no-use-before-define": "off",
             "style/multiline-ternary": "off",
             "no-alert": "off",
+            "tailwindcss/classnames-order": "error",
+            "tailwindcss/enforces-negative-arbitrary-values": "error",
+            "tailwindcss/enforces-shorthand": "error",
+            "tailwindcss/no-contradicting-classname": "error",
+            "tailwindcss/no-unnecessary-arbitrary-value": "error",
             "react-refresh/only-export-components": [
                 "warn",
                 { allowConstantExport: true },

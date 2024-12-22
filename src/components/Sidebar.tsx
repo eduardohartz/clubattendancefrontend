@@ -23,12 +23,12 @@ function Sidebar({ page }: { page: string }) {
 
     return (
         <>
-            <div className="fixed hidden h-[100vh] w-[225px] bg-greyscale-100 border-r-2 border-r-greyscale-200 lg:flex flex-1 items-center flex-col">
-                <img className="h-12 w-auto rounded-md mt-3" src="/logo.png" alt=""></img>
+            <div className="fixed hidden h-screen w-[225px] flex-1 flex-col items-center border-r-2 border-r-greyscale-200 bg-greyscale-100 lg:flex">
+                <img className="mt-3 h-12 w-auto rounded-md" src="/logo.png" alt=""></img>
                 <span className="text-[1.35rem] font-bold">Club Attendance</span>
-                <span className="text-base border-b-2 border-b-greyscale-200 w-[180px] text-center py-1">{club ? club.displayName : ""}</span>
+                <span className="w-[180px] border-b-2 border-b-greyscale-200 py-1 text-center text-base">{club ? club.displayName : ""}</span>
 
-                <div className="flex flex-1 items-center flex-col gap-2 mt-[25px] mr-3">
+                <div className="mr-3 mt-[25px] flex flex-1 flex-col items-center gap-2">
                     <Link to="/dashboard">
                         <button className={`${buttonClass} ${page === "/dashboard" ? selected : ""}`}>
                             <FontAwesomeIcon icon={faHouse} size="lg" className="mr-1" />
@@ -59,16 +59,16 @@ function Sidebar({ page }: { page: string }) {
                     </Link>
                     {user.admin
                         ? (
-                            <Link to="/dashboard/admin">
-                                <button className={`${buttonClass} ${page === "/dashboard/admin" ? selected : ""}`}>
-                                    <FontAwesomeIcon icon={faUserShield} size="lg" className="mr-1" />
-                                    {" "}
-                                    Admin
-                                </button>
-                            </Link>
-                        )
+                                <Link to="/dashboard/admin">
+                                    <button className={`${buttonClass} ${page === "/dashboard/admin" ? selected : ""}`}>
+                                        <FontAwesomeIcon icon={faUserShield} size="lg" className="mr-1" />
+                                        {" "}
+                                        Admin
+                                    </button>
+                                </Link>
+                            )
                         : ""}
-                    <span className="w-[180px] border-b-2 border-b-greyscale-200 mb-[40px]"></span>
+                    <span className="mb-[40px] w-[180px] border-b-2 border-b-greyscale-200"></span>
                     <Link to="/settings">
                         <button className={`${buttonClass} ${page === "/settings" ? selected : ""}`}>
                             <FontAwesomeIcon icon={faUser} size="lg" className="mr-1" />
@@ -85,17 +85,17 @@ function Sidebar({ page }: { page: string }) {
                     </Link>
                 </div>
             </div>
-            <div onClick={toggleMenu} className="lg:hidden flex flex-1 items-center flex-col fixed top-10 left-6 hover:cursor-pointer z-10">
+            <div onClick={toggleMenu} className="fixed left-6 top-10 z-10 flex flex-1 flex-col items-center hover:cursor-pointer lg:hidden">
                 <FontAwesomeIcon icon={faBars} size="2xl" />
             </div>
 
-            <div className={`fixed inset-0 bg-greyscale-100 z-50 flex flex-col transition-transform duration-200 ${isMenuOpen ? "translate-x-0" : "-translate-x-full"}`}>
-                <div onClick={toggleMenu} className="lg:hidden flex flex-1 items-center flex-col fixed top-10 left-6 hover:cursor-pointer z-20">
+            <div className={`fixed inset-0 z-50 flex flex-col bg-greyscale-100 transition-transform duration-200 ${isMenuOpen ? "translate-x-0" : "-translate-x-full"}`}>
+                <div onClick={toggleMenu} className="fixed left-6 top-10 z-20 flex flex-1 flex-col items-center hover:cursor-pointer lg:hidden">
                     <FontAwesomeIcon icon={faXmark} size="2xl" />
                 </div>
-                <div className="flex flex-col gap-4 ml-8">
-                    <span className="text-4xl font-bold mt-20">Club Attendance</span>
-                    <span className="text-2xl ml-2">{club ? club.displayName : ""}</span>
+                <div className="ml-8 flex flex-col gap-4">
+                    <span className="mt-20 text-4xl font-bold">Club Attendance</span>
+                    <span className="ml-2 text-2xl">{club ? club.displayName : ""}</span>
                     <Link to="/dashboard" onClick={toggleMenu}><span className={`${textClass} ${page === "/dashboard" ? tselected : ""}`}>Home</span></Link>
                     <Link to="/dashboard/meetings" onClick={toggleMenu}><span className={`${textClass} ${page.includes("meeting") ? tselected : ""}`}>Meetings</span></Link>
                     <Link to="/dashboard/members" onClick={toggleMenu}><span className={`${textClass} ${page.includes("member") ? tselected : ""}`}>Members</span></Link>

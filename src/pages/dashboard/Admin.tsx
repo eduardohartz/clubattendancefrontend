@@ -56,12 +56,12 @@ function Admin() {
                     <title>Admin | Club Attendance</title>
                 </Helmet>
             </HelmetProvider>
-            <div className="lg:usablesize w-full h-[100vh] absolute top-0 right-0 flex flex-col items-center gap-10">
-                <div className="relative top-[100px] max-w-[90%] w-[996px] 2xl:w-[1400px]">
-                    <div className="mx-auto flex w-[100%] items-center justify-between mb-5">
-                        <span className="justify-start text-2xl font-bold ml-2">Users</span>
+            <div className="lg:usablesize absolute right-0 top-0 flex h-screen w-full flex-col items-center gap-10">
+                <div className="relative top-[100px] w-[996px] max-w-[90%] 2xl:w-[1400px]">
+                    <div className="mx-auto mb-5 flex w-full items-center justify-between">
+                        <span className="ml-2 justify-start text-2xl font-bold">Users</span>
                         <button
-                            className="bg-accent-100 hover:bg-accent-200 transition-colors px-[25px] py-[12px] rounded-lg text-[13.5px] mr-2 justify-end"
+                            className="mr-2 justify-end rounded-lg bg-accent-100 px-[25px] py-[12px] text-[13.5px] transition-colors hover:bg-accent-200"
                             onClick={handleAddUser}
                             disabled={isSubmitting}
                         >
@@ -72,9 +72,9 @@ function Admin() {
                     </div>
                     <Table type="users" />
                 </div>
-                <div className="relative top-[100px] max-w-[90%] w-[996px] 2xl:w-[1400px]">
-                    <div className="mx-auto flex w-[100%] items-center justify-between mb-5">
-                        <span className="justify-start text-2xl font-bold ml-2">Clubs</span>
+                <div className="relative top-[100px] w-[996px] max-w-[90%] 2xl:w-[1400px]">
+                    <div className="mx-auto mb-5 flex w-full items-center justify-between">
+                        <span className="ml-2 justify-start text-2xl font-bold">Clubs</span>
                     </div>
                     <Table type="clubs" />
                 </div>
