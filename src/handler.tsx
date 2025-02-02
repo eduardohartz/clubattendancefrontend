@@ -2,7 +2,6 @@ import { AnimatePresence } from "framer-motion"
 import { Route, Routes, useLocation } from "react-router-dom"
 
 import PageTransition from "./components/PageTransition"
-// utils
 import ProtectedRoute from "./components/ProtectedRoute"
 import Sidebar from "./components/Sidebar"
 
@@ -25,25 +24,40 @@ import ClubSettings from "./pages/dashboard/Settings"
 
 // No login needed
 import Landing from "./pages/Landing"
-
 import Login from "./pages/Login"
-
 import Logout from "./pages/Logout"
 import Settings from "./pages/Settings"
-
-// Need to be logged in but not setup
 import Setup from "./pages/Setup"
 import { useAuth } from "./utils/AuthContext"
+import { JSX } from "react"
+
+interface RouteWrapperProps {
+    element: JSX.Element
+    protectedRoute?: boolean
+}
+
+function RouteWrapper({ element, protectedRoute = false }: RouteWrapperProps) {
+    const location = useLocation()
+    const currentRoute = location.pathname
+
+    if (protectedRoute)
+        return (
+            <ProtectedRoute path={currentRoute}>
+                <PageTransition>{element}</PageTransition>
+            </ProtectedRoute>
+        )
+    return <PageTransition>{element}</PageTransition>
+}
 
 function Handler() {
     const location = useLocation()
     const currentRoute = location.pathname
     const { user, club, isLoading } = useAuth()
 
-    const showNavbar
-        = (currentRoute.startsWith("/dashboard") || currentRoute === "/settings")
-        && user
-        && club
+    const showNavbar =
+        (currentRoute.startsWith("/dashboard") || currentRoute === "/settings") &&
+        user &&
+        club
 
     return (
         <>
@@ -57,163 +71,76 @@ function Handler() {
                     {/* Public Routes */}
                     <Route
                         path="/"
-                        element={(
-                            <PageTransition key={location.pathname}>
-                                <Landing />
-                            </PageTransition>
-                        )}
+                        element={<RouteWrapper element={<Landing />} />}
                     />
                     <Route
                         path="/attend"
-                        element={(
-                            <PageTransition key={location.pathname}>
-                                <Attend />
-                            </PageTransition>
-                        )}
+                        element={<RouteWrapper element={<Attend />} />}
                     />
                     <Route
                         path="/login"
-                        element={(
-                            <PageTransition key={location.pathname}>
-                                <Login />
-                            </PageTransition>
-                        )}
+                        element={<RouteWrapper element={<Login />} />}
                     />
                     <Route
                         path="/setup"
-                        element={(
-                            <PageTransition key={location.pathname}>
-                                <Setup />
-                            </PageTransition>
-                        )}
+                        element={<RouteWrapper element={<Setup />} />}
                     />
 
                     {/* Protected Routes */}
                     <Route
                         path="/dashboard"
-                        element={(
-                            <ProtectedRoute path={currentRoute}>
-                                <PageTransition key={location.pathname}>
-                                    <Dashboard />
-                                </PageTransition>
-                            </ProtectedRoute>
-                        )}
+                        element={<RouteWrapper element={<Dashboard />} protectedRoute />}
                     />
                     <Route
                         path="/settings"
-                        element={(
-                            <ProtectedRoute path={currentRoute}>
-                                <PageTransition key={location.pathname}>
-                                    <Settings />
-                                </PageTransition>
-                            </ProtectedRoute>
-                        )}
+                        element={<RouteWrapper element={<Settings />} protectedRoute />}
                     />
                     <Route
                         path="/dashboard/settings"
-                        element={(
-                            <ProtectedRoute path={currentRoute}>
-                                <PageTransition key={location.pathname}>
-                                    <ClubSettings />
-                                </PageTransition>
-                            </ProtectedRoute>
-                        )}
+                        element={<RouteWrapper element={<ClubSettings />} protectedRoute />}
                     />
                     <Route
                         path="/dashboard/members"
-                        element={(
-                            <ProtectedRoute path={currentRoute}>
-                                <PageTransition key={location.pathname}>
-                                    <Members />
-                                </PageTransition>
-                            </ProtectedRoute>
-                        )}
+                        element={<RouteWrapper element={<Members />} protectedRoute />}
                     />
                     <Route
                         path="/dashboard/members/create"
-                        element={(
-                            <ProtectedRoute path={currentRoute}>
-                                <PageTransition key={location.pathname}>
-                                    <CreateMember />
-                                </PageTransition>
-                            </ProtectedRoute>
-                        )}
+                        element={<RouteWrapper element={<CreateMember />} protectedRoute />}
                     />
                     <Route
                         path="/dashboard/members/fields"
-                        element={(
-                            <ProtectedRoute path={currentRoute}>
-                                <PageTransition key={location.pathname}>
-                                    <CustomFields />
-                                </PageTransition>
-                            </ProtectedRoute>
-                        )}
+                        element={<RouteWrapper element={<CustomFields />} protectedRoute />}
                     />
                     <Route
                         path="/dashboard/member/:id"
-                        element={(
-                            <ProtectedRoute path={currentRoute}>
-                                <PageTransition key={location.pathname}>
-                                    <Member />
-                                </PageTransition>
-                            </ProtectedRoute>
-                        )}
+                        element={<RouteWrapper element={<Member />} protectedRoute />}
                     />
                     <Route
                         path="/dashboard/meetings"
-                        element={(
-                            <ProtectedRoute path={currentRoute}>
-                                <PageTransition key={location.pathname}>
-                                    <Meetings />
-                                </PageTransition>
-                            </ProtectedRoute>
-                        )}
+                        element={<RouteWrapper element={<Meetings />} protectedRoute />}
                     />
                     <Route
                         path="/dashboard/meeting/:id"
-                        element={(
-                            <ProtectedRoute path={currentRoute}>
-                                <PageTransition key={location.pathname}>
-                                    <Meeting />
-                                </PageTransition>
-                            </ProtectedRoute>
-                        )}
+                        element={<RouteWrapper element={<Meeting />} protectedRoute />}
                     />
                     <Route
                         path="/logout"
-                        element={(
-                            <ProtectedRoute path={currentRoute}>
-                                <PageTransition key={location.pathname}>
-                                    <Logout />
-                                </PageTransition>
-                            </ProtectedRoute>
-                        )}
+                        element={<RouteWrapper element={<Logout />} protectedRoute />}
                     />
 
                     {/* Admin Route */}
                     <Route
                         path="/dashboard/admin"
-                        element={(
-                            <ProtectedRoute path={currentRoute}>
-                                <PageTransition key={location.pathname}>
-                                    <Admin />
-                                </PageTransition>
-                            </ProtectedRoute>
-                        )}
+                        element={<RouteWrapper element={<Admin />} protectedRoute />}
                     />
 
                     {/* 404 Route */}
                     <Route
                         path="*"
-                        element={(
-                            <PageTransition key={location.pathname}>
-                                <Unknown />
-                            </PageTransition>
-                        )}
+                        element={<RouteWrapper element={<Unknown />} />}
                     />
                 </Routes>
             </AnimatePresence>
-
         </>
     )
 }
