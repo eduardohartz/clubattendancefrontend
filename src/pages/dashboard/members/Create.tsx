@@ -26,12 +26,12 @@ function Create() {
                     <title>Create Member | Club Attendance</title>
                 </Helmet>
             </HelmetProvider>
-            <div className="lg:usablesize absolute right-0 top-0 flex h-screen w-full flex-col items-center gap-10">
-                <h2 className="mt-28 text-center text-3xl/9 font-bold tracking-tight text-gray-900">Create member</h2>
-                <div className="mt-0 sm:mx-auto sm:w-full sm:max-w-sm">
+            <div className="lg:usablesize top-0 right-0 absolute flex flex-col items-center gap-10 w-full h-screen">
+                <h2 className="mt-28 font-bold text-3xl/9 text-center text-gray-900 tracking-tight">Create member</h2>
+                <div className="sm:mx-auto mt-0 sm:w-full sm:max-w-sm">
                     <form className="space-y-6" onSubmit={handleSubmit}>
                         <div>
-                            <label htmlFor="firstname" className="block text-sm/6 font-medium text-gray-900">First name</label>
+                            <label htmlFor="firstname" className="block font-medium text-gray-900 text-sm/6">First name</label>
                             <div className="mt-2">
                                 <input
                                     id="firstname"
@@ -41,14 +41,14 @@ function Create() {
                                     required
                                     value={firstName}
                                     onChange={e => setFirstName(e.target.value)}
-                                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 transition-all placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-accent-200 sm:text-sm/6"
+                                    className="block border-0 shadow-xs py-1.5 rounded-md ring-1 ring-gray-300 focus:ring-2 focus:ring-accent-200 ring-inset focus:ring-inset w-full text-gray-900 placeholder:text-gray-400 sm:text-sm/6 transition-all"
                                 />
                             </div>
                         </div>
 
                         <div>
-                            <div className="flex items-center justify-between">
-                                <label htmlFor="lastname" className="block text-sm/6 font-medium text-gray-900">Last name</label>
+                            <div className="flex justify-between items-center">
+                                <label htmlFor="lastname" className="block font-medium text-gray-900 text-sm/6">Last name</label>
                             </div>
                             <div className="mt-2">
                                 <input
@@ -59,7 +59,7 @@ function Create() {
                                     required
                                     value={lastName}
                                     onChange={e => setLastName(e.target.value)}
-                                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 transition-all placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-accent-200 sm:text-sm/6"
+                                    className="block border-0 shadow-xs py-1.5 rounded-md ring-1 ring-gray-300 focus:ring-2 focus:ring-accent-200 ring-inset focus:ring-inset w-full text-gray-900 placeholder:text-gray-400 sm:text-sm/6 transition-all"
                                 />
                             </div>
                         </div>
@@ -68,7 +68,7 @@ function Create() {
                             <Link to="/dashboard/members" className="w-3/4">
                                 <button
                                     type="button"
-                                    className="flex w-full justify-center rounded-md bg-greyscale-200 px-3 py-1.5 text-sm/6 font-semibold text-black shadow-sm transition-colors hover:bg-greyscale-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-200"
+                                    className="flex justify-center bg-greyscale-200 hover:bg-greyscale-300 shadow-xs px-3 py-1.5 rounded-md w-full font-semibold text-black text-sm/6 transition-colors focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-accent-200"
                                     disabled={isSubmitting}
                                 >
                                     Back
@@ -76,20 +76,20 @@ function Create() {
                             </Link>
                             <button
                                 type="submit"
-                                className="flex w-full justify-center rounded-md bg-accent-100 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm transition-colors hover:bg-accent-200"
+                                className="flex justify-center bg-accent-100 hover:bg-accent-200 shadow-xs px-3 py-1.5 rounded-md w-full font-semibold text-sm/6 text-white transition-colors"
                                 disabled={isSubmitting}
                             >
 
                                 {isSubmitting
                                     ? (
-                                            <svg className="size-5 animate-spin text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                                                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                                            </svg>
-                                        )
+                                        <svg className="text-white animate-spin size-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                        </svg>
+                                    )
                                     : (
-                                            "Create"
-                                        )}
+                                        "Create"
+                                    )}
 
                             </button>
                         </div>

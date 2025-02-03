@@ -98,13 +98,13 @@ function Table({ type, id = "" }: { type: "meetings" | "members" | "attendees" |
             {isLoading ? (
                 <Loading table={true} />
             ) : (
-                <div className="mb-6 overflow-scroll scroll-smooth rounded-lg bg-greyscale-100 outline outline-1 outline-greyscale-200">
-                    <table className="m-0 w-full border-collapse">
+                <div className="bg-greyscale-100 mb-6 rounded-lg overflow-scroll outline outline-greyscale-200 scroll-smooth">
+                    <table className="border-collapse m-0 w-full">
                         <thead className="h-[45px]">
                             <tr>
                                 {headers.map(header => (
                                     ((header !== "Volunteering" && header !== "Volunteered") || club?.volunteering === true) && (
-                                        <th key={header} className="border-b border-gray-200 px-4 py-2 text-left text-sm font-medium text-gray-700">
+                                        <th key={header} className="border-gray-200 px-4 py-2 border-b font-medium text-gray-700 text-left text-sm">
                                             {header}
                                         </th>
                                     )

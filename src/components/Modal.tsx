@@ -46,7 +46,7 @@ function Modal({
         <AnimatePresence mode="wait" onExitComplete={() => setShouldRender(false)}>
             {(isOpen || shouldRender) && (
                 <motion.div
-                    className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
+                    className="z-50 fixed inset-0 flex justify-center items-center bg-black bg-opacity-50"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
@@ -54,19 +54,19 @@ function Modal({
                     onClick={handleClickOutside}
                 >
                     <motion.div
-                        className="w-[500px] rounded-lg bg-white p-6 shadow-lg"
+                        className="bg-white shadow-lg p-6 rounded-lg w-[500px]"
                         initial={{ scale: 0.95, opacity: 0 }}
                         animate={{ scale: 1, opacity: 1 }}
                         exit={{ scale: 0.95, opacity: 0 }}
                         transition={{ duration: 0.2 }}
                     >
                         {title && (
-                            <div className="mb-4 flex items-center justify-between">
-                                <h2 className="text-2xl font-bold">{title}</h2>
+                            <div className="flex justify-between items-center mb-4">
+                                <h2 className="font-bold text-2xl">{title}</h2>
                                 <FontAwesomeIcon
                                     icon={faXmark}
                                     size="2x"
-                                    className="transition-colors hover:cursor-pointer hover:text-gray-600"
+                                    className="hover:text-gray-600 transition-colors hover:cursor-pointer"
                                     onClick={handleClose}
                                 />
                             </div>
@@ -74,14 +74,14 @@ function Modal({
                         {children}
                         {onSubmit && (
                             <button
-                                className="mr-3 mt-4 rounded-lg bg-accent-100 px-4 py-2 text-white transition-colors hover:bg-accent-200"
+                                className="bg-accent-100 hover:bg-accent-200 mt-4 mr-3 px-4 py-2 rounded-lg text-white transition-colors"
                                 onClick={onSubmit}
                             >
                                 {submitText}
                             </button>
                         )}
                         <button
-                            className="mt-4 rounded-lg bg-gray-400 px-4 py-2 text-white transition-colors hover:bg-gray-500"
+                            className="bg-gray-400 hover:bg-gray-500 mt-4 px-4 py-2 rounded-lg text-white transition-colors"
                             onClick={handleClose}
                         >
                             {closeText}

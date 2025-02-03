@@ -67,7 +67,7 @@ function CustomFields() {
             <label className="text-lg">Field name</label>
             <input
                 type="text"
-                className="mb-5 mt-2 w-full rounded-lg border border-greyscale-200 bg-greyscale-100 p-2 transition-all hover:cursor-pointer focus:ring-accent-100"
+                className="border-greyscale-200 bg-greyscale-100 mt-2 mb-5 p-2 border rounded-lg focus:ring-accent-100 w-full transition-all hover:cursor-pointer"
                 value={fieldName}
                 onChange={e => setFieldName(e.target.value)}
                 required
@@ -75,7 +75,7 @@ function CustomFields() {
 
             <label className="text-lg">Field type</label>
             <select
-                className="mb-5 mt-2 w-full rounded-lg border border-greyscale-200 bg-greyscale-100 p-2 transition-all hover:cursor-pointer focus:ring-accent-100"
+                className="border-greyscale-200 bg-greyscale-100 mt-2 mb-5 p-2 border rounded-lg focus:ring-accent-100 w-full transition-all hover:cursor-pointer"
                 required
                 value={fieldType}
                 onChange={e => setFieldType(e.target.value)}
@@ -91,7 +91,7 @@ function CustomFields() {
                     <label className="text-lg">Dropdown values</label>
                     <input
                         type="text"
-                        className="mb-5 mt-2 w-full rounded-lg border border-greyscale-200 bg-greyscale-100 p-2 transition-all focus:ring-accent-100"
+                        className="border-greyscale-200 bg-greyscale-100 mt-2 mb-5 p-2 border rounded-lg focus:ring-accent-100 w-full transition-all"
                         required
                         placeholder="value1, value2, value3"
                         value={dropdownOptions}
@@ -103,7 +103,7 @@ function CustomFields() {
             <label className="text-lg">Default value</label>
             {fieldType === "dropdown" ? (
                 <select
-                    className="mb-5 mt-2 w-full rounded-lg border border-greyscale-200 bg-greyscale-100 p-2 transition-all focus:ring-accent-100"
+                    className="border-greyscale-200 bg-greyscale-100 mt-2 mb-5 p-2 border rounded-lg focus:ring-accent-100 w-full transition-all"
                     required
                     value={defaultValue}
                     onChange={e => setDefaultValue(e.target.value)}
@@ -117,7 +117,7 @@ function CustomFields() {
                 </select>
             ) : fieldType === "checkbox" ? (
                 <select
-                    className="mb-5 mt-2 w-full rounded-lg border border-greyscale-200 bg-greyscale-100 p-2 transition-all focus:ring-accent-100"
+                    className="border-greyscale-200 bg-greyscale-100 mt-2 mb-5 p-2 border rounded-lg focus:ring-accent-100 w-full transition-all"
                     required
                     value={defaultValue}
                     onChange={e => setDefaultValue(e.target.value)}
@@ -128,7 +128,7 @@ function CustomFields() {
             ) : (
                 <input
                     type="text"
-                    className="mb-5 mt-2 w-full rounded-lg border border-greyscale-200 bg-greyscale-100 p-2 transition-all focus:ring-accent-100"
+                    className="border-greyscale-200 bg-greyscale-100 mt-2 mb-5 p-2 border rounded-lg focus:ring-accent-100 w-full transition-all"
                     required
                     value={defaultValue}
                     onChange={e => setDefaultValue(e.target.value)}
@@ -144,20 +144,20 @@ function CustomFields() {
                     <title>Edit Custom Fields | Club Attendance</title>
                 </Helmet>
             </HelmetProvider>
-            <div className="lg:usablesize absolute right-0 top-0 flex h-screen w-full flex-col items-center gap-10">
-                <div className="absolute top-[100px] w-[996px] max-w-[90%] 2xl:w-[1400px]">
-                    <div className="mx-auto mb-5 flex w-full items-center justify-between">
-                        <span className="ml-2 justify-start text-2xl font-bold">Edit Custom Fields</span>
-                        <div className="mr-2 flex justify-end gap-1">
+            <div className="lg:usablesize top-0 right-0 absolute flex flex-col items-center gap-10 w-full h-screen">
+                <div className="top-[100px] absolute w-[996px] 2xl:w-[1400px] max-w-[90%]">
+                    <div className="flex justify-between items-center mx-auto mb-5 w-full">
+                        <span className="justify-start ml-2 font-bold text-2xl">Edit Custom Fields</span>
+                        <div className="flex justify-end gap-1 mr-2">
                             <Link to="/dashboard/members">
-                                <button className="mr-2 justify-end rounded-lg bg-greyscale-200 px-[25px] py-[12px] text-[13.5px] transition-colors hover:bg-greyscale-300">
+                                <button className="justify-end bg-greyscale-200 hover:bg-greyscale-300 mr-2 px-[25px] py-[12px] rounded-lg text-[13.5px] transition-colors">
                                     <FontAwesomeIcon icon={faArrowLeft} size="lg" />
                                     {" "}
                                     Back
                                 </button>
                             </Link>
                             <button
-                                className="rounded-lg bg-accent-100 px-[25px] py-[12px] text-[13.5px] transition-colors hover:bg-accent-200"
+                                className="bg-accent-100 hover:bg-accent-200 px-[25px] py-[12px] rounded-lg text-[13.5px] transition-colors"
                                 onClick={() => setShowModal(true)}
                             >
                                 <FontAwesomeIcon icon={faPlus} size="lg" />

@@ -4,12 +4,12 @@ function ErrorFallback({ error }: { error: Error | null }) {
     const navigate = useNavigate()
 
     return (
-        <div className="flex h-screen w-screen items-center justify-center">
+        <div className="flex justify-center items-center w-screen h-screen">
             <div className="text-center">
-                <h1 className="mb-4 text-2xl font-bold">Something went wrong</h1>
+                <h1 className="mb-4 font-bold text-2xl">Something went wrong</h1>
                 <pre className="mb-4 text-red-500">{error?.message}</pre>
                 <button
-                    className="mr-2 justify-end rounded-lg bg-accent-100 px-[25px] py-[12px] text-[13.5px] transition-colors hover:bg-accent-200"
+                    className="justify-end bg-accent-100 hover:bg-accent-200 mr-2 px-[25px] py-[12px] rounded-lg text-[13.5px] transition-colors"
                     onClick={() => navigate("/")}
                 >
                     Return Home

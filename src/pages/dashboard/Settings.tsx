@@ -83,11 +83,11 @@ function Settings() {
                     <title>Club Settings | Club Attendance</title>
                 </Helmet>
             </HelmetProvider>
-            <div className="lg:usablesize absolute right-0 top-0 flex h-screen w-full flex-col items-center gap-10">
-                <div className="absolute top-[100px] h-[365px] w-[500px] max-w-[90%] rounded-lg bg-greyscale-100 p-8">
-                    <div className="items-left mx-auto mb-5 flex w-full flex-col gap-8">
-                        <span className="ml-2 self-center text-3xl font-bold">Club Settings</span>
-                        <div className="flex w-full flex-col gap-2">
+            <div className="lg:usablesize top-0 right-0 absolute flex flex-col items-center gap-10 w-full h-screen">
+                <div className="top-[100px] absolute bg-greyscale-100 p-8 rounded-lg w-[500px] max-w-[90%] h-[365px]">
+                    <div className="flex flex-col items-left gap-8 mx-auto mb-5 w-full">
+                        <span className="ml-2 font-bold text-3xl self-center">Club Settings</span>
+                        <div className="flex flex-col gap-2 w-full">
                             <span className="text-xl">
                                 Club name:
                                 {" "}
@@ -104,7 +104,7 @@ function Settings() {
                                 Allow Member self-registration:
                                 <input
                                     type="checkbox"
-                                    className="ml-2 size-6 rounded-md border-0 text-accent-100 shadow-sm ring-1 ring-inset ring-gray-300 transition-all hover:cursor-pointer focus:ring-2 focus:ring-inset focus:ring-accent-200"
+                                    className="border-0 shadow-xs ml-2 rounded-md ring-1 ring-gray-300 focus:ring-2 focus:ring-accent-200 ring-inset focus:ring-inset text-accent-100 transition-all hover:cursor-pointer size-6"
                                     onChange={handleSelfCheckboxChange}
                                     checked={isSelfChecked}
                                 />
@@ -113,14 +113,14 @@ function Settings() {
                                 Enable static QR-Code:
                                 <input
                                     type="checkbox"
-                                    className="ml-2 size-6 rounded-md border-0 text-accent-100 shadow-sm ring-1 ring-inset ring-gray-300 transition-all hover:cursor-pointer focus:ring-2 focus:ring-inset focus:ring-accent-200"
+                                    className="border-0 shadow-xs ml-2 rounded-md ring-1 ring-gray-300 focus:ring-2 focus:ring-accent-200 ring-inset focus:ring-inset text-accent-100 transition-all hover:cursor-pointer size-6"
                                     onChange={handleQrCheckboxChange}
                                     checked={isQrChecked}
                                 />
                             </span>
                             <button
                                 disabled={!isQrChecked}
-                                className="mr-2 w-full rounded-lg bg-accent-100 px-[20px] py-[10px] text-[15.5px] transition-colors hover:bg-accent-200  disabled:bg-slate-300 disabled:hover:cursor-not-allowed disabled:hover:bg-slate-300"
+                                className="bg-accent-100 hover:bg-accent-200 disabled:hover:bg-slate-300 disabled:bg-slate-300 mr-2 px-[20px] py-[10px] rounded-lg w-full text-[15.5px] transition-colors disabled:hover:cursor-not-allowed"
                                 onClick={() => setShowQrModal(true)}
                             >
                                 <FontAwesomeIcon icon={faQrcode} size="lg" />
@@ -128,7 +128,7 @@ function Settings() {
                                 QR Code
                             </button>
                             <button
-                                className="mr-2 w-full rounded-lg bg-red-400 px-[20px] py-[10px] text-[15.5px] transition-colors hover:bg-red-500"
+                                className="bg-red-400 hover:bg-red-500 mr-2 px-[20px] py-[10px] rounded-lg w-full text-[15.5px] transition-colors"
                                 onClick={handleDeleteClub}
                             >
                                 <FontAwesomeIcon icon={faTrash} size="lg" />
@@ -148,7 +148,7 @@ function Settings() {
             >
                 <input
                     type="text"
-                    className="mb-4 w-full rounded-lg border border-greyscale-200 bg-greyscale-100 p-2 transition-all focus:ring-accent-100"
+                    className="border-greyscale-200 bg-greyscale-100 mb-4 p-2 border rounded-lg focus:ring-accent-100 w-full transition-all"
                     value={newFieldValue}
                     onChange={e => setNewFieldValue(e.target.value)}
                     required
@@ -162,7 +162,7 @@ function Settings() {
                 closeText="Close"
             >
                 <span className="mb-4">This is used for attendance check-in. Your club members can scan this at every meeting to attend.</span>
-                <div className="mt-4 flex justify-center">
+                <div className="flex justify-center mt-4">
                     <img
                         ref={qrCodeRef}
                         className="w-64"
@@ -171,7 +171,7 @@ function Settings() {
                     />
                 </div>
                 <button
-                    className="mr-3 mt-6 inline rounded-lg bg-accent-100 px-4 py-2 text-white transition-colors hover:bg-accent-100"
+                    className="inline bg-accent-100 hover:bg-accent-100 mt-6 mr-3 px-4 py-2 rounded-lg text-white transition-colors"
                     onClick={handleDownloadQrCode}
                 >
                     <FontAwesomeIcon icon={faDownload} size="lg" />

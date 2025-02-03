@@ -30,29 +30,29 @@ function Home() {
                     <title>Meetings | Club Attendance</title>
                 </Helmet>
             </HelmetProvider>
-            <div className="lg:usablesize absolute right-0 top-0 flex h-screen w-full flex-col items-center gap-10">
-                <div className="absolute top-[100px] w-[996px] max-w-[90%] 2xl:w-[1400px]">
-                    <div className="mx-auto mb-5 flex w-full items-center justify-between">
-                        <span className="ml-2 justify-start text-2xl font-bold">Meetings</span>
+            <div className="lg:usablesize top-0 right-0 absolute flex flex-col items-center gap-10 w-full h-screen">
+                <div className="top-[100px] absolute w-[996px] 2xl:w-[1400px] max-w-[90%]">
+                    <div className="flex justify-between items-center mx-auto mb-5 w-full">
+                        <span className="justify-start ml-2 font-bold text-2xl">Meetings</span>
                         <button
-                            className="mr-2 justify-end rounded-lg bg-accent-100 px-[25px] py-[12px] text-[13.5px] transition-colors hover:bg-accent-200"
+                            className="justify-end bg-accent-100 hover:bg-accent-200 mr-2 px-[25px] py-[12px] rounded-lg text-[13.5px] transition-colors"
                             onClick={handleCreateMeeting}
                             disabled={isCreatingMeeting}
                         >
                             {isCreatingMeeting
                                 ? (
-                                        <svg className="size-6 animate-spin text-black" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                                        </svg>
-                                    )
+                                    <svg className="text-black animate-spin size-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                    </svg>
+                                )
                                 : (
-                                        <>
-                                            <FontAwesomeIcon icon={faPlus} size="lg" />
-                                            {" "}
-                                            New Meeting
-                                        </>
-                                    )}
+                                    <>
+                                        <FontAwesomeIcon icon={faPlus} size="lg" />
+                                        {" "}
+                                        New Meeting
+                                    </>
+                                )}
                         </button>
                     </div>
                     <Table type="meetings" />

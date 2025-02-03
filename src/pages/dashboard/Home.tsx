@@ -7,7 +7,7 @@ import { updateWelcome } from "../../services/UpdateData"
 import { useAuth } from "../../utils/AuthContext"
 import { FetchData } from "../../services/FetchData"
 import { Meeting } from "../../types/models"
-import { formatDate, formatLength } from "../../utils/Formatters"
+import { formatDate } from "../../utils/Formatters"
 
 function Home() {
     const { user, club } = useAuth()
@@ -56,7 +56,7 @@ function Home() {
                     <div>
 
                         <div className="gap-4 grid grid-cols-5 grid-rows-4 h-full">
-                            <div className="col-span-3 col-start-1 row-span-2 bg-greyscale-100 drop-shadow-sm rounded-lg">
+                            <div className="col-span-3 col-start-1 row-span-2 bg-greyscale-100 drop-shadow-xs rounded-lg">
                                 <div className="flex flex-col p-2">
                                     <span className="pt-3 pl-4 font-bold text-xl">
                                         <FontAwesomeIcon icon={faComments} />
@@ -87,7 +87,7 @@ function Home() {
                                     </div>
                                 </div>
                             </div>
-                            <div className="col-span-2 col-start-4 row-span-1 bg-greyscale-100 drop-shadow-sm rounded-lg">
+                            <div className="col-span-2 col-start-4 row-span-1 bg-greyscale-100 drop-shadow-xs rounded-lg">
                                 <div className="flex justify-center items-center size-full">
                                     <div className="flex pr-2 font-bold text-2xl">
                                         <svg width="80px" height="80px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -109,10 +109,10 @@ function Home() {
                                     </div>
                                 </div>
                             </div>
-                            <div className="col-span-2 col-start-4 row-span-3 row-start-2 bg-greyscale-100 drop-shadow-sm rounded-lg">
+                            <div className="col-span-2 col-start-4 row-span-3 row-start-2 bg-greyscale-100 drop-shadow-xs rounded-lg">
 
                             </div>
-                            <div className="col-span-3 row-span-2 row-start-3 bg-greyscale-100 drop-shadow-sm rounded-lg">
+                            <div className="col-span-3 row-span-2 row-start-3 bg-greyscale-100 drop-shadow-xs rounded-lg">
                                 <div className="flex flex-col p-2">
                                     <span className="pt-3 pl-4 font-bold text-2xl">
                                         <FontAwesomeIcon icon={faNewspaper} />

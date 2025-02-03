@@ -17,20 +17,20 @@ function Home() {
                     <title>Members | Club Attendance</title>
                 </Helmet>
             </HelmetProvider>
-            <div className="lg:usablesize absolute right-0 top-0 flex h-screen w-full flex-col items-center gap-10">
-                <div className="absolute top-[100px] w-[996px] max-w-[90%] 2xl:w-[1400px]">
-                    <div className="mx-auto mb-5 flex w-full flex-col justify-between lg:flex-row lg:items-center">
-                        <span className="mb-4 ml-2 justify-start text-2xl font-bold lg:mb-0">Members</span>
-                        <div className="mr-2 flex flex-col justify-end gap-3 lg:flex-row">
+            <div className="lg:usablesize top-0 right-0 absolute flex flex-col items-center gap-10 w-full h-screen">
+                <div className="top-[100px] absolute w-[996px] 2xl:w-[1400px] max-w-[90%]">
+                    <div className="flex lg:flex-row flex-col justify-between lg:items-center mx-auto mb-5 w-full">
+                        <span className="justify-start mb-4 lg:mb-0 ml-2 font-bold text-2xl">Members</span>
+                        <div className="flex lg:flex-row flex-col justify-end gap-3 mr-2">
                             <Link to="/dashboard/members/fields">
-                                <button className="w-[201px] rounded-lg bg-greyscale-200 px-[25px] py-[12px] text-[13.5px] transition-colors hover:bg-greyscale-300 lg:w-auto">
+                                <button className="bg-greyscale-200 hover:bg-greyscale-300 px-[25px] py-[12px] rounded-lg w-[201px] lg:w-auto text-[13.5px] transition-colors">
                                     <FontAwesomeIcon icon={faFilePen} size="lg" />
                                     {" "}
                                     Edit Custom Fields
                                 </button>
                             </Link>
                             <Link to="/dashboard/members/create">
-                                <button className="w-[201px] rounded-lg bg-accent-100 px-[25px] py-[12px] text-[13.5px] transition-colors hover:bg-accent-200 lg:w-auto">
+                                <button className="bg-accent-100 hover:bg-accent-200 px-[25px] py-[12px] rounded-lg w-[201px] lg:w-auto text-[13.5px] transition-colors">
                                     <FontAwesomeIcon icon={faPlus} size="lg" />
                                     {" "}
                                     Add Member
