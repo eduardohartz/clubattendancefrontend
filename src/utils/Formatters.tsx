@@ -19,3 +19,17 @@ export function formatTime(timestamp: string) {
         second: "2-digit",
     })
 }
+
+export function formatLength(timestamp1: number, timestamp2: number) {
+    const durationMs = Math.abs(((timestamp1) * 1000) - (timestamp2 * 1000))
+    const durationSec = Math.floor(durationMs / 1000)
+    const hours = Math.floor(durationSec / 3600)
+    const minutes = Math.floor((durationSec % 3600) / 60)
+    const seconds = durationSec % 60
+
+    const durationStr = `${hours.toString().padStart(2, "0")}h:${minutes
+        .toString()
+        .padStart(2, "0")}m:${seconds.toString().padStart(2, "0")}s`
+
+    return durationStr
+}

@@ -143,7 +143,7 @@ function Login() {
 
                     <p className="mt-10 text-center text-sm/6 text-gray-500">
                         Need to setup an account?
-                        <Link to="/setup"><span className="font-semibold text-accent-200 transition-colors hover:bg-accent-100"> Click here</span></Link>
+                        <Link to="/setup"><span className="font-semibold text-accent-200 transition-colors hover:text-accent-100"> Click here</span></Link>
                     </p>
                 </div>
             </div>
