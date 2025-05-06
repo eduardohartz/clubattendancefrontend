@@ -46,7 +46,7 @@ function Modal({
         <AnimatePresence mode="wait" onExitComplete={() => setShouldRender(false)}>
             {(isOpen || shouldRender) && (
                 <motion.div
-                    className="z-50 fixed inset-0 flex justify-center items-center bg-black bg-opacity-50"
+                    className="z-50 fixed inset-0 flex justify-center items-center bg-black/40 backdrop-blur-sm"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
